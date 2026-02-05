@@ -1,0 +1,16 @@
+<div class="navbar">
+    <a href="/" style="height:100%">
+        <img src="/logo.svg" height="100%">
+    </a>
+    <div class="links">
+        {% if user %}
+        {% if user[4] %}
+            <a href="/admin">Admin</a>
+        {% endif %}
+            <a href="/dashboard">Dashboard</a>
+            <a href="/logout">Logout</a>
+        {% else %}
+            <a href="/login">Login</a>
+        {% endif %}
+    </div>
+</div>
