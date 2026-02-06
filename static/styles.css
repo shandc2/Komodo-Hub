@@ -1,7 +1,7 @@
 :root {
-  --text: #000000;
-  --background: #ffffff;
-  --primary: #869cf7;
+  --text: #cdffca;
+  --background: #094d21;
+  --primary: #229b3c;
   --secondary: #cc2229;
   --accent: #505e86;
   --transparent: #01030cbf;
@@ -379,8 +379,8 @@ input:focus {
 
 .link_button {
   text-decoration: none;
-  color: var(--background);
-  margin: 0.5rem 0;
+  color: var(--text);
+  margin: 1rem;
   padding: 1rem;
   border-radius: 10px;
   font-size: 20px;

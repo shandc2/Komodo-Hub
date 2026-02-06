@@ -1,0 +1,11 @@
+{% macro button(url="#", 
+                button_text="Click Me", 
+                extra_classes="",
+                id="") %}
+<a href="{{ url }}" 
+   class="link_button {{ extra_classes }}" 
+   {% if id %}id="{{ id }}"{% endif %}
+>
+    {{ button_text }}
+</a>
+{% endmacro %}
