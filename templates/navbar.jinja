@@ -1,6 +1,7 @@
+{% from "button.html" import button %}
 <div class="navbar">
     <a href="/" style="height:100%">
-        <img src="/logo.svg" height="100%">
+        <img src="/images/lizard.png" height="100%">
     </a>
     <div class="links">
         {% if user %}
@@ -10,7 +11,7 @@
             <a href="/dashboard">Dashboard</a>
             <a href="/logout">Logout</a>
         {% else %}
-            <a href="/login">Login</a>
+            {{ button(url='/login', button_text='Login', extra_classes='green') }}
         {% endif %}
     </div>
 </div>

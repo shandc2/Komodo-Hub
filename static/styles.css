@@ -64,6 +64,35 @@ h6 {
   z-index: 1;
 }
 
+.navbar .link_button {
+    display: inline-flex;
+    align-items: center;
+    height: 70%;
+    padding: 0 1rem;
+    margin-left: 0.5rem;
+    background: #4CAF50;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.navbar .link_button:hover {
+    background-color: #43a047;
+}
+
+.half-width {
+    width: 50vw;
+    max-width: 600px;   /* optional cap */
+    min-width: 300px;   /* optional floor */
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.full-width {
+  width: 99vw;
+}
+
 .navbar li {
   display: flex;
   list-style: none;
@@ -462,4 +491,22 @@ input:focus {
   width: 100%;
   max-width: 250px;
   margin: 1rem;
+}
+
+.homepage-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+.homepage-buttons .homepage-btn {
+    width: 200px;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1rem;
+    font-size: 1.25rem;
 }

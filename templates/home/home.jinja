@@ -6,12 +6,14 @@
 {% from 'button.html' import button %}
 <!-- Banner section -->
 <section id="hero" style="padding: 100px 20px; text-align: center;">
-    <img src="/images/image.png"> 
+    <img src="/images/image.png" class="half-width"> 
     <h1>Protecting Indonesia's Endangered Species Together</h1>
     <p>Komodo Hub is dedicated to safeguarding the incredible biodiversity of Indonesia. Join us in our mission to conserve and protect these precious creatures for future generations.</p>
-        {{ button(url='#', button_text='Donate Now', extra_classes='green') }}
-        {{ button(url='#featured-species', button_text='Explore Species', extra_classes='blue') }}
-        {{ button(url='/register', button_text='Join the Movement', extra_classes='red') }}
+        <div class="homepage-buttons">
+            {{ button(url='#', button_text='Donate Now', extra_classes='homepage-btn') }}
+            {{ button(url='#featured-species', button_text='Explore Species', extra_classes='homepage-btn') }}
+            {{ button(url='/register', button_text='Join the Movement', extra_classes='homepage-btn') }}
+        </div>
     </div>
 </section>
 <!-- Brief about section -->
