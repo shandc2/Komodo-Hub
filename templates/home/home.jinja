@@ -3,24 +3,28 @@
 {% block head %}
 {% endblock %}
 {% block content %}
-{% from 'button.html' import button %}
+{% from 'button.jinja' import button %}
 <!-- Banner section -->
 <section id="hero" style="padding: 100px 20px; text-align: center;">
-    <img src="/images/image.png" class="half-width"> 
+    <img src="/images/image.png" class="half-width">
     <h1>Protecting Indonesia's Endangered Species Together</h1>
-    <p>Komodo Hub is dedicated to safeguarding the incredible biodiversity of Indonesia. Join us in our mission to conserve and protect these precious creatures for future generations.</p>
-        <div class="homepage-buttons">
-            {{ button(url='#', button_text='Donate Now', extra_classes='homepage-btn') }}
-            {{ button(url='#featured-species', button_text='Explore Species', extra_classes='homepage-btn') }}
-            {{ button(url='/register', button_text='Join the Movement', extra_classes='homepage-btn') }}
-        </div>
+    <p>Komodo Hub is dedicated to safeguarding the incredible biodiversity of Indonesia. Join us in our mission to
+        conserve and protect these precious creatures for future generations.</p>
+    <div class="homepage-buttons">
+        {{ button(url='#', button_text='Donate Now', extra_classes='homepage-btn') }}
+        {{ button(url='#featured-species', button_text='Explore Species', extra_classes='homepage-btn') }}
+        {{ button(url='/register', button_text='Join the Movement', extra_classes='homepage-btn') }}
+    </div>
     </div>
 </section>
 <!-- Brief about section -->
 <section id="about" style="padding: 50px 20px; text-align: center;">
     <h2>What is Komodo Hub?</h2>
-    <p style="max-width: 800px; margin: 0 auto;">Komodo Hub is a digital platform designed to support conservation and species protection efforts across Indonesia. We connect passionate individuals, educators, and organizations to make a tangible difference.</p>
-    <a href="/about" style="display: inline-block; margin-top: 20px; color: #008CBA; text-decoration: none;">Read More &rarr;</a>
+    <p style="max-width: 800px; margin: 0 auto;">Komodo Hub is a digital platform designed to support conservation and
+        species protection efforts across Indonesia. We connect passionate individuals, educators, and organizations to
+        make a tangible difference.</p>
+    <a href="/about" style="display: inline-block; margin-top: 20px; color: #008CBA; text-decoration: none;">Read More
+        &rarr;</a>
 </section>
 <!-- Featured Species -->
 <section id="featured-species" style="padding: 50px 20px; background-color: #f9f9f9; text-align: center;">
@@ -39,15 +43,22 @@
             <p>Main category: Mammal</p>
         </div>
     </div>
-    <a href="/species" style="display: inline-block; margin-top: 40px; background-color: #555; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">View All Species</a>
+    <a href="/species"
+        style="display: inline-block; margin-top: 40px; background-color: #555; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">View
+        All Species</a>
 </section>
 <!-- Schools & communities section -->
 <section id="schools-communities" style="padding: 50px 20px; text-align: center; background-color: #fff;">
     <h2>Schools & Communities</h2>
-    <p style="max-width: 800px; margin: 0 auto;">Schools and communities play a vital role in conservation. Discover how your group can get involved through educational programs, fundraising, and awareness campaigns.</p>
+    <p style="max-width: 800px; margin: 0 auto;">Schools and communities play a vital role in conservation. Discover how
+        your group can get involved through educational programs, fundraising, and awareness campaigns.</p>
     <div style="margin-top: 30px;">
-        <a href="/schools-register" style="background-color: #2196F3; color: white; padding: 15px 25px; text-decoration: none; border-radius: 5px; margin: 0 10px;">Register Your School</a>
-        <a href="/communities-register" style="background-color: #FF9800; color: white; padding: 15px 25px; text-decoration: none; border-radius: 5px; margin: 0 10px;">Join as a Community</a>
+        <a href="/schools-register"
+            style="background-color: #2196F3; color: white; padding: 15px 25px; text-decoration: none; border-radius: 5px; margin: 0 10px;">Register
+            Your School</a>
+        <a href="/communities-register"
+            style="background-color: #FF9800; color: white; padding: 15px 25px; text-decoration: none; border-radius: 5px; margin: 0 10px;">Join
+            as a Community</a>
     </div>
 </section>
 {% endblock %}

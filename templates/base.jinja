@@ -1,20 +1,24 @@
 <html>
-    <head>
-        <title>{% block title %}Untitled{% endblock %} - Komodo Hub</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <link rel="stylesheet" href="/styles.css" type="text/css">
-        <link rel="icon" type="image/png" href="/images/favicon-96x96.png" sizes="96x96" />
-        <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
-        <link rel="shortcut icon" href="/images/favicon.ico" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
-        <meta name="apple-mobile-web-app-title" content="Komodo Hub" />
-        <link rel="manifest" href="/images/site.webmanifest" />
-        {% block head %}{% endblock %}
-    <body>
-        {% include 'navbar.jinja' %}
-        <div class="content">
-            {% block content %}
-            {% endblock %}
-        </div>
-    </body>
+
+<head>
+    <title>{% block title %}Untitled{% endblock %} - Komodo Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="/styles.css" type="text/css">
+    <link rel="icon" type="image/png" href="/images/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Komodo Hub" />
+    <link rel="manifest" href="/images/site.webmanifest" />
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+    {% include 'navbar.jinja' %}
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+
 </html>
