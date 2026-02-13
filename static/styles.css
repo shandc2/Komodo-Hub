@@ -29,6 +29,13 @@ body {
   margin-bottom: 2rem;
 }
 
+.title {
+  font-size: 80;
+  font-weight: bold;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  text-shadow: 20px 20px 20px;
+}
+
 a {
   color: var(--primary);
 }
@@ -84,7 +91,7 @@ h6 {
 }
 
 .half-width {
-    width: 50vw;
+    width: 50%;
     max-width: 600px;   /* optional cap */
     min-width: 300px;   /* optional floor */
     height: auto;
@@ -516,4 +523,26 @@ input:focus {
     justify-content: center;
     padding: 0.75rem 1rem;
     font-size: 1.25rem;
+}
+
+.komodo_crop {
+  margin-top: -1px;
+}
+
+.mirror-shadow {
+    font-size: 60px;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 60px;
+}
+
+.mirror-shadow::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;                 /* shorthand for top/left/right/bottom */
+    transform: translateY(290%) scaleY(-3);
+    transform-origin: top;
+    opacity: 0.8;
+    filter: blur(1px);
+    pointer-events: none;
 }
