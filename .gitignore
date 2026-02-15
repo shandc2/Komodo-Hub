@@ -214,6 +214,4 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
-database/add_entry.py
-database/database_maker.py
 database/species.db
