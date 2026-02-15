@@ -33,7 +33,9 @@ body {
   font-size: 80;
   font-weight: bold;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  text-shadow: 20px 20px 20px;
+  text-shadow: 
+        0 20px 40px rgba(255, 255, 255, 0.2),
+        0 80px 200px rgba(255, 255, 255, 0.15);
 }
 
 a {
@@ -527,22 +529,4 @@ input:focus {
 
 .komodo_crop {
   margin-top: -1px;
-}
-
-.mirror-shadow {
-    font-size: 60px;
-    position: relative;
-    display: inline-block;
-    margin-bottom: 60px;
-}
-
-.mirror-shadow::after {
-    content: attr(data-text);
-    position: absolute;
-    inset: 0;                 /* shorthand for top/left/right/bottom */
-    transform: translateY(290%) scaleY(-3);
-    transform-origin: top;
-    opacity: 0.8;
-    filter: blur(1px);
-    pointer-events: none;
 }

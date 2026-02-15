@@ -1,12 +1,15 @@
 {% extends "base.jinja" %}
-{% block title %}Donations{% endblock %}
+{% block title %}{{ english_name }} {% endblock %}
 {% block head %}
 {% endblock %}
 {% block content %}
 {% from 'button.jinja' import button %}
 <!-- Banner section -->
 <section id="hero" style="padding: 100px 20px; text-align: center;"> 
-    <h1>We are not currently accepting donations as this is not a real website!</h1>
-    </div>
+    <h1>{{ english_name }}</h1>
+    <h2><em>{{ latin_name }}</em></h2>
+    <img src="/images/species_database/{{ english_name }}.jpg">
+
+    <p>{{ main_text }}</p>
 </section>
 {% endblock %}

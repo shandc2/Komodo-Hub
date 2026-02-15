@@ -1,8 +1,10 @@
 from flask import render_template, Blueprint
 from routes.donation.donation import donation_page
+from routes.species_info.species_info import species_info_page
 
 home_page = Blueprint("home", __name__, url_prefix="/")
 home_page.register_blueprint(donation_page)
+home_page.register_blueprint(species_info_page)
 
 
 @home_page.route("/")
