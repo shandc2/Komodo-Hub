@@ -101,6 +101,13 @@ h6 {
     margin: 0 auto;
 }
 
+.three-quarter-width {
+  width: 75%;
+  height: auto;
+  display: block;
+  margin: 5rem auto;
+}
+
 .full-width {
   width: 99vw;
 }

@@ -23,7 +23,6 @@ def animal_from_database(species_id):
 
     row = cursor.fetchone()
     conn.close()
-    print(row)
     return row
 
 
@@ -43,10 +42,17 @@ def animal_from_database(species_id):
 
 @species_info_page.route("/species/<species_id>")
 def data(species_id):
-    var1, var2, latin_name, body_text, var5 = animal_from_database(species_id)
-    return render_template(
-        "species_information/species_information.jinja",
-        english_name=var2,
-        latin_name=latin_name,
-        main_text=body_text,
-    )
+    try:
+        database_entry = animal_from_database(species_id)
+        var1, var2, latin_name, body_text, var5 = database_entry
+        return render_template(
+            "species_information/species_information.jinja",
+            english_name=var2,
+            latin_name=latin_name,
+            main_text=body_text,
+            )
+    except TypeError as error_information:
+        return render_template(
+            "error.jinja",
+            extra_information=error_information,
+            )
