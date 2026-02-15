@@ -18,12 +18,12 @@ def animal_from_database(species_id):
         FROM species
         WHERE species_english = ?
     """,
-        (animal_id,),
+        (species_id,),
     )
 
     row = cursor.fetchone()
     conn.close()
-    # print(row)
+    print(row)
     return row
 
 
@@ -37,6 +37,8 @@ def animal_from_database(species_id):
 # based on the contents of the database
 # i.e. we can create a button with the hyperlink /species/iguana and this will
 # allow the user to view the information about the species
+# please be aware the page expects a .jpg at:
+# /static/images/species_database/{{species_id}}.jpg
 
 
 @species_info_page.route("/species/<species_id>")

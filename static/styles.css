@@ -105,6 +105,13 @@ h6 {
   width: 99vw;
 }
 
+.quarter-height{
+  height: 25%;
+  width: auto;
+  display: block;
+  margin: auto
+}
+
 .navbar li {
   display: flex;
   list-style: none;
