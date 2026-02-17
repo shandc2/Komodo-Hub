@@ -5,4 +5,4 @@ page = Blueprint('error', __name__, url_prefix='/error')
 
 @page.route('/')
 def error():
-    return render_template('error.jinja')
+    return render_template("error.jinja")

@@ -13,8 +13,7 @@ def animal_from_database(species_id):
         SELECT species_id,
                species_english,
                species_latin,
-               body_text,
-               created_at
+               body_text
         FROM species
         WHERE species_english = ?
     """,
@@ -27,7 +26,7 @@ def animal_from_database(species_id):
 
 
 # animal_from_database expects five variables:
-# id, english_name, latin_name, body_text and created_at
+# id, english_name, latin_name, body_text and
 # if this needs changing feel free to adjust but...
 # species_information.jinja does expect english_name, latin_name and main_text
 # this page works by taking the "species_id" from the url and using that to
@@ -44,7 +43,7 @@ def animal_from_database(species_id):
 def data(species_id):
     try:
         database_entry = animal_from_database(species_id)
-        var1, var2, latin_name, body_text, var5 = database_entry
+        var1, var2, latin_name, body_text = database_entry
         return render_template(
             "species_information/species_information.jinja",
             english_name=var2,
