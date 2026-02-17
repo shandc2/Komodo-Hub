@@ -1,0 +1,14 @@
+{% extends "base.jinja" %}
+{% block title %} Species Upload Portal {% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+{% from 'button.jinja' import button %}
+<!-- Banner section -->
+<section id="hero" style="padding: 100px 20px; text-align: center;"> 
+    <form action="/action_page.php">
+    <input type="file" name="pic" accept="image/*">
+    <input type="submit">
+    </form>
+</section>
+{% endblock %}
