@@ -2,7 +2,7 @@ import sqlite3
 from datetime import datetime
 
 
-database = sqlite3.connect("database/species.db")
+database = sqlite3.connect("database/species.db", check_same_thread=False)
 database.execute(
     """
 CREATE TABLE IF NOT EXISTS species (

@@ -4,10 +4,22 @@
 {% endblock %}
 {% block content %}
 {% from 'button.jinja' import button %}
-<!-- Banner section -->
-<section id="hero" style="padding: 100px 20px; text-align: center;"> 
-    <form action="/action_page.php">
-    <input type="file" name="pic" accept="image/*">
+<section id="hero" style="padding: 50px 20px; text-align: center;"> 
+    <form
+        action="{{ url_for('species_portal.add_species_to_database') }}"
+        class=""
+        style="outline-style: double; width: auto;"
+        method="POST"
+        enctype="multipart/form-data"
+        >
+    <label for="eng_name" style="padding: 50px;">English name:</label><br>
+    <input type="text" id="eng_name" name="eng_name" value=""><br>
+    <label for="latin_name">Latin name:</label><br>
+    <input type="text" id="latin_name" name="latin_name" value=""><br>
+    <label for="main_text">Species information:</label><br>
+    <input type="text" id="main_text" name="main_text" value=""><br>
+    <label for="species_image">Species image:</label><br>
+    <input type="file" id="species_image" name="species_image" accept="image/*"><br>
     <input type="submit">
     </form>
 </section>

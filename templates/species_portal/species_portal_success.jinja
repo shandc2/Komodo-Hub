@@ -1,0 +1,28 @@
+{% extends "base.jinja" %}
+{% block title %} Species Upload Success {% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+{% from 'button.jinja' import button %}
+<section style="padding: 50px 20px; text-align: center;"> 
+    <section style="padding 0px 20px 100px 80px" class="half-width">
+        <h1>
+        You have succesfully added {{ eng_name }} to the species database! Please view the entry to verify.
+        </h1>
+    </section>
+    <section style="margin: 50px 20px;">
+    {{ button(
+                url='/species_portal',
+                button_text='Add another species',
+                extra_classes='homepage-btn')}}
+    {{ button(
+                url='/species/{{ eng_name }}',
+                button_text='View New Entry',
+                extra_classes='homepage-btn')}}
+    {{ button(
+                url='/',
+                button_text='Return to Homepage',
+                extra_classes='homepage-btn')}}
+    </section>
+</section>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.jinja" %}
+{% block title %} Species Upload Failed {% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+{% from 'button.jinja' import button %}
+<section id="hero" style="padding: 50px 20px; text-align: center; margin: 0px 0px 50px 0px;"> 
+    <h1>Failed - There was an error!</h1>
+    <h2>Additional information: <em>{{ error_information }}</em></h2>
+</section>
+<section id="hero" style="padding: 50px 20px; text-align: center; margin: 0px 0px 50px 0px;">
+    {{ button(url='/species_portal', button_text='Return to Species Portal', extra_classes='homepage-btn') }}
+    {{ button(url='/', button_text='Return to Species Portal', extra_classes='homepage-btn') }}
+</section>
+{% endblock %}
