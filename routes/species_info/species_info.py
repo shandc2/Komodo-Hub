@@ -1,7 +1,7 @@
 from flask import render_template, Blueprint
 import sqlite3
 
-species_info_page = Blueprint("species_information", __name__)
+page = Blueprint("species_information", __name__)
 
 
 def animal_from_database(species_id):
@@ -40,7 +40,7 @@ def animal_from_database(species_id):
 # /static/images/species_database/{{species_id}}.jpg
 
 
-@species_info_page.route("/species/<species_id>")
+@page.route("/species/<species_id>")
 def data(species_id):
     try:
         database_entry = animal_from_database(species_id)
