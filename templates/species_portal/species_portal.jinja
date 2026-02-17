@@ -5,7 +5,13 @@
 {% block content %}
 {% from 'button.jinja' import button %}
 <section id="hero" style="padding: 50px 20px; text-align: center;"> 
-    <form action="/action_page.php" class="half-width" style="outline-style: double;">
+    <form
+        action="{{ url_for('species_portal.add_species_to_database') }}"
+        class=""
+        style="outline-style: double; width: auto;"
+        method="POST"
+        enctype="multipart/form-data"
+        >
     <label for="eng_name" style="padding: 50px;">English name:</label><br>
     <input type="text" id="eng_name" name="eng_name" value=""><br>
     <label for="latin_name">Latin name:</label><br>

@@ -1,0 +1,12 @@
+{% extends "base.jinja" %}
+{% block title %} Species Upload Portal {% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+{% from 'button.jinja' import button %}
+<section id="hero" style="padding: 50px 20px; text-align: center;"> 
+    <h1>Failed</h1>
+    {{ button(url='/species_portal', button_text='Return to Species Portal', extra_classes='homepage-btn') }}
+    {{ button(url='/', button_text='Return to Species Portal', extra_classes='homepage-btn') }}
+</section>
+{% endblock %}
