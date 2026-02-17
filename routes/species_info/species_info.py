@@ -1,12 +1,12 @@
 from flask import render_template, Blueprint
+import database.add_entry
 import sqlite3
 
 page = Blueprint("species_information", __name__)
 
 
 def animal_from_database(species_id):
-    conn = sqlite3.connect("database/species.db")
-    cursor = conn.cursor()
+    cursor = database.add_entry.database.cursor()
 
     cursor.execute(
         """
@@ -21,7 +21,7 @@ def animal_from_database(species_id):
     )
 
     row = cursor.fetchone()
-    conn.close()
+    cursor.close()
     return row
 
 
