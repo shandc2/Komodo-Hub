@@ -2,9 +2,25 @@ import sqlite3
 from datetime import datetime
 
 
+database = sqlite3.connect("database/species.db")
+database.execute(
+    """
+CREATE TABLE IF NOT EXISTS species (
+  species_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  species_english TEXT,
+  species_latin TEXT,
+  body_text TEXT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
+"""
+)
+database.commit()
+
+print("Database initialized.")
+
+
 def add_species(english, latin, body):
-    connection = sqlite3.connect("database/species.db")
-    cursor = connection.cursor()
+    cursor = database.cursor()
 
     cursor.execute(
         """
@@ -19,8 +35,8 @@ def add_species(english, latin, body):
         (english, latin, body, datetime.now()),
     )
 
-    connection.commit()
-    connection.close()
+    cursor.close()
+    database.commit()
 
     print("Species added successfully.")
 
