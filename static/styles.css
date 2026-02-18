@@ -634,6 +634,41 @@ input:focus {
   box-sizing: border-box;
 }
 
+.container-lite {
+  max-width: 600px;
+  background: var(--green3);
+  padding: 40px;
+  border-radius: 20px;
+  border: 2px solid var(--primary);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+}
+
+.container-full {
+  width: 100%;
+  background: var(--green3);
+  padding: 40px;
+  border-radius: 20px;
+  border: 2px solid var(--primary);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+}
+
+.container-full-bright {
+  width: 100%;
+  background: var(--primary);
+  padding: 40px;
+  border-radius: 20px;
+  border: 2px solid var(--primary);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+}
+
+.plain-white-text {
+  text-decoration: none;
+  color: whitesmoke;
+}
+
 /* Form group */
 .form-group {
   display: flex;
