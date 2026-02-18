@@ -2,7 +2,7 @@ from flask import render_template, Blueprint, request
 from utilities.add_species import add_species
 import os
 
-page = Blueprint("species_portal", __name__, url_prefix="/species_portal")
+page = Blueprint("species_portal", __name__, url_prefix="/species/portal")
 
 
 @page.route("/")
