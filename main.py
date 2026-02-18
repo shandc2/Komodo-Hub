@@ -2,7 +2,7 @@ from flask import Flask
 import os
 import importlib.util
 
-database = sqlite3.connect("database/species.db", check_same_thread=False)
+# database = sqlite3.connect("database/species.db", check_same_thread=False)
 
 def import_pages(route, app):
     for root, _, files in os.walk(route):
