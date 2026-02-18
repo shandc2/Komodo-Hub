@@ -4,6 +4,16 @@
         <img src="/images/lizard.png" height="100%">
     </a>
     <div class="links">
+    {# todo #}
+        <div class="dropdown">
+                <button class="dropbtn">Species ▾</button>
+                <div class="dropdown-content">
+                    <a href="/species_portal">Add Species</a>
+                    <a href="/species_database">View Species</a>
+                    <a href="/species_search">Search Species</a>
+                </div>
+        </div>
+        {# todo #}
         {% if user %}
         {% if user[4] %}
         <a href="/admin">Admin</a>
