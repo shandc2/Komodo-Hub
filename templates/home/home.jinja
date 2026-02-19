@@ -28,20 +28,24 @@
     {{ button(url='/about', button_text='Read More', extra_classes='homepage-btn') }}
 </section>
 <!-- Featured Species -->
+{# If you want to change the featured species please do so in config.ini - CS #}
 <section id="featured-species" style="padding: 50px 20px; background-color: #047f02; text-align: center;" class="container-full-bright">
     <h2>Featured Species</h2>
     <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-top: 30px; text-decoration: none;">
-        <a href="/species/iguana" class="container-lite">
-            <h3 class="plain-white-text">Fecking iguana</h3>
+        <a href="/species/{{species1}}" class="container-lite">
+            <h3 class="plain-white-text">{{species1}}</h3>
+            <img src="images/species_database/{{species1}}.jpg">
             <p style="color: var(--text)">Main category: Reptile</p>
         </a>
-        <a href="/species/sumatran-tiger" class="container-lite">
-            <h3 class="plain-white-text">Sumatran Tiger</h3>
+        <a href="/species/{{species2}}" class="container-lite">
+            <h3 class="plain-white-text">{{species2}}</h3>
+            <img src="images/species_database/{{species2}}.jpg">
             <p style="color: var(--text)">Main category: Mammal</p>
         </a>
-        <a href="/species/orangutan" class="container-lite">
-            <h3 class="plain-white-text">Orangutan</h3>
-            <p style="color: var(--text)">Main category: Mammal</p>
+        <a href="/species/{{species3}}" class="container-lite">
+            <h3 class="plain-white-text">{{species3}}</h3>
+            <img src="images/species_database/{{species3}}.jpg">
+            <p style="color: var(--text)">This is deliberately broken I wanted to see what happened</p>
         </a>
     </div>
     <a href="/species"

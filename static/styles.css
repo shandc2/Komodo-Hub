@@ -645,6 +645,13 @@ input:focus {
   text-decoration: none;
 }
 
+.container-lite img {
+  width: 100%;
+  height: 180px;
+  display: block;        /* removes inline spacing gap */
+  border-radius: 10px;   /* optional: cleaner look */
+}
+
 .container-full {
   width: 100%;
   background: var(--green3);
