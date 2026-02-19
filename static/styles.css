@@ -10,7 +10,7 @@
   --green2: var(--background);
   --green3: #094422;
   --red: #ff5e5e;
-  --navbar-height: 50px;
+  --navbar-height: 6.854%;
 }
 
 html {
@@ -68,6 +68,7 @@ h6 {
   background-color: var(--transparent);
   backdrop-filter: blur(50px);
   height: var(--navbar-height);
+  min-height: 40px;
   padding: 0.5rem 1rem;
   margin: auto;
   display: flex;
@@ -84,7 +85,7 @@ h6 {
   margin-left: 0.5rem;
   background: #4CAF50;
   color: white;
-  border-radius: 6px;
+  border-radius: 10px;
   text-decoration: none;
 }
 
@@ -539,7 +540,7 @@ input:focus {
 }
 
 .logo-text {
-  font-size: 1.5rem;
+  font-size: 1.44rem;
   font-weight: 700;
   color: var(--text);
 }
@@ -596,7 +597,7 @@ input:focus {
   justify-content: center;
   padding: 0.75rem 1rem;
   font-size: 1.25rem;
-  border-radius: 6px;
+  border-radius: 10px;
 }
 
 /* Hover effects */
@@ -637,7 +638,7 @@ input:focus {
 .container-lite {
   max-width: 600px;
   background: var(--green3);
-  padding: 40px;
+  padding: 36px;
   border-radius: 20px;
   border: 2px solid var(--primary);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
@@ -645,32 +646,49 @@ input:focus {
   text-decoration: none;
 }
 
+#featured-species .container-lite {
+  flex: 1;                /* Makes all container-lite elements within the featured species section even */
+  min-width: 250px;       
+  max-width: 30%;
+}
+
+#featured-species h3 {
+  margin-bottom: 1rem;
+}
+
 .container-lite img {
-  width: 100%;
-  height: 180px;
-  display: block;        /* removes inline spacing gap */
-  border-radius: 10px;   /* optional: cleaner look */
+  width: 99%;
+  aspect-ratio: 1/1;
+  max-height: 50%;
+  object-fit: cover;
+  display: block;       
+  border-radius: 10px;   
+}
+
+.container-lite p {
+  margin-bottom: 0;
 }
 
 .container-full {
-  width: 100%;
+  width: var(--custom-width, 100%); /* You can set custom widths here but defaults to 100% */
   background: var(--green3);
   padding: 40px;
   border-radius: 20px;
   border: 2px solid var(--primary);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
   box-sizing: border-box;
-  margin-top: 1.545%;
+  margin: 1.618% auto 0 auto;
 }
 
 .container-full-bright {
-  width: 100%;
+  width: var(--custom-width, 100%); /* You can set custom widths here but defaults to 100% */
   background: var(--primary);
   padding: 40px;
   border-radius: 20px;
   border: 2px solid var(--primary);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
   box-sizing: border-box;
+  margin: 1.618% auto 0 auto;
 }
 
 .plain-white-text {
