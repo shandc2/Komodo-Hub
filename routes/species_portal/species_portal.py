@@ -17,7 +17,8 @@ def add_species_to_database():
         latin_name = request.form["latin_name"]
         main_text = request.form["main_text"]
         species_image = request.files["species_image"]
-        species_image.save(f"static/images/species_database/{eng_name}.jpg")
+        if species_image:
+            species_image.save(f"static/images/species_database/{eng_name}.jpg")
         add_species(eng_name, latin_name, main_text)
         
         return render_template(

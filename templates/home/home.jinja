@@ -6,7 +6,7 @@
 {% from 'button.jinja' import button %}
 <!-- Banner section -->
 <section id="hero" style="padding: 0px 20px 0px 20px; text-align: center;">
-    <h1 class="title" data-text="Komodo Hub">Komodo Hub</h1>   
+    {# <h1 class="title" data-text="Komodo Hub">Komodo Hub</h1>    #}
     <img src="/images/image.png" class="komodo_crop half-width" alt="I stole this photo from the internet"> 
     <h1>Protecting Indonesia's Endangered Species Together</h1>
     <p>Komodo Hub is dedicated to safeguarding the incredible biodiversity of Indonesia. Join us in our mission to
@@ -28,32 +28,33 @@
     {{ button(url='/about', button_text='Read More', extra_classes='homepage-btn') }}
 </section>
 <!-- Featured Species -->
-<section id="featured-species" style="padding: 50px 20px; background-color: #047f02; text-align: center;">
+<section id="featured-species" style="padding: 50px 20px; background-color: #047f02; text-align: center;" class="container-full-bright">
     <h2>Featured Species</h2>
-    <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-top: 30px;">
-        <div style="border: 1px solid #ddd; padding: 20px; border-radius: 8px; width: 250px;">
-            <h3><a href="/species/iguana" style="text-decoration: none; color: #333;">Fecking iguana</a></h3>
-            <p>Main category: Reptile</p>
-        </div>
-        <div style="border: 1px solid #ddd; padding: 20px; border-radius: 8px; width: 250px;">
-            <h3><a href="/species/sumatran-tiger" style="text-decoration: none; color: #333;">Sumatran Tiger</a></h3>
-            <p>Main category: Mammal</p>
-        </div>
-        <div style="border: 1px solid #ddd; padding: 20px; border-radius: 8px; width: 250px;">
-            <h3><a href="/species/orangutan" style="text-decoration: none; color: #333;">Orangutan</a></h3>
-            <p>Main category: Mammal</p>
-        </div>
+    <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-top: 30px; text-decoration: none;">
+        <a href="/species/iguana" class="container-lite">
+            <h3 class="plain-white-text">Fecking iguana</h3>
+            <p style="color: var(--text)">Main category: Reptile</p>
+        </a>
+        <a href="/species/sumatran-tiger" class="container-lite">
+            <h3 class="plain-white-text">Sumatran Tiger</h3>
+            <p style="color: var(--text)">Main category: Mammal</p>
+        </a>
+        <a href="/species/orangutan" class="container-lite">
+            <h3 class="plain-white-text">Orangutan</h3>
+            <p style="color: var(--text)">Main category: Mammal</p>
+        </a>
     </div>
     <a href="/species"
         style="display: inline-block; margin-top: 40px; background-color: #555; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">View
         All Species</a>
 </section>
 <!-- Schools & communities section -->
-<section id="schools-communities" style="padding: 50px 20px; text-align: center; background-color: #094d21;">
+<section id="schools-communities" style="padding: 50px 20px; text-align: center; background-color: #094d21;" class="container-full">
     <h2>Schools & Communities</h2>
-    <p style="max-width: 800px; margin: 0 auto;">Schools and communities play a vital role in conservation. Discover how
-        your group can get involved through educational programs, fundraising, and awareness campaigns.</p>
-    </div>
+    <p style="max-width: 800px; margin: 0 auto;">
+    Schools and communities play a vital role in conservation. Discover how
+    your group can get involved through educational programs, fundraising, and awareness campaigns.
+    </p>
     <div class="homepage-buttons">
         {{ button(url='/register-school', button_text='Register Your School', extra_classes='homepage-btn') }}
         <!-- need to assign bg colour -->
