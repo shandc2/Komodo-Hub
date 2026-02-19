@@ -642,6 +642,7 @@ input:focus {
   border: 2px solid var(--primary);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
   box-sizing: border-box;
+  text-decoration: none;
 }
 
 .container-full {
@@ -669,6 +670,7 @@ input:focus {
   text-decoration: none;
   color: whitesmoke;
 }
+
 
 /* Form group */
 .form-group {
