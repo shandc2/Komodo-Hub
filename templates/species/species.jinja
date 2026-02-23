@@ -1,0 +1,18 @@
+{% extends "base.jinja" %}
+{% block title %}Species Database{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+{% from 'button.jinja' import button %}
+<section class="species-grid">
+    {% for sp in species %}
+    <div class="container-lite">
+        <a href="/species/{{ sp['species_english'] }}">
+            <h3 class="plain-white-text">{{ sp['species_english'] }}</h3>
+            <img src="{{ url_for('static', filename='images/species_database/' ~ sp['species_english'] ~ '.jpg') }}">
+            <p>Main category: {{ sp['category'] }}</p>
+        </a>
+    </div>
+    {% endfor %}
+</section>
+{% endblock %}
