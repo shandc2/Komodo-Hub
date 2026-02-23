@@ -637,6 +637,8 @@ input:focus {
 
 .container-lite {
   max-width: 600px;
+  max-height: 100%;
+  overflow: hidden;
   background: var(--green3);
   padding: 10px;
   border-radius: 20px;
@@ -650,6 +652,7 @@ input:focus {
   flex: 1;                /* Makes all container-lite elements within the featured species section even */
   min-width: 250px;       
   max-width: 30%;
+  max-height: 100%;
 }
 
 #featured-species h3 {
@@ -657,7 +660,8 @@ input:focus {
 }
 
 .container-lite img {
-  width: 80%;
+  max-width: 80%;
+  max-height: 80%;
   aspect-ratio: 1/1;
   object-fit: cover;
   display: block;       
@@ -682,6 +686,7 @@ input:focus {
 
 .container-full-bright {
   width: var(--custom-width, 100%); /* You can set custom widths here but defaults to 100% */
+  max-height: fit-content;
   background: var(--primary);
   padding: 40px;
   border-radius: 20px;
@@ -759,9 +764,7 @@ input:focus {
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 30px;
   width: 100%;
-  margin: 40px auto;
+  margin: 20px auto;
   padding: 0 20px;
   box-sizing: border-box;
 }
-
-/* temp */
