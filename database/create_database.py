@@ -11,4 +11,4 @@ def makeDB():
 		cur.execute(f.read())
 		f.close()
 
-
+makeDB()

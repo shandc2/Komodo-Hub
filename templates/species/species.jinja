@@ -1,0 +1,42 @@
+{% extends "base.jinja" %}
+{% block title %}Species Database{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+{% from 'button.jinja' import button %}
+<section class="title">
+Species Database
+</section>
+<section id="featured-species" style="padding: 10px 20px; background-color: #047f02; text-align: center;" class="container-full-bright">
+    <h2>Featured Species</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-top: 30px; text-decoration: none; justify-content: space-evenly">
+        <a href="/species/{{species1}}" class="container-lite">
+            <h3 class="plain-white-text">{{species1}}</h3>
+            <img src="images/species_database/{{species1}}.jpg">
+            <p style="color: var(--text)">Main category: Reptile</p>
+        </a>
+        <a href="/species/{{species2}}" class="container-lite">
+            <h3 class="plain-white-text">{{species2}}</h3>
+            <img src="images/species_database/{{species2}}.jpg">
+            <p style="color: var(--text)">Main category: Mammal</p>
+        </a>
+        <a href="/species/{{species3}}" class="container-lite">
+            <h3 class="plain-white-text">{{species3}}</h3>
+            <img src="images/species_database/{{species3}}.jpg">
+            <p style="color: var(--text)">This is deliberately broken I wanted to see what happened</p>
+        </a>
+    </div>
+</section>
+<h2 style="text-align: center; margin-top: 30px;">All Species</h2>
+<section class="species-grid">
+    {% for sp in species %}
+    <div class="container-lite">
+        <a href="/species/{{ sp['species_english'] }}">
+            <h3 class="plain-white-text">{{ sp['species_english'] }}</h3>
+            <img src="{{ url_for('static', filename='images/species_database/' ~ sp['species_english'] ~ '.jpg') }}">
+            <p>Main category: {{ sp['category'] }}</p>
+        </a>
+    </div>
+    {% endfor %}
+</section>
+{% endblock %}

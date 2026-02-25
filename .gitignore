@@ -216,3 +216,5 @@ __marimo__/
 .streamlit/secrets.toml
 database/species.db
 static/images/.DS_Store
+static/images/.DS_Store
+static/images/.DS_Store

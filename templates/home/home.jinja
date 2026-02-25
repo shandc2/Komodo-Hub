@@ -6,7 +6,6 @@
 {% from 'button.jinja' import button %}
 <!-- Banner section -->
 <section id="hero" style="padding: 0px 20px 0px 20px; text-align: center;">
-    {# <h1 class="title" data-text="Komodo Hub">Komodo Hub</h1>    #}
     <img src="/images/image.png" class="komodo_crop half-width" alt="I stole this photo from the internet"> 
     <h1>Protecting Indonesia's Endangered Species Together</h1>
     <p>Komodo Hub is dedicated to safeguarding the incredible biodiversity of Indonesia. Join us in our mission to
@@ -28,20 +27,24 @@
     {{ button(url='/about', button_text='Read More', extra_classes='homepage-btn') }}
 </section>
 <!-- Featured Species -->
-<section id="featured-species" style="padding: 50px 20px; background-color: #047f02; text-align: center;" class="container-full-bright">
+{# If you want to change the featured species please do so in config.ini - CS #}
+<section id="featured-species" style="padding: 10px 20px; background-color: #047f02; text-align: center;" class="container-full-bright">
     <h2>Featured Species</h2>
-    <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-top: 30px; text-decoration: none;">
-        <a href="/species/iguana" class="container-lite">
-            <h3 class="plain-white-text">Fecking iguana</h3>
+    <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-top: 30px; text-decoration: none; justify-content: space-evenly">
+        <a href="/species/{{species1}}" class="container-lite">
+            <h3 class="plain-white-text">{{species1}}</h3>
+            <img src="images/species_database/{{species1}}.jpg">
             <p style="color: var(--text)">Main category: Reptile</p>
         </a>
-        <a href="/species/sumatran-tiger" class="container-lite">
-            <h3 class="plain-white-text">Sumatran Tiger</h3>
+        <a href="/species/{{species2}}" class="container-lite">
+            <h3 class="plain-white-text">{{species2}}</h3>
+            <img src="images/species_database/{{species2}}.jpg">
             <p style="color: var(--text)">Main category: Mammal</p>
         </a>
-        <a href="/species/orangutan" class="container-lite">
-            <h3 class="plain-white-text">Orangutan</h3>
-            <p style="color: var(--text)">Main category: Mammal</p>
+        <a href="/species/{{species3}}" class="container-lite">
+            <h3 class="plain-white-text">{{species3}}</h3>
+            <img src="images/species_database/{{species3}}.jpg">
+            <p style="color: var(--text)">This is deliberately broken I wanted to see what happened</p>
         </a>
     </div>
     <a href="/species"
@@ -49,7 +52,7 @@
         All Species</a>
 </section>
 <!-- Schools & communities section -->
-<section id="schools-communities" style="padding: 50px 20px; text-align: center; background-color: #094d21;" class="container-full">
+<section id="schools-communities" style="padding: 10px 20px; text-align: center; background-color: #094d21;" class="container-full">
     <h2>Schools & Communities</h2>
     <p style="max-width: 800px; margin: 0 auto;">
     Schools and communities play a vital role in conservation. Discover how
