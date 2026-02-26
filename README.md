@@ -1,5 +1,3 @@
-This is my fork of the project, please go to Ugric/Komodo-Hub
-
 # Komodo-Hub
 
 ## Brief
