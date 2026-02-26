@@ -27,7 +27,5 @@ def all_species():
     return render_template(
         "species/species.jinja",
         species=species_list,
-        species1=species1,
-        species2=species2,
-        species3=species3,
+        featured_species=list(dict(config['homepage']).values())
         )
