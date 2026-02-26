@@ -659,7 +659,9 @@ input:focus {
   margin-bottom: 1rem;
 }
 
-.container-lite img {
+.container-lite .div-image {
+  background-size: cover;
+  background-position: center;
   max-width: 80%;
   max-height: 80%;
   aspect-ratio: 1/1;

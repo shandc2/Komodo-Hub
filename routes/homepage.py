@@ -15,7 +15,5 @@ def home():
     print(f'Featured species: {species1}, {species2}, {species3}')
     return render_template(
         "home/home.jinja",
-        species1=species1,
-        species2=species2,
-        species3=species3,
+        species_list=list(dict(config['homepage']).values())
         )
