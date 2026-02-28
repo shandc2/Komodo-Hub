@@ -4,23 +4,14 @@
 {% endblock %}
 {% block content %}
 {% from 'button.jinja' import button %}
+{% from 'featured_species.jinja' import featured_species_section%}
 <section class="title">
 Species Database
 </section>
-<section id="featured-species" style="padding: 10px 20px; background-color: #047f02; text-align: center;" class="container-full-bright">
-    <h2>Featured Species</h2>
-    <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-top: 30px; text-decoration: none; justify-content: space-evenly">
-        {%for species in featured_species%}
-        <a href="/species/{{species}}" class="container-lite">
-            <h3 class="plain-white-text">{{species}}</h3>
-            <div
-                style="background-image: url('images/species_database/{{species}}.jpg');" class="div-image">
-            </div>
-            <p style="color: var(--text)">Main category: Reptile</p>
-        </a>
-        {%endfor%}
-    </div>
-</section>
+{# Featured Species #}
+{# If you want to change the featured species please do so in config.ini - CS #}
+{{featured_species_section(featured_species, False)}}
+{# All Species #}
 <h2 style="text-align: center; margin-top: 30px;">All Species</h2>
 <section class="species-grid">
     {% for sp in species %}

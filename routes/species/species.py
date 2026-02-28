@@ -1,6 +1,7 @@
 from flask import render_template, Blueprint
-import sqlite3
 import configparser
+
+from database.db_commands import get_all_species
 
 config = configparser.ConfigParser()
 
@@ -9,23 +10,16 @@ page = Blueprint("species", __name__)
 @page.route("/species")
 def all_species():
     config.read('config.ini')
-    species1 = config['homepage']['featured_species_1']
-    species2 = config['homepage']['featured_species_2']
-    species3 = config['homepage']['featured_species_3']
-    conn = sqlite3.connect("database/species.db", check_same_thread=False)
-    conn.row_factory = sqlite3.Row  # allows dict-style access
-    cursor = conn.cursor()
+    
+    featured_species = list(dict(config["homepage"]).values())
 
-    cursor.execute("SELECT * FROM species")
-    species_list = cursor.fetchall()
+    species_list = get_all_species()
     
     for sp in species_list:
         print(sp['species_english'])
 
-    conn.close()
-
     return render_template(
         "species/species.jinja",
         species=species_list,
-        featured_species=list(dict(config['homepage']).values())
+        featured_species=featured_species
         )

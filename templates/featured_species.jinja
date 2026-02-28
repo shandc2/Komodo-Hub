@@ -1,0 +1,34 @@
+{% macro featured_species_section(featured_species, species_button)%}
+<!-- Featured Species -->
+{# If you want to change the featured species please do so in config.ini - CS #}
+<section id="featured-species" style="padding: 10px 20px; background-color: #047f02; text-align: center;"
+    class="container-full-bright">
+    <h2>Featured Species</h2>
+    <div
+        style="display: flex; flex-wrap: wrap; gap: 20px; margin-top: 30px; text-decoration: none; justify-content: space-evenly">
+        {%for species in featured_species%}
+        <a href="/species/{{species}}" class="container-lite">
+            <h3 class="plain-white-text">{{species}}</h3>
+            <div style="background-image: url('images/species_database/{{species}}.jpg');" class="div-image">
+            </div>
+            <p style="color: var(--text)">Main category: Reptile</p>
+        </a>
+        {%endfor%}
+    </div>
+    {%if species_button == True%}
+        <a  href="/species"
+            style=" display: inline-block;
+                    margin-top: 40px;
+                    background-color: #555;
+                    color: white;
+                    padding: 10px 20px;
+                    text-decoration: none;
+                    border-radius: 5px;"
+                    >
+                View All Species
+        </a>
+    {% else %}
+        
+    {%endif%}
+</section>
+{% endmacro %}
