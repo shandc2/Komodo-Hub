@@ -14,6 +14,8 @@ def all_species():
     featured_species = list(dict(config["homepage"]).values())
 
     species_list = get_all_species()
+        
+    species_list = sorted(species_list, key=lambda sp: sp['species_english'])
     
     for sp in species_list:
         print(sp['species_english'])

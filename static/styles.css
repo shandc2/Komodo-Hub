@@ -770,3 +770,13 @@ input:focus {
   padding: 0 20px;
   box-sizing: border-box;
 }
+
+.boring-button {
+  display: inline-block;
+  margin-top: 40px;
+  background-color: #555;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+}
