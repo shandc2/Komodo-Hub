@@ -9,10 +9,10 @@ def column_exists(cursor, table, column):
 def add_category_column():
     with get_db() as conn:
         cursor = conn.cursor()
-
-        if not column_exists(cursor, "species", "category"):
-            cursor.execute("ALTER TABLE species ADD COLUMN category TEXT")
-            print("Column 'category' added.")
+        category = input("What category do you want to add to the species table? ").lower()
+        if not column_exists(cursor, "species", category):
+            cursor.execute(f"ALTER TABLE species ADD COLUMN {category} TEXT")
+            print(f"Column '{category}' added.")
         else:
             print("Column already exists.")
 

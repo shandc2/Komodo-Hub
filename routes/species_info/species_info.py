@@ -1,28 +1,8 @@
 from flask import render_template, Blueprint
-import database.add_entry
+from database.db_commands import get_species_by_name
 import sqlite3
 
 page = Blueprint("species_information", __name__)
-
-
-def animal_from_database(species_id):
-    cursor = database.add_entry.database.cursor()
-
-    cursor.execute(
-        """
-        SELECT species_id,
-               species_english,
-               species_latin,
-               body_text
-        FROM species
-        WHERE species_english = ?
-    """,
-        (species_id,),
-    )
-
-    row = cursor.fetchone()
-    cursor.close()
-    return row
 
 
 # animal_from_database expects five variables:
@@ -39,16 +19,18 @@ def animal_from_database(species_id):
 # /static/images/species_database/{{species_id}}.jpg
 
 
-@page.route("/species/<species_id>")
-def data(species_id):
+@page.route("/species/<species_english>")
+def data(species_english):
     try:
-        database_entry = animal_from_database(species_id)
-        var1, var2, latin_name, body_text = database_entry
+        database_entry = get_species_by_name(species_english)
+        # print(dict(database_entry))
         return render_template(
             "species_information/species_information.jinja",
-            english_name=var2,
-            latin_name=latin_name,
-            main_text=body_text,
+            english_name=database_entry["species_english"],
+            latin_name=database_entry["species_latin"],
+            main_text=database_entry["body_text"],
+            category=database_entry["category"],
+            extinction_risk=database_entry["extinction_risk"],
             )
     except TypeError as error_information:
         return render_template(

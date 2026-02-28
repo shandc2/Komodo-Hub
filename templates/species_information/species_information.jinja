@@ -8,7 +8,9 @@
 <section id="hero" style="padding: 100px 20px; text-align: center;" class="container">
     <h1>{{ english_name }}</h1>
     <h2><em>{{ latin_name }}</em></h2>
+    <p>Category: {{category}}</p>
     <img src="/images/species_database/{{ english_name }}.jpg" class="quarter-height">
     <p>{{ main_text }}</p>
+    <p>This species is currently classed as: {{extinction_risk}}</p>
 </section>
 {% endblock %}

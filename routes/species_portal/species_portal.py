@@ -1,5 +1,5 @@
 from flask import render_template, Blueprint, request
-from utilities.add_species import add_species
+from database.db_commands import add_species
 import os
 
 page = Blueprint("species_portal", __name__, url_prefix="/species/portal")
@@ -13,13 +13,16 @@ def portal():
 @page.route("/", methods=["POST"])
 def add_species_to_database():
     try:
-        eng_name = request.form["eng_name"]
-        latin_name = request.form["latin_name"]
-        main_text = request.form["main_text"]
-        species_image = request.files["species_image"]
+        eng_name        = request.form["eng_name"]
+        latin_name      = request.form["latin_name"]
+        main_text       = request.form["main_text"]
+        category        = request.form["category"]
+        extinction_risk = request.form["extinction_risk"]
+        species_image   = request.files["species_image"]
         if species_image:
             species_image.save(f"static/images/species_database/{eng_name}.jpg")
-        add_species(eng_name, latin_name, main_text)
+        print(category, extinction_risk)
+        add_species(eng_name, latin_name, main_text, category, extinction_risk)
         
         return render_template(
             "species_portal/species_portal_success.jinja",
