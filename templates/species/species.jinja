@@ -15,15 +15,16 @@ Species Database
 <h2 style="text-align: center; margin-top: 30px;">All Species</h2>
 <section class="species-grid">
     {% for sp in species %}
-    <div class="container-lite">
-        <a href="/species/{{ sp['species_english'] }}">
-            <h3 class="plain-white-text">{{ sp['species_english'] }}</h3>
-            <div
-                style="background-image: url('{{ url_for('static', filename='images/species_database/' ~ sp['species_english'] ~ '.jpg') }}');" class="div-image">
-            </div>
-            <p>Main category: {{ sp['category'] }}</p>
-        </a>
-    </div>
+    <a href="/species/{{ sp['species_english'] }}" class="container-lite">
+        <h3 class="plain-white-text">{{ sp['species_english'] }}</h3>
+        <div 
+        style="background-image: url('{{ url_for('static', filename='images/species_database/' ~ sp['species_english'] ~ '.jpg') }}');" class="div-image">
+        </div>
+        <p style="color: var(--text)">
+        Main category: {{ sp['category'] }}
+        </p>
+    </a>
+
     {% endfor %}
 </section>
 {% endblock %}

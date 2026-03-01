@@ -8,7 +8,28 @@
 <section id="hero" style="padding: 100px 20px; text-align: center;" class="container">
     <h1>{{ english_name }}</h1>
     <h2><em>{{ latin_name }}</em></h2>
-    <img src="/images/species_database/{{ english_name }}.jpg" class="quarter-height">
+    <p>Category: {{category}}</p>
+    <img src="/images/species_database/{{ english_name }}.jpg" class="species-photo">
     <p>{{ main_text }}</p>
+    <p>This species is currently classed as: {{extinction_risk}}</p>
+    {% if extinction_risk == "Not Evaluated" %}
+        <img src="/images/extinction_risk/notevaluated.png" class="extinction-icon">
+    {% elif extinction_risk == "Least Concern" %}
+        <img src="/images/extinction_risk/leastconcern.png" class="extinction-icon">
+    {% elif extinction_risk == "Near Threatened" %}
+        <img src="/images/extinction_risk/nearthreatened.png" class="extinction-icon">
+    {% elif extinction_risk == "Vulnerable" %}
+        <img src="/images/extinction_risk/vulnerable.png" class="extinction-icon">
+    {% elif extinction_risk == "Endangered" %}
+        <img src="/images/extinction_risk/endangered.png" class="extinction-icon">
+    {% elif extinction_risk == "Critically Endangered" %}
+        <img src="/images/extinction_risk/criticallyendangered.png" class="extinction-icon">
+    {% elif extinction_risk == "Extinct in Wild" %}
+        <img src="/images/extinction_risk/extinctinwild.png" class="extinction-icon">
+    {% elif extinction_risk == "Extinct" %}
+        <img src="/images/extinction_risk/extinct.png" class="extinction-icon">
+    {% else %}
+        <p></p>
+    {% endif %}
 </section>
 {% endblock %}

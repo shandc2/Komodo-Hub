@@ -122,6 +122,17 @@ h6 {
   margin: auto
 }
 
+.species-photo {
+  height: 50%;
+  width: auto;
+  display: block;
+  margin: auto
+}
+
+.extinction-icon {
+  height: 10%
+}
+
 .navbar li {
   display: flex;
   list-style: none;
@@ -769,4 +780,14 @@ input:focus {
   margin: 20px auto;
   padding: 0 20px;
   box-sizing: border-box;
+}
+
+.boring-button {
+  display: inline-block;
+  margin-top: 40px;
+  background-color: #555;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
 }

@@ -2,17 +2,19 @@ from datetime import datetime
 from database.db_connection import get_db
 
 
-def add_species(english, latin, body):
+def add_species(english, latin, body, category, extinction_risk):
     with get_db() as conn:
         conn.execute("""
             INSERT INTO species (
                 species_english,
                 species_latin,
                 body_text,
+                category,
+                extinction_risk,
                 created_at
             )
-            VALUES (?, ?, ?, ?)
-        """, (english.lower(), latin.lower(), body, datetime.now()))
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (english, latin.lower(), body, category, extinction_risk, datetime.now()))
 
 
 def get_all_species():
@@ -22,11 +24,11 @@ def get_all_species():
         ).fetchall()
 
 
-def get_species_by_id(species_id):
+def get_species_by_name(species_english):
     with get_db() as conn:
         return conn.execute(
-            "SELECT * FROM species WHERE species_id = ?",
-            (species_id,)
+            "SELECT * FROM species WHERE species_english = ?",
+            (species_english,)
         ).fetchone()
 
 

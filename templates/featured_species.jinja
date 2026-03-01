@@ -1,6 +1,8 @@
 {% macro featured_species_section(featured_species, species_button)%}
 <!-- Featured Species -->
 {# If you want to change the featured species please do so in config.ini - CS #}
+{# This macro requires to input variables (featured_species & species button), featured species should #}
+{# be a list and species button is a boolean. #}
 <section id="featured-species" style="padding: 10px 20px; background-color: #047f02; text-align: center;"
     class="container-full-bright">
     <h2>Featured Species</h2>
@@ -16,16 +18,8 @@
         {%endfor%}
     </div>
     {%if species_button == True%}
-        <a  href="/species"
-            style=" display: inline-block;
-                    margin-top: 40px;
-                    background-color: #555;
-                    color: white;
-                    padding: 10px 20px;
-                    text-decoration: none;
-                    border-radius: 5px;"
-                    >
-                View All Species
+        <a  href="/species" class="boring-button">
+        View All Species
         </a>
     {% else %}
         

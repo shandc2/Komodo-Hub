@@ -23,6 +23,23 @@
             <label for="species_image">Species Image:</label>
             <input type="file" id="species_image" name="species_image" accept="image/*">
         </div>
+        <div class="form-group">
+            <label for="category">Category (e.g. Reptile):</label>
+            <textarea id="category" name="category" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="extinction_risk"> Extinction risk: </label>
+            <select id="extinction_risk" name="extinction_risk">
+                <option value="Not Evaluated">          Not Evaluated           </option>
+                <option value="Least Concern">          Least Concern           </option>
+                <option value="Near Threatened">        Near Threatened         </option>
+                <option value="Vulnerable">             Vulnerable              </option>
+                <option value="Endangered">             Endangered              </option>
+                <option value="Critically Endangered">  Critically Endangered   </option>
+                <option value="Extinct in Wild">        Extinct in Wild         </option>
+                <option value="Extinct">                Extinct                 </option>
+            </select>
+        </div>
         <button type="submit" class="submit-button">
             Add Species
         </button>

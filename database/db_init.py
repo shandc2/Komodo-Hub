@@ -9,6 +9,7 @@ def init_database():
             species_latin TEXT,
             body_text TEXT,
             category TEXT,
+            extinction_risk TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
         """)
