@@ -122,6 +122,17 @@ h6 {
   margin: auto
 }
 
+.species-photo {
+  height: 50%;
+  width: auto;
+  display: block;
+  margin: auto
+}
+
+.extinction-icon {
+  height: 10%
+}
+
 .navbar li {
   display: flex;
   list-style: none;

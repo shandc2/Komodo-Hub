@@ -13,10 +13,10 @@ def portal():
 @page.route("/", methods=["POST"])
 def add_species_to_database():
     try:
-        eng_name        = request.form["eng_name"]
-        latin_name      = request.form["latin_name"]
+        eng_name        = request.form["eng_name"].capitalize()
+        latin_name      = request.form["latin_name"].capitalize()
         main_text       = request.form["main_text"]
-        category        = request.form["category"]
+        category        = request.form["category"].capitalize()
         extinction_risk = request.form["extinction_risk"]
         species_image   = request.files["species_image"]
         if species_image:

@@ -22,10 +22,10 @@ def data(species_english):
         # print(dict(database_entry))
         return render_template(
             "species_information/species_information.jinja",
-            english_name    =database_entry["species_english"],
-            latin_name      =database_entry["species_latin"],
+            english_name    =(database_entry["species_english"]).capitalize(),
+            latin_name      =database_entry["species_latin"].capitalize(),
             main_text       =database_entry["body_text"],
-            category        =database_entry["category"],
+            category        =database_entry["category"].capitalize(),
             extinction_risk =database_entry["extinction_risk"],
         )
     except TypeError as error_information:
