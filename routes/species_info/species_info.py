@@ -19,7 +19,8 @@ page = Blueprint("species_information", __name__)
 def data(species_english):
     try:
         database_entry = get_species_by_name(species_english)
-        # print(dict(database_entry))
+        if database_entry is None:
+            raise TypeError(f"No species named '{species_english}' found in the database.")
         return render_template(
             "species_information/species_information.jinja",
             english_name    =(database_entry["species_english"]).capitalize(),

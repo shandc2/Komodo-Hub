@@ -1,8 +1,7 @@
 from flask import Flask
 import os
 import importlib.util
-
-# database = sqlite3.connect("database/species.db", check_same_thread=False)
+from database.db_init import init_database
 
 def import_pages(route, app):
     for root, _, files in os.walk(route):
@@ -33,6 +32,7 @@ def import_pages(route, app):
 
 app = Flask(__name__, static_folder='static', static_url_path='')
 
+init_database()
 import_pages("routes", app)
 
 if __name__ == "__main__":
