@@ -19,17 +19,17 @@ def add_species(english, latin, body, category, extinction_risk):
 
 def get_all_species():
     with get_db() as conn:
-        return conn.execute(
-            "SELECT * FROM species"
-        ).fetchall()
+        rows = conn.execute("SELECT * FROM species").fetchall()
+        return [dict(row) for row in rows]
 
 
 def get_species_by_name(species_english):
     with get_db() as conn:
-        return conn.execute(
+        row = conn.execute(
             "SELECT * FROM species WHERE species_english = ?",
             (species_english,)
         ).fetchone()
+        return dict(row) if row else None
 
 
 def delete_species(species_id):
