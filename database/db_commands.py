@@ -31,6 +31,30 @@ def get_species_by_name(species_english):
         ).fetchone()
         return dict(row) if row else None
 
+def search_species(query):
+    with get_db() as conn:
+        rows = conn.execute(
+            """SELECT *
+FROM species
+WHERE
+        instr(LOWER(COALESCE(CAST(species_english AS TEXT), '')), ?1) > 0
+     OR instr(LOWER(COALESCE(CAST(species_latin   AS TEXT), '')), ?1) > 0
+     OR instr(LOWER(COALESCE(CAST(body_text       AS TEXT), '')), ?1) > 0
+     OR instr(LOWER(COALESCE(CAST(category        AS TEXT), '')), ?1) > 0
+     OR instr(LOWER(COALESCE(CAST(extinction_risk AS TEXT), '')), ?1) > 0;""",
+            (query.lower(),)
+        ).fetchmany()
+        return [dict(row) for row in rows]
+
+
+def get_species_by_name(species_english):
+    with get_db() as conn:
+        row = conn.execute(
+            "SELECT * FROM species WHERE species_english = ?",
+            (species_english,)
+        ).fetchone()
+        return dict(row) if row else None
+
 
 def delete_species(species_id):
     with get_db() as conn:

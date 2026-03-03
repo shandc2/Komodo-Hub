@@ -1,7 +1,7 @@
-from flask import render_template, Blueprint
+from flask import render_template, Blueprint, request
 import configparser
 
-from database.db_commands import get_all_species
+from database.db_commands import get_all_species, search_species
 
 config = configparser.ConfigParser()
 
@@ -29,5 +29,7 @@ def all_species():
 @page.route("/search")
 def search():
     query = request.args.get("search-query")
+
+    results = search_species(query)
     
-    return render_template("/species/species_search.jinja", results=results)
+    return render_template("/species/species_search.jinja", results=results, query=query)

@@ -11,7 +11,7 @@ def add_category_column():
         cursor = conn.cursor()
         category = input("What category do you want to add to the species table? ").lower()
         if not column_exists(cursor, "species", category):
-            cursor.execute(f"ALTER TABLE species ADD COLUMN {category} TEXT")
+            cursor.execute(f"ALTER TABLE species ADD COLUMN ? TEXT", (category,))
             print(f"Column '{category}' added.")
         else:
             print("Column already exists.")
