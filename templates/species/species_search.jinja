@@ -9,25 +9,7 @@
 Species Database
 </section>
 {# All Species #}
-<div>
-    <form action="/species/search" method="GET" class="search">
-        <input type="text" name="search-query" placeholder="Search all species..." value="{{query}}" class="bar">
-        <input type="submit" value="Search" class="button">
-    </form>
-</div>
+{{search_bar("/species/search")}}   
 <h2 style="text-align: center; margin-top: 30px;">All Species</h2>
-<section class="species-grid">
-    {% for sp in results %}
-    <a href="/species/{{ sp['species_english'] }}" class="container-lite">
-        <h3 class="plain-white-text">{{ sp['species_english'] }}</h3>
-        <div 
-        style="background-image: url('{{ url_for('static', filename='images/species_database/' ~ sp['species_english'] ~ '.jpg') }}');" class="div-image">
-        </div>
-        <p style="color: var(--text)">
-        Main category: {{ sp['category'] }}
-        </p>
-    </a>
-
-    {% endfor %}
-</section>
+{{display_all_items(results)}}
 {% endblock %}
