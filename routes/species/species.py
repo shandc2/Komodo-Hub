@@ -5,9 +5,9 @@ from database.db_commands import get_all_species
 
 config = configparser.ConfigParser()
 
-page = Blueprint("species", __name__)
+page = Blueprint("species", __name__, url_prefix="/species")
 
-@page.route("/species")
+@page.route("")
 def all_species():
     config.read('config.ini')
     
@@ -25,3 +25,9 @@ def all_species():
         species=species_list,
         featured_species=featured_species
         )
+    
+@page.route("/search")
+def search():
+    query = request.args.get("search-query")
+    
+    return render_template("/species/species_search.jinja", results=results)

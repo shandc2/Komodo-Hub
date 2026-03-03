@@ -219,39 +219,6 @@ input:focus {
   outline: none;
 }
 
-.search {
-  display: flex;
-  flex-direction: row;
-  margin: 2.5rem 0;
-  justify-content: center;
-}
-
-.search .bar {
-  width: 500px;
-  height: 50px;
-  border-radius: 25px;
-  color: var(--text);
-  background-color: var(--secondary);
-  border: 1px solid var(--primary);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 1rem;
-}
-
-.search .button {
-  width: 100px;
-  border-radius: 25px;
-  margin-left: 1rem;
-  color: var(--text);
-  background-color: var(--primary);
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
 .results {
   display: flex;
   flex-direction: column;
@@ -388,7 +355,7 @@ input:focus {
 }
 
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -660,8 +627,8 @@ input:focus {
 }
 
 #featured-species .container-lite {
-  flex: 1;                /* Makes all container-lite elements within the featured species section even */
-  min-width: 250px;       
+  flex: 1;
+  min-width: 200px;       
   max-width: 30%;
   max-height: 100%;
 }
@@ -715,7 +682,6 @@ input:focus {
 }
 
 
-/* Form group */
 .form-group {
   display: flex;
   flex-direction: column;
@@ -790,4 +756,37 @@ input:focus {
   padding: 10px 20px;
   text-decoration: none;
   border-radius: 5px;
+}
+
+.search {
+    display: flex;
+    flex-direction: row;
+    margin: 2.5rem 0;
+    justify-content: center;
+}
+
+.search .bar {
+    width: 500px;
+    height: 50px;
+    border-radius: 25px;
+    color: black;
+    background-color: var(--secondary);
+    border: 1px solid var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+}
+
+.search .button {
+    width: 100px;
+    border-radius: 25px;
+    margin-left: 1rem;
+    color: var(--text);
+    background-color: var(--primary);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 }
