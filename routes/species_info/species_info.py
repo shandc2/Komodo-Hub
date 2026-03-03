@@ -28,6 +28,7 @@ def data(species_english):
             main_text       =database_entry["body_text"],
             category        =database_entry["category"].capitalize(),
             extinction_risk =database_entry["extinction_risk"],
+            photoid         =database_entry["photoid"]
         )
     except TypeError as error_information:
         return render_template(

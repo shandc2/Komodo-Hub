@@ -2,7 +2,7 @@ from datetime import datetime
 from database.db_connection import get_db
 
 
-def add_species(english, latin, body, category, extinction_risk):
+def add_species(english, latin, body, category, extinction_risk, image_id):
     with get_db() as conn:
         conn.execute("""
             INSERT INTO species (
@@ -11,10 +11,12 @@ def add_species(english, latin, body, category, extinction_risk):
                 body_text,
                 category,
                 extinction_risk,
-                created_at
+                created_at,
+                photoid
+                
             )
-            VALUES (?, ?, ?, ?, ?, ?)
-        """, (english, latin.lower(), body, category, extinction_risk, datetime.now()))
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        """, (english, latin.lower(), body, category, extinction_risk, datetime.now(), image_id))
 
 
 def get_all_species():
@@ -43,7 +45,7 @@ WHERE
      OR instr(LOWER(COALESCE(CAST(category        AS TEXT), '')), ?1) > 0
      OR instr(LOWER(COALESCE(CAST(extinction_risk AS TEXT), '')), ?1) > 0;""",
             (query.lower(),)
-        ).fetchmany()
+        ).fetchall()
         return [dict(row) for row in rows]
 
 
