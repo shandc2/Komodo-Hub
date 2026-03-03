@@ -1,16 +1,15 @@
 from flask import render_template, Blueprint
 import configparser
+from utilities.featured_species import featured_species_function
 
-config = configparser.ConfigParser()
+# config = configparser.ConfigParser()
 
 page = Blueprint("home", __name__, url_prefix="/")
 
 
 @page.route("/")
 def home():
-    config.read('config.ini')
-    featured_species = list(dict(config["homepage"]).values())
-    # print(f'Featured species: {species1}, {species2}, {species3}')
+    featured_species = featured_species_function('config.ini')
     return render_template(
         "home/home.jinja",
         featured_species=featured_species

@@ -1,0 +1,18 @@
+{% macro display_all_items(items)%}
+{# Displays all species in the provided 'items' array #}
+{# Used in the species database and species results pages #}
+<section class="species-grid">
+    {% for item in items %}
+    <a href="/species/{{ item['species_english'] }}" class="container-lite">
+        <h3 class="plain-white-text">{{ item['species_english'] }}</h3>
+        <div 
+        style="background-image: url('{{ url_for('static', filename='images/species_database/' ~ item['photoid'] ~ '.jpg') }}');" class="div-image">
+        </div>
+        <p style="color: var(--text)">
+        Main category: {{ item['category'] }}
+        </p>
+    </a>
+
+    {% endfor %}
+</section>
+{% endmacro %}

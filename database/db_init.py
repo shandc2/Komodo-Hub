@@ -15,6 +15,7 @@ SEED_SPECIES = [
         ),
         "category": "Mammal",
         "extinction_risk": "Critically Endangered",
+        "photoid": "sumatran tiger",
     },
     {
         "species_english": "Javan Rhinoceros",
@@ -28,6 +29,7 @@ SEED_SPECIES = [
         ),
         "category": "Mammal",
         "extinction_risk": "Critically Endangered",
+        "photoid": "javan rhinoceros",
     },
     {
         "species_english": "Bali Myna",
@@ -41,6 +43,7 @@ SEED_SPECIES = [
         ),
         "category": "Bird",
         "extinction_risk": "Critically Endangered",
+        "photoid": "bali myna"
     },
     {
         "species_english": "Javan Eagle",
@@ -55,6 +58,7 @@ SEED_SPECIES = [
         ),
         "category": "Bird",
         "extinction_risk": "Endangered",
+        "photoid": "javan eagle"
     },
     {
         "species_english": "Tarsius",
@@ -69,6 +73,7 @@ SEED_SPECIES = [
         ),
         "category": "Mammal",
         "extinction_risk": "Endangered",
+        "photoid": "tarsius"
     },
     {
         "species_english": "Celebes Crested Macaque",
@@ -82,6 +87,7 @@ SEED_SPECIES = [
         ),
         "category": "Mammal",
         "extinction_risk": "Critically Endangered",
+        "photoid": "celebes crested macaque"
     },
 ]
 
@@ -96,7 +102,8 @@ def init_database():
             body_text TEXT,
             category TEXT,
             extinction_risk TEXT,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            photoid TEXT
         )
         """)
     print("Database initialised.")
