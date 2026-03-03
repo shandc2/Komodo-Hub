@@ -6,6 +6,7 @@
 {% from 'button.jinja' import button %}
 {% from 'featured_species.jinja' import featured_species_section %}
 {% from 'display_items.jinja' import display_all_items %}
+{% from 'search_bar.jinja' import search_bar%}
 <section class="title">
 Species Database
 </section>
@@ -14,10 +15,7 @@ Species Database
 {{featured_species_section(featured_species, False)}}
 {# All Species #}
 <div>
-    <form action="/species/search" method="GET" class="search">
-        <input type="text" name="search-query" placeholder="Search all species..." class="bar">
-        <input type="submit" value="Search" class="button">
-    </form>
+    {{search_bar("/species/search")}}
 </div>
 <h2 style="text-align: center; margin-top: 30px;">All Species</h2>
 {{display_all_items(species)}}

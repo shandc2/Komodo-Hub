@@ -9,9 +9,9 @@
     <div
         style="display: flex; flex-wrap: wrap; gap: 20px; margin-top: 30px; text-decoration: none; justify-content: space-evenly">
         {%for species in featured_species%}
-        <a href="/species/{{species}}" class="container-lite">
-            <h3 class="plain-white-text">{{species}}</h3>
-            <div style="background-image: url('images/species_database/{{species}}.jpg');" class="div-image">
+        <a href="/species/{{ species['species_english'] }}" class="container-lite">
+            <h3 class="plain-white-text">{{ species['species_english'] }}</h3>
+            <div style="background-image: url('images/species_database/{{ species['photoid'] }}.jpg');" class="div-image">
             </div>
 
         </a>
