@@ -1,7 +1,7 @@
 import sqlite3
 from contextlib import contextmanager
 
-DATABASE_PATH = "database/species.db"
+DATABASE_PATH = "database/database.db"
 
 @contextmanager
 def get_db():
