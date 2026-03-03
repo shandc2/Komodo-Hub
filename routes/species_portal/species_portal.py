@@ -1,6 +1,7 @@
 from flask import render_template, Blueprint, request, redirect, url_for
 from database.db_commands import add_species, delete_species, get_species_by_name
 import os
+import uuid
 
 page = Blueprint("species_portal", __name__, url_prefix="/species/portal")
 
@@ -19,10 +20,12 @@ def add_species_to_database():
         category        = request.form["category"].capitalize()
         extinction_risk = request.form["extinction_risk"]
         species_image   = request.files["species_image"]
+        image_id        = ""
         if species_image:
-            species_image.save(f"static/images/species_database/{eng_name}.jpg")
+            image_id = str(uuid.uuid4())
+            species_image.save(f"static/images/species_database/{image_id}.jpg")
         print(category, extinction_risk)
-        add_species(eng_name, latin_name, main_text, category, extinction_risk)
+        add_species(eng_name, latin_name, main_text, category, extinction_risk, image_id)
         
         return render_template(
             "species_portal/species_portal_success.jinja",
