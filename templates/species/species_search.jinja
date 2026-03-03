@@ -8,9 +8,6 @@
 <section class="title">
 Species Database
 </section>
-{# Featured Species #}
-{# If you want to change the featured species please do so in config.ini - CS #}
-{{featured_species_section(featured_species, False)}}
 {# All Species #}
 <div>
     <form action="/species/search" method="GET" class="search">
@@ -20,7 +17,7 @@ Species Database
 </div>
 <h2 style="text-align: center; margin-top: 30px;">All Species</h2>
 <section class="species-grid">
-    {% for sp in species %}
+    {% for sp in results %}
     <a href="/species/{{ sp['species_english'] }}" class="container-lite">
         <h3 class="plain-white-text">{{ sp['species_english'] }}</h3>
         <div 
