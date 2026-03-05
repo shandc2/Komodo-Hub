@@ -14,7 +14,7 @@ def portal():
 @page.route("/", methods=["POST"])
 def add_species_to_database():
     try:
-        eng_name        = request.form["eng_name"].capitalize()
+        eng_name        = request.form["eng_name"].title()
         latin_name      = request.form["latin_name"].capitalize()
         main_text       = request.form["main_text"]
         category        = request.form["category"].capitalize()
@@ -36,6 +36,8 @@ def add_species_to_database():
             "species_portal/species_portal_failed.jinja",
             error_information=error_information
             )
+        
+# now add editing functionality
 
 
 @page.route("/delete/<species_english>", methods=["POST"])
