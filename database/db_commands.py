@@ -4,19 +4,22 @@ from database.db_connection import get_db
 
 def add_species(english, latin, body, category, extinction_risk, image_id):
     with get_db() as conn:
-        conn.execute("""
-            INSERT INTO species (
-                species_english,
-                species_latin,
-                body_text,
-                category,
-                extinction_risk,
-                created_at,
-                photoid
+        try:
+            conn.execute("""
+                INSERT INTO species (
+                    species_english,
+                    species_latin,
+                    body_text,
+                    category,
+                    extinction_risk,
+                    created_at,
+                    photoid
                 
-            )
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        """, (english, latin.lower(), body, category, extinction_risk, datetime.now(), image_id))
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            """, (english.title(), latin.lower(), body, category, extinction_risk, datetime.now(), image_id))
+        except:
+            raise ValueError("This species already exists in the database, would you like to edit it?")
 
 
 def get_all_species():
@@ -47,16 +50,6 @@ WHERE
             (query.lower(),)
         ).fetchall()
         return [dict(row) for row in rows]
-
-
-def get_species_by_name(species_english):
-    with get_db() as conn:
-        row = conn.execute(
-            "SELECT * FROM species WHERE species_english = ?",
-            (species_english,)
-        ).fetchone()
-        return dict(row) if row else None
-
 
 def delete_species(species_id):
     with get_db() as conn:

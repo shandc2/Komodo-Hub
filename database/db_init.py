@@ -97,7 +97,7 @@ def init_database():
         conn.execute("""
         CREATE TABLE IF NOT EXISTS species (
             species_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            species_english TEXT,
+            species_english TEXT UNIQUE,
             species_latin TEXT,
             body_text TEXT,
             category TEXT,
