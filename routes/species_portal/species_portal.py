@@ -41,8 +41,8 @@ def add_species_to_database():
             error_information=error_information
             )
         
-@page.route("")
-def portal_succes():
+@page.route("/<eng_name>")
+def portal_success(eng_name):
     return render_template(
             "species_portal/species_portal_success.jinja",
             eng_name = eng_name,

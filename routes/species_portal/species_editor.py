@@ -37,7 +37,7 @@ def species_update(species_id):
         update_species(species_id, eng_name, latin_name, main_text, category, extinction_risk)
 
         return redirect(
-            url_for("species_portal.portal_success", eng_name=eng_name)
+            url_for("species_editor.edit_success", eng_name=eng_name)
         )
 
     except Exception as error_information:
@@ -45,3 +45,10 @@ def species_update(species_id):
             "species_portal/species_portal_failed.jinja",
             error_information=error_information
         )
+        
+@page.route("/<eng_name>")
+def edit_success(eng_name):
+    return render_template(
+            "species_portal/species_portal_success.jinja",
+            eng_name = eng_name,
+            )
