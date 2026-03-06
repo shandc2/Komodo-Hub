@@ -1,5 +1,5 @@
 from flask import render_template, Blueprint, request, redirect, url_for
-from database.db_commands import add_species, delete_species, get_species_by_name
+from database.db_commands import add_species, delete_species, get_species_by_name, get_species_by_id
 import os
 import uuid
 
@@ -31,13 +31,22 @@ def add_species_to_database():
             "species_portal/species_portal_success.jinja",
             eng_name = eng_name,
             )
+    except ValueError as error_information:
+        species_to_edit = get_species_by_name(request.form["eng_name"].title())
+        species_id = species_to_edit['species_id']
+        return redirect(url_for("species_editor.edit_species", species_id=species_id))
     except Exception as error_information:
         return render_template(
             "species_portal/species_portal_failed.jinja",
             error_information=error_information
             )
         
-# now add editing functionality
+@page.route("")
+def portal_succes():
+    return render_template(
+            "species_portal/species_portal_success.jinja",
+            eng_name = eng_name,
+            )
 
 
 @page.route("/delete/<species_english>", methods=["POST"])

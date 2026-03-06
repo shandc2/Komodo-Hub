@@ -1,0 +1,54 @@
+{% extends "base.jinja" %}
+{% block title %} Species Upload Portal {% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+{% from 'button.jinja' import button %}
+<h1>SPECIES EDITOR</h1>
+<p>Species ID: {{ species_id }}</p>
+<section id="hero" class="form">
+    <form action="{{ url_for('species_editor.species_update', species_id=species_id) }}" class="container" method="POST"
+        enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="eng_name">English Name:</label>
+            <input type="text" id="eng_name" name="eng_name" value="{{ sp['species_english'] }}" required>
+        </div>
+        <div class="form-group">
+            <label for="latin_name">Latin Name:</label>
+            <input type="text" id="latin_name" name="latin_name" value="{{ sp['species_latin'] }}" required>
+        </div>
+        <div class="form-group">
+            <label for="main_text">Species Information:</label>
+            <textarea id="main_text" name="main_text" rows="5" required>{{ sp['body_text'] }}</textarea>
+        </div>
+        {# <div class="form-group">
+            <label for="species_image">Species Image:</label>
+            <input type="file" id="species_image" name="species_image" accept="image/*">
+        </div> #}
+        {# temporarily removed as i can't figure it out rn #}
+        {# probably need to check if the value in the db is greater than the supplied value or something, don't wanna overwrite existing entry eith nothing #}
+        <div class="form-group">
+            <label for="category">Category (e.g. Reptile):</label>
+            <textarea id="category" name="category" required>{{ sp['category'] }}</textarea>
+        </div>
+        {# can't figure out how to get this last one to pre-fill with the existing value, need to fix #}
+        <div class="form-group">
+            <label for="extinction_risk"> Extinction risk: </label>
+            <select id="extinction_risk" name="extinction_risk">
+                <option value="Not Evaluated"           > Not Evaluated           </option>
+                <option value="Least Concern"           > Least Concern           </option>
+                <option value="Near Threatened"         > Near Threatened         </option>
+                <option value="Vulnerable"              > Vulnerable              </option>
+                <option value="Endangered"              > Endangered              </option>
+                <option value="Critically Endangered"   > Critically Endangered   </option>
+                <option value="Extinct in Wild"         > Extinct in Wild         </option>
+                <option value="Extinct"                 > Extinct                 </option>
+            </select>
+        </div>
+        <button type="submit" class="submit-button">
+            Add Species
+        </button>
+
+    </form>
+</section>
+{% endblock %}
