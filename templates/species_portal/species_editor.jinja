@@ -4,8 +4,12 @@
 {% endblock %}
 {% block content %}
 {% from 'button.jinja' import button %}
-<h1 style="text-align: center;">SPECIES EDITOR</h1>
+<h1 style="text-align:left;">SPECIES EDITOR</h1>
 <div style="display:flex;flex-direction: row;">
+    <div class="container" style="height: fit-content; width:fit-content; text-align:center; max-width: 40%; padding:20px">
+        <p> Current photo: </p>
+        <img src="/images/species_database/{{ sp['photoid'] }}.jpg" style="width: 100%; height: auto; margin: auto">
+    </div>
 <section id="hero" class="container">
     <form action="{{ url_for('species_editor.species_update', species_id=species_id) }}" class="form" method="POST"
         enctype="multipart/form-data">
@@ -60,9 +64,5 @@
         </div>
     </form>
 </section>
-    <div class="container" style="height: fit-content; width:fit-content; text-align:center; max-width: 40%; padding:20px">
-        <p> Current photo: </p>
-        <img src="/images/species_database/{{ sp['photoid'] }}.jpg" style="width: 100%; height: auto; margin: auto">
-    </div>
 </div>
 {% endblock %}
