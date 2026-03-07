@@ -4,7 +4,7 @@
 {% endblock %}
 {% block content %}
 {% from 'button.jinja' import button %}
-<h1>SPECIES EDITOR</h1>
+<h1 style="text-align: center;">SPECIES EDITOR</h1>
 <section id="hero" class="form">
     <form action="{{ url_for('species_editor.species_update', species_id=species_id) }}" class="container" method="POST"
         enctype="multipart/form-data">
@@ -50,7 +50,9 @@
         <button type="submit" class="submit-button">
             Update Species Information
         </button>
-
+        <form action="{{ url_for('species_editor.delete_species_from_database', species_english=sp['species_english']) }}" method="POST" class="container" style="text-align: center;">
+            <button type="submit" class="delete-button">Delete from Database</button>
+        </form>
     </form>
     <div class="container" style="height: fit-content; width:fit-content; text-align:center; max-width: 40%">
     <p> Current photo: </p>

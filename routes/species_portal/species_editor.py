@@ -1,6 +1,5 @@
 from flask import render_template, Blueprint, request, redirect, url_for
 from database.db_commands import delete_species, get_species_by_id, update_species
-import os
 import uuid
 
 page = Blueprint("species_editor", __name__, url_prefix="/species/editor")
@@ -48,3 +47,17 @@ def edit_success(eng_name):
             "species_portal/species_portal_success.jinja",
             eng_name = eng_name,
             )
+    
+@page.route("/delete/<species_english>", methods=["POST"])
+def delete_species_from_database(species_english):
+    try:
+        entry = get_species_by_name(species_english)
+        if entry is None:
+            raise ValueError(f"Species '{species_english}' not found.")
+        delete_species(entry["species_id"])
+        return redirect(url_for("species.all_species"))
+    except Exception as error_information:
+        return render_template(
+            "species_portal/species_portal_failed.jinja",
+            error_information=error_information
+        )
