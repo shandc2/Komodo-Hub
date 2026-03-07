@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, request, redirect, url_for
+from flask import render_template, Blueprint, request, redirect, url_for, flash
 from database.db_commands import add_species, delete_species, get_species_by_name, get_species_by_id
 import os
 import uuid
@@ -34,6 +34,7 @@ def add_species_to_database():
     except ValueError as error_information:
         species_to_edit = get_species_by_name(request.form["eng_name"].title())
         species_id = species_to_edit['species_id']
+        flash(f"{species_to_edit['species_english']} already exists. You have been redirected to the editor to update it.", "info")
         return redirect(url_for("species_editor.edit_species", species_id=species_id))
     except Exception as error_information:
         return render_template(

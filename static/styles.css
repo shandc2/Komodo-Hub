@@ -824,3 +824,26 @@ input:focus {
 .species-layout .container{
   flex:1;
 }
+
+/* flash message css please review */
+.flash-container {
+    margin: 20px;
+}
+
+.flash {
+    padding: 12px 16px;
+    margin: 10px;
+    border-radius: 6px;
+    animation: fadeOut 3.5s forwards;
+}
+
+@keyframes fadeOut {
+    0%   { opacity: 1; }
+    80%  { opacity: 1; }
+    100% { opacity: 0; display: none; }
+}
+
+.flash-info {
+    background: var(--background);
+    border: 1px solid var(--primary);
+}
