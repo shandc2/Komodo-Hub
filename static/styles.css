@@ -592,6 +592,8 @@ input:focus {
 
 .form{
   width: 100%;
+  flex-direction: row;
+  display: flex;
 }
 
 .form-section {
@@ -685,12 +687,12 @@ input:focus {
 .form-group {
   display: flex;
   flex-direction: column;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
 }
 
 /* Labels */
 .form-group label {
-  margin-bottom: 8px;
+  margin-bottom: 5px;
   font-weight: 700;
   font-size: 1rem;
 }
@@ -698,7 +700,7 @@ input:focus {
 /* Inputs + textarea */
 .form-group input,
 .form-group textarea {
-  padding: 12px 15px;
+  padding: 9px 12px;
   border-radius: 12px;
   border: 2px solid var(--secondary);
   background-color: var(--background);

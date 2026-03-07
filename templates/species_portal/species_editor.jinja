@@ -52,7 +52,9 @@
         </button>
 
     </form>
-    
+    <div class="container" style="height: fit-content; width:fit-content; text-align:center; max-width: 40%">
+    <p> Current photo: </p>
+    <img src="/images/species_database/{{ sp['photoid'] }}.jpg" style="width: 100%; height: auto; margin: auto">
+    </div>
 </section>
-<img src="/images/species_database/{{ sp['photoid'] }}.jpg" style="width: 10%;">
 {% endblock %}
