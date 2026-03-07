@@ -4,15 +4,13 @@ import sqlite3
 
 page = Blueprint("species_information", __name__)
 
-# this page works by taking the "species_id" from the url and using that to
-# read the database.
-# Because of this we are able to create one page and simply generate links
-# based on the contents of the database
+# this page works by taking the species name (in english) from the url and using that to read the database.
+# Because of this we are able to create one page and simply generate links based on the contents of the database
 # i.e. we can create a button with the hyperlink /species/iguana and this will
 # allow the user to view the information about the species
 # please be aware the page expects a .jpg at:
-# /static/images/species_database/{{species_id}}.jpg but this will be generated automatically
-# so long as you use the 'species_portal' page I created - CS
+# /static/images/species_database/{{photoid}}.jpg but this will be generated automatically
+# so long as you use the species_portal or species editor pages I created - CS
 
 
 @page.route("/species/<species_english>")
@@ -29,7 +27,7 @@ def data(species_english):
             category        =database_entry["category"].capitalize(),
             extinction_risk =database_entry["extinction_risk"],
             photoid         =database_entry["photoid"],
-            species_id      =database_entry["species_id"]
+            species_id      =str(database_entry["species_id"])
         )
     except TypeError as error_information:
         return render_template(

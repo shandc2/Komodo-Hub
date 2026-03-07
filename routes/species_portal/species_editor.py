@@ -30,15 +30,11 @@ def species_update(species_id):
 
         if species_image and species_image.filename:
             image_id = str(uuid.uuid4())
-            species_image.save(
-                f"static/images/species_database/{image_id}.jpg"
-            )
+            species_image.save(f"static/images/species_database/{image_id}.jpg")
 
         update_species(species_id, eng_name, latin_name, main_text, category, extinction_risk)
 
-        return redirect(
-            url_for("species_editor.edit_success", eng_name=eng_name)
-        )
+        return redirect(url_for("species_information.data", species_english=eng_name))
 
     except Exception as error_information:
         return render_template(

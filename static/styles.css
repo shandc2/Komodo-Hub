@@ -605,7 +605,7 @@ input:focus {
   width: 100%;
   max-width: 600px;
   background: var(--green3);
-  padding: 40px;
+  padding: 20px;
   border-radius: 20px;
   border: 2px solid var(--primary);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);

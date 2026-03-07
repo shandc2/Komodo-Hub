@@ -5,7 +5,6 @@
 {% block content %}
 {% from 'button.jinja' import button %}
 <h1>SPECIES EDITOR</h1>
-<p>Species ID: {{ species_id }}</p>
 <section id="hero" class="form">
     <form action="{{ url_for('species_editor.species_update', species_id=species_id) }}" class="container" method="POST"
         enctype="multipart/form-data">
@@ -21,34 +20,39 @@
             <label for="main_text">Species Information:</label>
             <textarea id="main_text" name="main_text" rows="5" required>{{ sp['body_text'] }}</textarea>
         </div>
-        {# <div class="form-group">
+        <div class="form-group">
             <label for="species_image">Species Image:</label>
             <input type="file" id="species_image" name="species_image" accept="image/*">
-        </div> #}
-        {# temporarily removed as i can't figure it out rn #}
-        {# probably need to check if the value in the db is greater than the supplied value or something, don't wanna overwrite existing entry eith nothing #}
+        </div>
         <div class="form-group">
             <label for="category">Category (e.g. Reptile):</label>
             <textarea id="category" name="category" required>{{ sp['category'] }}</textarea>
         </div>
-        {# can't figure out how to get this last one to pre-fill with the existing value, need to fix #}
         <div class="form-group">
             <label for="extinction_risk"> Extinction risk: </label>
             <select id="extinction_risk" name="extinction_risk">
-                <option value="Not Evaluated"           > Not Evaluated           </option>
-                <option value="Least Concern"           > Least Concern           </option>
-                <option value="Near Threatened"         > Near Threatened         </option>
-                <option value="Vulnerable"              > Vulnerable              </option>
-                <option value="Endangered"              > Endangered              </option>
-                <option value="Critically Endangered"   > Critically Endangered   </option>
-                <option value="Extinct in Wild"         > Extinct in Wild         </option>
-                <option value="Extinct"                 > Extinct                 </option>
+                {%for option in [
+                    "Not Evaluated",
+                    "Least Concern",
+                    "Near Threatened",
+                    "Vulnerable",
+                    "Endangered",
+                    "Critically Endangered",
+                    "Extinct in Wild",
+                    "Extinct"]%}
+                    <option value='{{ option }}'{% if option == sp['extinction_risk'] %}
+                            selected='selected'
+                        {%endif%}
+                        >{{option}}</option>
+                {% endfor %}
             </select>
         </div>
         <button type="submit" class="submit-button">
-            Add Species
+            Update Species Information
         </button>
 
     </form>
+    
 </section>
+<img src="/images/species_database/{{ sp['photoid'] }}.jpg" style="width: 10%;">
 {% endblock %}
