@@ -1,5 +1,5 @@
 from flask import render_template, Blueprint, request, redirect, url_for
-from database.db_commands import delete_species, get_species_by_id, update_species
+from database.db_commands import delete_species, get_species_by_id, update_species, get_species_by_name
 import uuid
 
 page = Blueprint("species_editor", __name__, url_prefix="/species/editor")
@@ -41,7 +41,7 @@ def species_update(species_id):
             error_information=error_information
         )
         
-@page.route("/<eng_name>")
+@page.route("/success/<eng_name>")
 def edit_success(eng_name):
     return render_template(
             "species_portal/species_portal_success.jinja",
