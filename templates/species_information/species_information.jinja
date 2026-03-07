@@ -4,13 +4,12 @@
 {% endblock %}
 {% block content %}
 {% from 'button.jinja' import button %}
-<!-- Banner section -->
-<section id="hero" style="padding: 10px 20px; text-align: center;" class="container">
+<div class="species-layout">
+<section id="summary" style="padding: 10px 20px; text-align: center; margin-top:1rem" class="container">
     <h1>{{ english_name }}</h1>
     <h2><em>{{ latin_name }}</em></h2>
     <p>Category: {{category}}</p>
     <img src="/images/species_database/{{ photoid }}.jpg" class="species-photo" style="max-width: 100%; height: auto; border-radius: inherit;">
-    <p>{{ main_text }}</p>
     <p>This species is currently classed as: {{extinction_risk}}</p>
     {% if extinction_risk == "Not Evaluated" %}
         <img src="/images/extinction_risk/notevaluated.png" class="extinction-icon">
@@ -32,6 +31,12 @@
         <p></p>
     {% endif %}
 </section>
+<section id="info" style="padding: 10px 20px; text-align: center;" class="container">
+<p>{{ main_text }}</p>
+</section>
+</div>
 {# this button should only be visible to certain account types #}
-{{ button(url='/species/editor/'+species_id, button_text='Edit Species') }}
+<div style="text-align: right;">
+    {{ button(url='/species/editor/'+species_id, button_text='Edit Species') }}
+</div>
 {% endblock %}

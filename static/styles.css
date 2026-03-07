@@ -130,7 +130,8 @@ h6 {
 }
 
 .extinction-icon {
-  height: 10%
+  height: 60px;
+  width: auto;
 }
 
 .navbar li {
@@ -811,4 +812,15 @@ input:focus {
   gap: 2px;
   margin-top: 10px;
   flex-direction: column;
+}
+
+.species-layout{
+  display:flex;
+  gap:30px;
+  align-items:flex-start;
+  margin-bottom: 20px;
+}
+
+.species-layout .container{
+  flex:1;
 }
