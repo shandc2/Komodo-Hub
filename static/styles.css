@@ -130,7 +130,8 @@ h6 {
 }
 
 .extinction-icon {
-  height: 10%
+  height: 60px;
+  width: auto;
 }
 
 .navbar li {
@@ -592,6 +593,8 @@ input:focus {
 
 .form{
   width: 100%;
+  flex-direction:column;
+  display: flex;
 }
 
 .form-section {
@@ -605,11 +608,13 @@ input:focus {
   width: 100%;
   max-width: 600px;
   background: var(--green3);
-  padding: 40px;
+  padding: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   border-radius: 20px;
   border: 2px solid var(--primary);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  margin: 1rem auto;
+  margin: auto;
   box-sizing: border-box;
 }
 
@@ -685,12 +690,11 @@ input:focus {
 .form-group {
   display: flex;
   flex-direction: column;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
 }
 
-/* Labels */
 .form-group label {
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   font-weight: 700;
   font-size: 1rem;
 }
@@ -698,7 +702,7 @@ input:focus {
 /* Inputs + textarea */
 .form-group input,
 .form-group textarea {
-  padding: 12px 15px;
+  padding: 9px 12px;
   border-radius: 12px;
   border: 2px solid var(--secondary);
   background-color: var(--background);
@@ -719,7 +723,6 @@ input:focus {
   padding: 8px;
 }
 
-/* Submit button */
 .submit-button {
   width: 100%;
   padding: 14px;
@@ -730,6 +733,19 @@ input:focus {
   cursor: pointer;
   background: linear-gradient(120deg, var(--primary_darker), var(--primary), var(--primary_darker));
   color: var(--text);
+  transition: 0.2s ease;
+}
+
+.delete-button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: linear-gradient(120deg, rgb(255, 0, 0), rgb(255, 0, 0), rgb(255, 0, 0));
+  color: rgb(255, 255, 255);
   transition: 0.2s ease;
 }
 
@@ -789,4 +805,45 @@ input:focus {
     align-items: center;
     justify-content: center;
     cursor: pointer;
+}
+
+.button-row {
+  display: flex;
+  gap: 2px;
+  margin-top: 10px;
+  flex-direction: column;
+}
+
+.species-layout{
+  display:flex;
+  gap:30px;
+  align-items:flex-start;
+  margin-bottom: 20px;
+}
+
+.species-layout .container{
+  flex:1;
+}
+
+/* flash message css please review */
+.flash-container {
+    margin: 20px;
+}
+
+.flash {
+    padding: 12px 16px;
+    margin: 10px;
+    border-radius: 6px;
+    animation: fadeOut 3.5s forwards;
+}
+
+@keyframes fadeOut {
+    0%   { opacity: 1; }
+    80%  { opacity: 1; }
+    100% { opacity: 0; display: none; }
+}
+
+.flash-info {
+    background: var(--background);
+    border: 1px solid var(--primary);
 }

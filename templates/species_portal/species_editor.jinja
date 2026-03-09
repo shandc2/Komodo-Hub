@@ -1,0 +1,68 @@
+{% extends "base.jinja" %}
+{% block title %} Species Upload Portal {% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+{% from 'button.jinja' import button %}
+<h1 style="text-align:left;">SPECIES EDITOR</h1>
+<div style="display:flex;flex-direction: row;">
+    <div class="container" style="height: fit-content; width:fit-content; text-align:center; max-width: 40%; padding:20px">
+        <p> Current photo: </p>
+        <img src="/images/species_database/{{ sp['photoid'] }}.jpg" style="width: 100%; height: auto; margin: auto">
+    </div>
+<section id="hero" class="container">
+    <form action="{{ url_for('species_editor.species_update', species_id=species_id) }}" class="form" method="POST"
+        enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="eng_name">English Name:</label>
+            <input type="text" id="eng_name" name="eng_name" value="{{ sp['species_english'] }}" required>
+        </div>
+        <div class="form-group">
+            <label for="latin_name">Latin Name:</label>
+            <input type="text" id="latin_name" name="latin_name" value="{{ sp['species_latin'] }}" required>
+        </div>
+        <div class="form-group">
+            <label for="main_text">Species Information:</label>
+            <textarea id="main_text" name="main_text" rows="4.5" required>{{ sp['body_text'] }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="species_image">Species Image:</label>
+            <input type="file" id="species_image" name="species_image" accept="image/*">
+        </div>
+        <div class="form-group">
+            <label for="category">Category (e.g. Reptile):</label>
+            <textarea id="category" name="category" required>{{ sp['category'] }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="extinction_risk"> Extinction risk: </label>
+            <select id="extinction_risk" name="extinction_risk">
+                {%for option in [
+                    "Not Evaluated",
+                    "Least Concern",
+                    "Near Threatened",
+                    "Vulnerable",
+                    "Endangered",
+                    "Critically Endangered",
+                    "Extinct in Wild",
+                    "Extinct"]%}
+                    <option value='{{ option }}'{% if option == sp['extinction_risk'] %}
+                            selected='selected'
+                        {%endif%}
+                        >{{option}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="button-row">
+            <button type="submit" class="submit-button">
+                Update Species Information
+            </button>
+        </div>
+    </form>
+    <form action="{{ url_for('species_editor.delete_species_from_database', species_english=sp['species_english']) }}" method="POST" style="text-align: center; margin-bottom: 0px;">
+        <div class="button-row">
+            <button type="submit" class="delete-button">Delete from Database</button>
+        </div>
+    </form>
+</section>
+</div>
+{% endblock %}

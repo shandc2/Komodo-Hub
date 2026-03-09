@@ -35,6 +35,17 @@ def get_species_by_name(species_english):
             (species_english,)
         ).fetchone()
         return dict(row) if row else None
+    
+def get_species_by_id(species_id):
+    with get_db() as conn:
+        result = conn.execute(
+            "SELECT * FROM species WHERE species_id = ?",
+            (species_id,)
+            ).fetchone()
+        if result:
+            return dict(result)
+        else:
+            return None
 
 def search_species(query):
     with get_db() as conn:
@@ -57,3 +68,22 @@ def delete_species(species_id):
             "DELETE FROM species WHERE species_id = ?",
             (species_id,)
         )
+        
+def update_species(species_id, english, latin, body, category, extinction_risk):
+    with get_db() as conn:
+        conn.execute("""
+            UPDATE species
+            SET species_english = ?,
+                species_latin = ?,
+                body_text = ?,
+                category = ?,
+                extinction_risk = ?
+            WHERE species_id = ?
+        """, (
+            english.title(),
+            latin.lower(),
+            body,
+            category,
+            extinction_risk,
+            species_id,
+        ))
