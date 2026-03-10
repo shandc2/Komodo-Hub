@@ -1,30 +1,19 @@
 from datetime import datetime
-from database.db_connection import get_db, get_accounts_db
+from database.db_connection import get_db, get_db
 import hashlib
 import os
-
-
-def _hash_password(password: str, salt: str = None):
-    if salt is None:
-        salt = os.urandom(16).hex()
-    pw_hash = hashlib.sha256((salt + password).encode()).hexdigest()
-    return f"{salt}${pw_hash}"
-
-
-def _verify_password(stored: str, password: str) -> bool:
-    salt, _ = stored.split("$", 1)
-    return stored == _hash_password(password, salt)
+import bcrypt
 
 
 def register_user(username, email, password, account_type="private_user"):
-    with get_accounts_db() as conn:
+    with get_db() as conn:
         existing = conn.execute(
             "SELECT user_id FROM users WHERE username = ? OR email = ?",
             (username, email)
         ).fetchone()
         if existing:
             raise ValueError("A user with that username or email already exists.")
-        password_hash = _hash_password(password)
+        password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt(14))
         conn.execute("""
             INSERT INTO users (username, email, password_hash, account_type, created_at)
             VALUES (?, ?, ?, ?, ?)
@@ -32,7 +21,7 @@ def register_user(username, email, password, account_type="private_user"):
 
 
 def login_user(username, password):
-    with get_accounts_db() as conn:
+    with get_db() as conn:
         row = conn.execute(
             "SELECT * FROM users WHERE username = ?",
             (username,)
@@ -40,7 +29,7 @@ def login_user(username, password):
         if not row:
             raise ValueError("Invalid username or password.")
         user = dict(row)
-        if not _verify_password(user["password_hash"], password):
+        if not bcrypt.checkpw(password.encode(), user["password_hash"]):
             raise ValueError("Invalid username or password.")
         return {k: user[k] for k in ("user_id", "username", "email", "account_type")}
 

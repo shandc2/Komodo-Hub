@@ -1,4 +1,4 @@
-from database.db_connection import get_db, get_accounts_db
+from database.db_connection import get_db, get_db
 from datetime import datetime
 
 SEED_SPECIES = [
@@ -137,7 +137,7 @@ def seed_species():
 
 
 def init_accounts_database():
-    with get_accounts_db() as conn:
+    with get_db() as conn:
         conn.execute("""
         CREATE TABLE IF NOT EXISTS users (
             user_id INTEGER PRIMARY KEY AUTOINCREMENT,
