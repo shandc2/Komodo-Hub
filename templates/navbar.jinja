@@ -28,7 +28,8 @@
         <a href="/dashboard">Dashboard</a>
         <a href="/logout">Logout</a>
         {% else %}
-        {{ button(url='/login', button_text='Login/Register', extra_classes='') }}
+        {{ button(url='/login', button_text='Login', extra_classes='') }}
+        {{ button(url='/register', button_text='Register', extra_classes='') }}
         {% endif %}
     </div>
 </div>
