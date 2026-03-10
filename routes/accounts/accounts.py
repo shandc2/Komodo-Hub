@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, request, redirect, url_for, session
+from flask import render_template, Blueprint, request, redirect, url_for, Response, g
 from database.db_commands import register_user, login_user
 
 page = Blueprint("login", __name__, url_prefix="")
@@ -6,27 +6,27 @@ page = Blueprint("login", __name__, url_prefix="")
 
 @page.route("/login", methods=["GET", "POST"])
 def login():
-    if "user_id" in session:
+    if g.user:
         return redirect(url_for("login.dashboard"))
     error = None
     if request.method == "POST":
         username = request.form.get("username", "").strip()
         password = request.form.get("password", "")
-        try:
-            user = login_user(username, password)
-            session.clear()
-            session["user_id"] = user["user_id"]
-            session["username"] = user["username"]
-            session["account_type"] = user["account_type"]
-            return redirect(url_for("login.dashboard"))
-        except ValueError as e:
-            error = str(e)
-    return render_template("accounts/login.jinja", error=error)
+        token = login_user(username, password)
+        if not token:
+            error = "invalid username or password"
+        else:
+            resp = redirect(url_for("login.dashboard"))
+            resp.set_cookie("token",token)
+            return resp
+    resp = Response(render_template("accounts/login.jinja", error=error))
+    if error: resp.status = 401
+    return resp
 
 
 @page.route("/register", methods=["GET", "POST"])
 def register():
-    if "user_id" in session:
+    if g.user:
         return redirect(url_for("login.dashboard"))
     error = None
     if request.method == "POST":
@@ -40,22 +40,27 @@ def register():
         elif len(password) < 8:
             error = "Password must be at least 8 characters."
         else:
-            try:
-                register_user(username, email, password, account_type)
-                return redirect(url_for("login.login"))
-            except ValueError as e:
-                error = str(e)
-    return render_template("accounts/user_registration.jinja", error=error)
+            token = register_user(username, email, password, account_type)
+            if not token:
+                error = "A user with that username or email already exists."
+            else:
+                resp = redirect(url_for("login.dashboard"))
+                resp.set_cookie("token",token)
+                return resp
+    resp = Response(render_template("accounts/user_registration.jinja", error=error))
+    if error: resp.status = 401
+    return resp
 
 
 @page.route("/logout")
 def logout():
-    session.clear()
-    return redirect(url_for("login.login"))
+    resp = redirect(url_for("login.login"))
+    resp.delete_cookie("token")
+    return resp
 
 
 @page.route("/dashboard")
 def dashboard():
-    if "user_id" not in session:
+    if not g.user:
         return redirect(url_for("login.login"))
     return render_template("accounts/dashboard.jinja")

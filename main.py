@@ -1,7 +1,8 @@
-from flask import Flask
+from flask import Flask, request, g
 import os
 import importlib.util
 from database.db_init import init_database
+from database.db_commands import get_user_from_token
 
 def import_pages(route, app):
     for root, _, files in os.walk(route):
@@ -31,7 +32,15 @@ def import_pages(route, app):
 
 
 app = Flask(__name__, static_folder='static', static_url_path='')
-app.secret_key = "59474221-13e4-43dd-bc07-46a8d051d456"
+
+@app.before_request
+def load_user():
+    token = request.cookies.get("token")
+    g.user = token and get_user_from_token(token)
+
+@app.context_processor
+def inject_user():
+    return {"user": g.user}
 
 init_database()
 import_pages("routes", app)

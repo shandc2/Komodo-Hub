@@ -3,6 +3,8 @@ from database.db_connection import get_db, get_db
 import hashlib
 import os
 import bcrypt
+import secrets
+import random
 
 
 def register_user(username, email, password, account_type="private_user"):
@@ -12,27 +14,59 @@ def register_user(username, email, password, account_type="private_user"):
             (username, email)
         ).fetchone()
         if existing:
-            raise ValueError("A user with that username or email already exists.")
+            return None
+        user_id = random.randint(1000000000, 9999999999)
         password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt(14))
         conn.execute("""
-            INSERT INTO users (username, email, password_hash, account_type, created_at)
-            VALUES (?, ?, ?, ?, ?)
-        """, (username, email, password_hash, account_type, datetime.now()))
+            INSERT INTO users (user_id, username, email, password_hash, account_type, created_at)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (user_id, username, email, password_hash, account_type, datetime.now()))
+        return create_token_for_user(user_id)
 
 
 def login_user(username, password):
+    user = None
     with get_db() as conn:
         row = conn.execute(
-            "SELECT * FROM users WHERE username = ?",
+            "SELECT user_id, password_hash FROM users WHERE username = ?",
             (username,)
         ).fetchone()
         if not row:
-            raise ValueError("Invalid username or password.")
+            return None
         user = dict(row)
         if not bcrypt.checkpw(password.encode(), user["password_hash"]):
-            raise ValueError("Invalid username or password.")
-        return {k: user[k] for k in ("user_id", "username", "email", "account_type")}
+            return None
+    return user and create_token_for_user(user["user_id"])
 
+def get_user_from_token(token):
+    with get_db() as conn:
+        row = conn.execute(
+            "SELECT * FROM users WHERE user_id = (SELECT user_id FROM tokens WHERE token = ? LIMIT 1) LIMIT 1",
+            (token,)
+        ).fetchone()
+        if not row:
+            return None
+        return dict(row)
+
+def create_token_for_user(user_id):
+    with get_db() as conn:
+        token = secrets.token_hex(64)
+        conn.execute("""
+            INSERT INTO tokens (
+                token,
+                user_id
+            )
+            VALUES (?, ?)
+        """, (token, user_id))
+        return token
+    print("hello")
+    
+def delete_token(token):
+    with get_db() as conn:
+        conn.execute("""
+            DELETE FROM tokens
+            WHERE token = ?
+        """, (token,))
 
 def add_species(english, latin, body, category, extinction_risk, image_id):
     with get_db() as conn:
