@@ -6,7 +6,10 @@
 {% block content %}
 {% from 'button.jinja' import button %}
 <section id="hero" class="form">
-    <form action="" class="container" method="POST">
+    <form action="{{ url_for('login.login') }}" class="container" method="POST">
+        {% if error %}
+        <p class="form-error">{{ error }}</p>
+        {% endif %}
         <div class="form-group">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
