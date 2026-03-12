@@ -97,7 +97,7 @@ def get_all_species():
 def get_species_by_name(species_english):
     with get_db() as conn:
         row = conn.execute(
-            "SELECT * FROM species WHERE species_english = ?",
+            "SELECT * FROM species WHERE species_english = ? LIMIT 1",
             (species_english,)
         ).fetchone()
         return dict(row) if row else None
@@ -105,7 +105,7 @@ def get_species_by_name(species_english):
 def get_species_by_id(species_id):
     with get_db() as conn:
         result = conn.execute(
-            "SELECT * FROM species WHERE species_id = ?",
+            "SELECT * FROM species WHERE species_id = ? LIMIT 1",
             (species_id,)
             ).fetchone()
         if result:

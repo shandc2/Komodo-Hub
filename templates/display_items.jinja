@@ -6,7 +6,7 @@
     <a href="/species/{{ item['species_english'] }}" class="container-lite">
         <h3 class="plain-white-text">{{ item['species_english'] }}</h3>
         <div 
-        style="background-image: url('{{ url_for('static', filename='images/species_database/' ~ item['photoid'] ~ '.jpg') }}');" class="div-image">
+        style="background-image: url('{{ '/species/image/' ~ item['photoid'] }}');" class="div-image">
         </div>
         <p style="color: var(--text)">
         Main category: {{ item['category'] }}
