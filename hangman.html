@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hangman Game</title>
+
+<style>
+body{
+    font-family: Arial;
+    text-align:center;
+    background:#f4f4f4;
+}
+
+h1{
+    margin-top:20px;
+}
+
+#word{
+    font-size:40px;
+    letter-spacing:10px;
+    margin:20px;
+}
+
+#letters button{
+    margin:4px;
+    padding:10px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+#message{
+    font-size:24px;
+    margin-top:20px;
+}
+
+#hangman{
+    font-size:20px;
+    margin-top:10px;
+}
+</style>
+
+</head>
+<body>
+
+<h1>Hangman</h1>
+
+<div id="hangman">Wrong guesses: 0 / 6</div>
+<div id="word"></div>
+
+<div id="letters"></div>
+
+<div id="message"></div>
+
+<script>
+
+const words = ["javascript","computer","hangman","developer","programming"];
+let chosenWord = words[Math.floor(Math.random()*words.length)];
+let guessedLetters = [];
+let wrongGuesses = 0;
+const maxWrong = 6;
+
+const wordDiv = document.getElementById("word");
+const lettersDiv = document.getElementById("letters");
+const messageDiv = document.getElementById("message");
+const hangmanDiv = document.getElementById("hangman");
+
+function displayWord(){
+    let display = "";
+
+    for(let letter of chosenWord){
+        if(guessedLetters.includes(letter)){
+            display += letter + " ";
+        } else {
+            display += "_ ";
+        }
+    }
+
+    wordDiv.textContent = display;
+
+    if(!display.includes("_")){
+        messageDiv.textContent = "🎉 You Win!";
+        disableButtons();
+    }
+}
+
+function createKeyboard(){
+    const alphabet = "abcdefghijklmnopqrstuvwxyz";
+
+    for(let letter of alphabet){
+        const btn = document.createElement("button");
+        btn.textContent = letter;
+
+        btn.onclick = () => guess(letter, btn);
+
+        lettersDiv.appendChild(btn);
+    }
+}
+
+function guess(letter, button){
+    button.disabled = true;
+
+    if(chosenWord.includes(letter)){
+        guessedLetters.push(letter);
+    } else {
+        wrongGuesses++;
+    }
+
+    hangmanDiv.textContent = `Wrong guesses: ${wrongGuesses} / ${maxWrong}`;
+
+    if(wrongGuesses >= maxWrong){
+        messageDiv.textContent = "💀 Game Over! Word was: " + chosenWord;
+        disableButtons();
+    }
+
+    displayWord();
+}
+
+function disableButtons(){
+    const buttons = lettersDiv.querySelectorAll("button");
+    buttons.forEach(b => b.disabled = true);
+}
+
+createKeyboard();
+displayWord();
+
+</script>
+
+</body>

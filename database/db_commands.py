@@ -1,5 +1,5 @@
 from datetime import datetime
-from database.db_connection import get_db, get_db
+from database.db_connection import get_db
 import hashlib
 import os
 import bcrypt
