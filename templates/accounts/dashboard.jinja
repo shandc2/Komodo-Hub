@@ -5,7 +5,7 @@
 {% from 'button.jinja' import button %}
 
 <section id="hero" style="padding: 40px 20px; text-align: center;">
-    <h1>Welcome back, {{ session.username }}.</h1>
+    <h1>Welcome back, {{ user.username }}.</h1>
     <p style="max-width: 700px; margin: 0.5rem auto;">Your conservation dashboard.</p>
 </section>
 
@@ -40,7 +40,7 @@
     {% endif %}
 
     {#Teacher#}
-    {% if session.account_type == "teacher" %}
+    {% if user.account_type == "teacher" %}
     <div class="container-full" style="margin-bottom: 20px;">
         <h2>Classes</h2>
         <p>View your classes or set up a new one for your students.</p>
@@ -51,7 +51,7 @@
     {% endif %}
 
     {#Community Leader#}
-    {% if session.account_type == "community_leader" %}
+    {% if user.account_type == "community_leader" %}
     <div class="container-full" style="margin-bottom: 20px;">
         <h2>Programmes</h2>
         <p>Create a new conservation programme for others to join.</p>

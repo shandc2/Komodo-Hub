@@ -122,14 +122,15 @@ def seed_species():
                 continue
             conn.execute("""
                 INSERT INTO species
-                    (species_english, species_latin, body_text, category, extinction_risk, created_at)
-                VALUES (?, ?, ?, ?, ?, ?)
+                    (species_english, species_latin, body_text, category, extinction_risk, photoid, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
             """, (
                 sp["species_english"],
                 sp["species_latin"],
                 sp["body_text"],
                 sp["category"],
                 sp["extinction_risk"],
+                sp["photoid"],
                 datetime.now(),
             ))
             print(f"  ADD   {sp['species_english']}")

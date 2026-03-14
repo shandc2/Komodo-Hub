@@ -11,7 +11,7 @@
         {%for species in featured_species%}
         <a href="/species/{{ species['species_english'] }}" class="container-lite">
             <h3 class="plain-white-text">{{ species['species_english'] }}</h3>
-            <div style="background-image: url('images/species_database/{{ species['photoid'] }}.jpg');" class="div-image">
+            <div style="background-image: url('/species/image/{{ species['photoid'] }}');" class="div-image">
             </div>
 
         </a>

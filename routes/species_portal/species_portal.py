@@ -23,7 +23,7 @@ def add_species_to_database():
         image_id        = ""
         if species_image:
             image_id = str(uuid.uuid4())
-            species_image.save(f"static/images/species_database/{image_id}.jpg")
+            species_image.save(f"database/images/{image_id}")
         print(category, extinction_risk)
         add_species(eng_name, latin_name, main_text, category, extinction_risk, image_id)
         
