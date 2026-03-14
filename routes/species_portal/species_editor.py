@@ -29,7 +29,7 @@ def species_update(species_id):
 
         if species_image and species_image.filename:
             image_id = str(uuid.uuid4())
-            species_image.save(f"static/images/species_database/{image_id}.jpg")
+            species_image.save(f"database/images/{image_id}")
 
         update_species(species_id, eng_name, latin_name, main_text, category, extinction_risk)
 

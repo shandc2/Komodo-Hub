@@ -9,7 +9,7 @@
     <h1>{{ english_name }}</h1>
     <h2><em>{{ latin_name }}</em></h2>
     <p>Category: {{category}}</p>
-    <img src="/images/species_database/{{ photoid }}.jpg" class="species-photo" style="max-width: 100%; height: auto; border-radius: inherit;">
+    <img src="/species/image/{{ photoid }}" class="species-photo" style="max-width: 100%; height: auto; border-radius: inherit;">
     <p>This species is currently classed as: {{extinction_risk}}</p>
     {% if extinction_risk == "Not Evaluated" %}
         <img src="/images/extinction_risk/notevaluated.png" class="extinction-icon">

@@ -1,9 +1,9 @@
-{% macro search_bar(destination)%}
+{% macro search_bar(destination, value)%}
 {# input the url of the page containing the backend for the search #}
 {# e.g. for the species search: "/species/search" #}
 {# used in species.jinja #}
 <form action="{{destination}}" method="GET" class="search">
-        <input type="text" name="search-query" placeholder="Search all species..." class="bar">
+        <input type="text" name="search-query" placeholder="Search all species..." value="{{value}}" class="bar">
         <input type="submit" value="Search" class="button">
 </form>
 {% endmacro %}

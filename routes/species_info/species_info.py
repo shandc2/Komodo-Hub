@@ -1,5 +1,5 @@
-from flask import render_template, Blueprint
-from database.db_commands import get_species_by_name
+from flask import render_template, Blueprint, send_from_directory
+from database.db_commands import get_species_by_name, get_species_by_id
 import sqlite3
 
 page = Blueprint("species_information", __name__)
@@ -15,22 +15,20 @@ page = Blueprint("species_information", __name__)
 
 @page.route("/species/<species_english>")
 def data(species_english):
-    try:
-        database_entry = get_species_by_name(species_english)
-        if database_entry is None:
-            raise TypeError(f"No species named '{species_english}' found in the database.")
-        return render_template(
-            "species_information/species_information.jinja",
-            english_name    =(database_entry["species_english"]).capitalize(),
-            latin_name      =database_entry["species_latin"].capitalize(),
-            main_text       =database_entry["body_text"],
-            category        =database_entry["category"].capitalize(),
-            extinction_risk =database_entry["extinction_risk"],
-            photoid         =database_entry["photoid"],
-            species_id      =str(database_entry["species_id"])
-        )
-    except TypeError as error_information:
-        return render_template(
-            "error.jinja",
-            extra_information=error_information,
-        )
+    database_entry = get_species_by_name(species_english)
+    if database_entry is None:
+        raise TypeError(f"No species named '{species_english}' found in the database.")
+    return render_template(
+        "species_information/species_information.jinja",
+        english_name    =(database_entry["species_english"]).capitalize(),
+        latin_name      =database_entry["species_latin"].capitalize(),
+        main_text       =database_entry["body_text"],
+        category        =database_entry["category"].capitalize(),
+        extinction_risk =database_entry["extinction_risk"],
+        photoid         =database_entry["photoid"],
+        species_id      =str(database_entry["species_id"])
+    )
+
+@page.route("/species/image/<photoid>")
+def image(photoid):
+    return send_from_directory("database/images", photoid)
