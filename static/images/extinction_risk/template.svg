@@ -7,7 +7,7 @@
    viewBox="0 0 200 200"
    version="1.1"
    id="svg1"
-   inkscape:export-filename="endangered.png"
+   inkscape:export-filename="leastconcern.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
    inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
@@ -27,12 +27,12 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      inkscape:zoom="0.59"
-     inkscape:cx="305.9322"
+     inkscape:cx="305.08475"
      inkscape:cy="369.49153"
-     inkscape:window-width="1637"
+     inkscape:window-width="1512"
      inkscape:window-height="685"
-     inkscape:window-x="1715"
-     inkscape:window-y="111"
+     inkscape:window-x="0"
+     inkscape:window-y="83"
      inkscape:window-maximized="0"
      inkscape:current-layer="layer1" />
   <defs
@@ -68,7 +68,7 @@
        r="100"
        inkscape:label="border" />
     <circle
-       style="fill:#ff6600;fill-opacity:1;stroke-width:0.251354"
+       style="fill:#008000;fill-opacity:1;stroke-width:0.251354"
        id="path1-6"
        cy="100"
        cx="100"
@@ -76,14 +76,14 @@
        inkscape:label="bg" />
     <text
        xml:space="preserve"
-       transform="matrix(0.33940673,0,0,0.42414264,-29.953106,38.567598)"
+       transform="matrix(0.33940673,0,0,0.42414264,-29.612494,38.567598)"
        id="text3"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:263.496px;font-family:'Arial Unicode MS';-inkscape-font-specification:'Arial Unicode MS, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect4);display:inline;fill:#1a1a1a"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:263.496px;font-family:'Arial Unicode MS';-inkscape-font-specification:'Arial Unicode MS, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect4);display:inline;fill:#ffffff"
        x="375.42374"
        y="0"
        inkscape:label="text"><tspan
-         x="194.10007"
+         x="208.70299"
          y="239.14691"
-         id="tspan2">EN</tspan></text>
+         id="tspan1">LC</tspan></text>
   </g>
 </svg>

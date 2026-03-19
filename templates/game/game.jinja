@@ -1,0 +1,64 @@
+{% extends "base.jinja" %}
+{% block title %}Hangman{% endblock %}
+{% block head %}
+<style>
+  #hangman-app { padding: 1.5rem 0; max-width: 520px; margin: 0 auto; }
+  .hm-title { font-size: 22px; font-weight: 500; margin: 0 0 0.25rem; }
+  .hm-subtitle { font-size: 14px; color: #6b7280; margin: 0 0 1.5rem; }
+  .hm-canvas-wrap { background: #f9fafb; border-radius: 12px; padding: 1rem; margin-bottom: 1.25rem; display: flex; justify-content: center; }
+  .hm-word { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .hm-letter { width: 32px; text-align: center; }
+  .hm-letter span { display: block; font-size: 22px; font-weight: 500; min-height: 28px; }
+  .hm-letter hr { border: none; border-top: 2px solid #111827; margin: 4px 0 0; }
+  .hm-guessed { font-size: 13px; color: #6b7280; text-align: center; margin-bottom: 1.25rem; min-height: 18px; }
+  .hm-keyboard { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-bottom: 1.25rem; }
+  .hm-key { width: 36px; height: 36px; border-radius: 8px; border: 1px solid #d1d5db; background: #fff; font-size: 13px; font-weight: 500; cursor: pointer; transition: background 0.1s; }
+  .hm-key:hover:not(:disabled) { background: #f3f4f6; }
+  .hm-key:disabled { opacity: 0.3; cursor: not-allowed; }
+  .hm-key.wrong { background: #fee2e2; color: #991b1b; border-color: #fca5a5; }
+  .hm-key.right { background: #dcfce7; color: #166534; border-color: #86efac; }
+  .hm-msg { text-align: center; font-size: 15px; font-weight: 500; margin-bottom: 1rem; min-height: 22px; }
+  .hm-msg.win { color: #166534; }
+  .hm-msg.lose { color: #991b1b; }
+  .hm-lives { text-align: center; font-size: 13px; color: #6b7280; margin-bottom: 0.75rem; }
+</style>
+{% endblock %}
+{% block content %}
+{% from 'button.jinja' import button %}
+
+<div id="hangman-app">
+  <p class="hm-title">Hangman</p>
+  <p class="hm-subtitle">Guess the species name, one letter at a time.</p>
+
+  <div class="hm-canvas-wrap">
+    <svg id="gallows" width="160" height="160" viewBox="0 0 160 160">
+      <line x1="20" y1="155" x2="140" y2="155" stroke="#9ca3af" stroke-width="2"/>
+      <line x1="50" y1="155" x2="50" y2="10" stroke="#9ca3af" stroke-width="2"/>
+      <line x1="50" y1="10" x2="110" y2="10" stroke="#9ca3af" stroke-width="2"/>
+      <line x1="110" y1="10" x2="110" y2="30" stroke="#9ca3af" stroke-width="2"/>
+      <circle id="p-head" cx="110" cy="42" r="12" stroke="#111827" stroke-width="2" fill="none" display="none"/>
+      <line id="p-body" x1="110" y1="54" x2="110" y2="100" stroke="#111827" stroke-width="2" display="none"/>
+      <line id="p-larm" x1="110" y1="65" x2="88" y2="85" stroke="#111827" stroke-width="2" display="none"/>
+      <line id="p-rarm" x1="110" y1="65" x2="132" y2="85" stroke="#111827" stroke-width="2" display="none"/>
+      <line id="p-lleg" x1="110" y1="100" x2="88" y2="125" stroke="#111827" stroke-width="2" display="none"/>
+      <line id="p-rleg" x1="110" y1="100" x2="132" y2="125" stroke="#111827" stroke-width="2" display="none"/>
+    </svg>
+  </div>
+
+  <div id="hm-word" class="hm-word"></div>
+  <div id="hm-lives" class="hm-lives">Lives: 6</div>
+  <div id="hm-guessed" class="hm-guessed"></div>
+  <div id="hm-msg" class="hm-msg"></div>
+  <div id="hm-keyboard" class="hm-keyboard"></div>
+
+  <div id="hm-restart-wrap" style="display:none; text-align:center;">
+  {{ button(url='/game', button_text='Play Again!', extra_classes='homepage-btn', id='hm-restart') }}
+  </div>
+</div>
+
+<script>
+  const SPECIES_LIST = {{ species_list | tojson }};
+</script>
+<script src="{{ url_for('static', filename='game.js') }}"></script>
+
+{% endblock %}
