@@ -1,0 +1,55 @@
+{% extends "base.jinja" %}
+{% block title %}My Classes{% endblock %}
+{% block content %}
+{% from 'button.jinja' import button %}
+
+<section id="hero" style="padding: 40px 20px; text-align: center;">
+    <h1>My Classes</h1>
+    <p style="max-width: 700px; margin: 0.5rem auto;">Enter a join code from your teacher to enrol in a class.</p>
+</section>
+
+<section style="padding: 0 20px 40px 20px; max-width: 900px; margin: 0 auto;">
+
+    {# Join class form #}
+    <div class="container-full" style="margin-bottom: 20px;">
+        <h2 style="margin-bottom: 1rem;">Join a Class</h2>
+        <form method="POST" class="form">
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %}
+            <div class="form-group">
+                <label for="code">Class Join Code</label>
+                <input type="text" id="code" name="code"
+                       placeholder="e.g. A3F9C2"
+                       maxlength="6"
+                       style="text-transform: uppercase; letter-spacing: 0.15em; font-family: monospace; font-size: 1.2rem;"
+                       required>
+            </div>
+            <button type="submit" class="submit-button" style="margin-top: 0.5rem;">Join Class</button>
+        </form>
+    </div>
+
+    {# Enrolled classes #}
+    <div class="container-full">
+        <h2 style="margin-bottom: 1rem;">Enrolled Classes</h2>
+        {% if classes %}
+            <div class="species-grid">
+                {% for cls in classes %}
+                <a href="{{ url_for('classes.class_detail', class_id=cls.class_id) }}"
+                   class="container-lite"
+                   style="display:block; text-decoration:none; color: var(--text);">
+                    <h3 style="margin-bottom: 0.4rem;">{{ cls.name }}</h3>
+                    {% if cls.description %}
+                        <p style="opacity:0.75; margin-bottom: 0.5rem; font-size:0.95rem;">{{ cls.description }}</p>
+                    {% endif %}
+                    <p style="opacity:0.6; font-size:0.85rem; margin:0;">View assignments →</p>
+                </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p style="opacity:0.6;">You have not joined any classes yet. Use the form above to join with your teacher's code.</p>
+        {% endif %}
+    </div>
+
+</section>
+{% endblock %}

@@ -152,6 +152,53 @@ def init_accounts_database():
     print("Accounts database initialised.")
 
 
+def init_classes_database():
+    with get_db() as conn:
+        conn.execute("""
+        CREATE TABLE IF NOT EXISTS classes (
+            class_id   INTEGER PRIMARY KEY AUTOINCREMENT,
+            teacher_id INTEGER NOT NULL,
+            name       TEXT    NOT NULL,
+            description TEXT   DEFAULT '',
+            join_code  TEXT    UNIQUE NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+        """)
+        conn.execute("""
+        CREATE TABLE IF NOT EXISTS class_enrolments (
+            class_id   INTEGER NOT NULL,
+            student_id INTEGER NOT NULL,
+            enrolled_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (class_id, student_id)
+        )
+        """)
+        conn.execute("""
+        CREATE TABLE IF NOT EXISTS assignments (
+            assignment_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            class_id      INTEGER NOT NULL,
+            title         TEXT    NOT NULL,
+            description   TEXT    DEFAULT '',
+            max_marks     INTEGER DEFAULT 10,
+            created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+        """)
+        conn.execute("""
+        CREATE TABLE IF NOT EXISTS submissions (
+            submission_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            assignment_id INTEGER NOT NULL,
+            student_id    INTEGER NOT NULL,
+            answer_text   TEXT    NOT NULL,
+            submitted_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            marks         INTEGER DEFAULT NULL,
+            feedback      TEXT    DEFAULT NULL,
+            marked_at     TIMESTAMP DEFAULT NULL,
+            UNIQUE (assignment_id, student_id)
+        )
+        """)
+    print("Classes database tables initialised.")
+
+
 if __name__ == "__main__":
     init_database()
     init_accounts_database()
+    init_classes_database()
