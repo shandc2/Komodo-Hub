@@ -1,0 +1,105 @@
+{% extends "base.jinja" %}
+{% block title %}{{ assignment.title }}{% endblock %}
+{% block content %}
+{% from 'button.jinja' import button %}
+
+<section id="hero" style="padding: 40px 20px; text-align: center;">
+    <h1>{{ assignment.title }}</h1>
+    <p style="max-width: 700px; margin: 0.5rem auto; opacity:0.75;">{{ cls.name }}&ensp;·&ensp;{{ assignment.max_marks }} marks</p>
+</section>
+
+<section style="padding: 0 20px 40px 20px; max-width: 900px; margin: 0 auto;">
+
+    {% if assignment.description %}
+    <div class="container-full" style="margin-bottom: 20px;">
+        <h2 style="margin-bottom: 0.75rem;">Instructions</h2>
+        <p style="white-space: pre-wrap; line-height: 1.7;">{{ assignment.description }}</p>
+    </div>
+    {% endif %}
+
+    {% if submission %}
+        {# Already submitted — show what they wrote + any mark/feedback #}
+        <div class="container-full" style="margin-bottom: 20px;">
+            <h2 style="margin-bottom: 0.75rem;">Your Submission</h2>
+            <div style="
+                background: var(--background);
+                border: 1.5px solid var(--primary);
+                border-radius: 12px;
+                padding: 16px 20px;
+                white-space: pre-wrap;
+                line-height: 1.7;
+                font-size: 0.97rem;
+            ">{{ submission.answer_text }}</div>
+            <p style="opacity:0.55; font-size:0.82rem; margin-top:6px;">
+                Submitted {{ submission.submitted_at[:16] }}
+            </p>
+        </div>
+
+        {# Result #}
+        <div class="container-full">
+            <h2 style="margin-bottom: 0.75rem;">Result</h2>
+            {% if submission.marks is not none %}
+                <div style="display:flex; align-items:center; gap: 1.5rem; flex-wrap:wrap; margin-bottom: 1rem;">
+                    <div style="
+                        font-size: 3rem;
+                        font-weight: 900;
+                        background: linear-gradient(120deg, var(--primary), var(--accent));
+                        background-clip: text;
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        line-height: 1;
+                    ">{{ submission.marks }}<span style="font-size:1.5rem; opacity:0.7;">/{{ assignment.max_marks }}</span></div>
+                    <div>
+                        {% set pct = (submission.marks / assignment.max_marks * 100) | int %}
+                        {% if pct >= 80 %}
+                            <span style="font-size:1.1rem; font-weight:700; color: var(--green);">Excellent work!</span>
+                        {% elif pct >= 60 %}
+                            <span style="font-size:1.1rem; font-weight:700; color: var(--text);">Good effort.</span>
+                        {% elif pct >= 40 %}
+                            <span style="font-size:1.1rem; font-weight:700; color: var(--text);">Keep working at it.</span>
+                        {% else %}
+                            <span style="font-size:1.1rem; font-weight:700; color: var(--red);">See your teacher for support.</span>
+                        {% endif %}
+                    </div>
+                </div>
+                {% if submission.feedback %}
+                    <div style="
+                        background: var(--background);
+                        border-left: 4px solid var(--primary);
+                        border-radius: 0 10px 10px 0;
+                        padding: 12px 16px;
+                        font-size: 0.95rem;
+                        line-height: 1.6;
+                    ">
+                        <strong>Teacher feedback:</strong><br>{{ submission.feedback }}
+                    </div>
+                {% endif %}
+            {% else %}
+                <p style="opacity:0.7;">
+                    Your submission is awaiting marking. Check back later.
+                </p>
+            {% endif %}
+        </div>
+
+    {% else %}
+        {# Not yet submitted — show the answer form #}
+        <div class="container-full">
+            <h2 style="margin-bottom: 0.75rem;">Your Answer</h2>
+            <form method="POST" action="{{ url_for('classes.submit_assignment', class_id=cls.class_id, assignment_id=assignment.assignment_id) }}" class="form">
+                <div class="form-group">
+                    <label for="answer">Write your answer below</label>
+                    <textarea id="answer" name="answer" rows="10"
+                        placeholder="Type your answer here…" required></textarea>
+                </div>
+                <button type="submit" class="submit-button" style="margin-top: 0.5rem;">Submit Answer</button>
+            </form>
+        </div>
+    {% endif %}
+
+</section>
+
+<section style="padding: 0 20px 20px; max-width: 900px; margin: 0 auto;">
+    {{ button(url=url_for('classes.class_detail', class_id=cls.class_id), button_text='← Back to Class', extra_classes='homepage-btn') }}
+</section>
+
+{% endblock %}

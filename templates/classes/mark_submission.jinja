@@ -1,0 +1,64 @@
+{% extends "base.jinja" %}
+{% block title %}Mark Submission — {{ assignment.title }}{% endblock %}
+{% block content %}
+{% from 'button.jinja' import button %}
+
+<section id="hero" style="padding: 40px 20px; text-align: center;">
+    <h1>Mark Submission</h1>
+    <p style="max-width: 700px; margin: 0.5rem auto; opacity:0.75;">
+        {{ assignment.title }}&ensp;·&ensp;{{ cls.name }}
+    </p>
+</section>
+
+<section style="padding: 0 20px 40px 20px; max-width: 900px; margin: 0 auto;">
+
+    {# Student's answer #}
+    <div class="container-full" style="margin-bottom: 20px;">
+        <h2 style="margin-bottom: 0.75rem;">
+            {{ submission.username }}'s Answer
+            <span style="font-size:0.9rem; font-weight:400; opacity:0.6; margin-left:0.5rem;">
+                submitted {{ submission.submitted_at[:16] }}
+            </span>
+        </h2>
+        <div style="
+            background: var(--background);
+            border: 1.5px solid var(--primary);
+            border-radius: 12px;
+            padding: 16px 20px;
+            white-space: pre-wrap;
+            line-height: 1.7;
+            font-size: 0.97rem;
+        ">{{ submission.answer_text }}</div>
+    </div>
+
+    {# Mark form #}
+    <div class="container-full">
+        <h2 style="margin-bottom: 1rem;">Award a Mark</h2>
+        <form method="POST" class="form">
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %}
+            <div class="form-group">
+                <label for="marks">Marks (out of {{ assignment.max_marks }})</label>
+                <input type="number" id="marks" name="marks"
+                       min="0" max="{{ assignment.max_marks }}"
+                       value="{{ submission.marks if submission.marks is not none else '' }}"
+                       placeholder="0 – {{ assignment.max_marks }}"
+                       required>
+            </div>
+            <div class="form-group">
+                <label for="feedback">Feedback <span style="font-weight:400; opacity:0.7;">(optional)</span></label>
+                <textarea id="feedback" name="feedback" rows="4"
+                    placeholder="Write any feedback for the student…">{{ submission.feedback or '' }}</textarea>
+            </div>
+            <button type="submit" class="submit-button" style="margin-top:0.5rem;">Save Mark</button>
+        </form>
+    </div>
+
+</section>
+
+<section style="padding: 0 20px 20px; max-width: 900px; margin: 0 auto;">
+    {{ button(url=url_for('classes.assignment_detail', class_id=cls.class_id, assignment_id=assignment.assignment_id), button_text='← Back to Assignment', extra_classes='homepage-btn') }}
+</section>
+
+{% endblock %}

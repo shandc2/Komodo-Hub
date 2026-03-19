@@ -1,0 +1,92 @@
+{% extends "base.jinja" %}
+{% block title %}{{ assignment.title }} — {{ cls.name }}{% endblock %}
+{% block content %}
+{% from 'button.jinja' import button %}
+
+<section id="hero" style="padding: 40px 20px; text-align: center;">
+    <h1>{{ assignment.title }}</h1>
+    <p style="max-width: 700px; margin: 0.5rem auto; opacity:0.75;">{{ cls.name }}&ensp;·&ensp;{{ assignment.max_marks }} marks</p>
+</section>
+
+<section style="padding: 0 20px 40px 20px; max-width: 900px; margin: 0 auto;">
+
+    {% if assignment.description %}
+    <div class="container-full" style="margin-bottom: 20px;">
+        <h2 style="margin-bottom: 0.75rem;">Instructions</h2>
+        <p style="white-space: pre-wrap; line-height: 1.7;">{{ assignment.description }}</p>
+    </div>
+    {% endif %}
+
+    <div class="container-full">
+        <h2 style="margin-bottom: 1rem;">Submissions
+            <span style="font-size:1rem; font-weight:400; opacity:0.7;">({{ submissions | length }})</span>
+        </h2>
+
+        {% if submissions %}
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+                {% for sub in submissions %}
+                <div style="
+                    background: var(--background);
+                    border: 1.5px solid {% if sub.marks is not none %}var(--primary){% else %}var(--accent){% endif %};
+                    border-radius: 14px;
+                    padding: 18px 22px;
+                ">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+                        <span style="font-weight:700; font-size:1.05rem;">{{ sub.username }}</span>
+                        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                            <span style="opacity:0.55; font-size:0.8rem;">{{ sub.submitted_at[:16] }}</span>
+                            {% if sub.marks is not none %}
+                                <span style="
+                                    background: var(--primary_darker);
+                                    border-radius: 8px;
+                                    padding: 3px 12px;
+                                    font-size: 0.9rem;
+                                    font-weight: 700;
+                                ">{{ sub.marks }} / {{ assignment.max_marks }}</span>
+                            {% else %}
+                                <span style="
+                                    background: var(--accent);
+                                    border-radius: 8px;
+                                    padding: 3px 12px;
+                                    font-size: 0.85rem;
+                                ">Ungraded</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div style="
+                        background: var(--green3);
+                        border-radius: 10px;
+                        padding: 12px 16px;
+                        font-size: 0.95rem;
+                        white-space: pre-wrap;
+                        line-height: 1.6;
+                        margin-bottom: 10px;
+                    ">{{ sub.answer_text }}</div>
+
+                    {% if sub.feedback %}
+                    <div style="opacity:0.75; font-size:0.9rem; margin-bottom: 10px;">
+                        <strong>Feedback:</strong> {{ sub.feedback }}
+                    </div>
+                    {% endif %}
+
+                    <a href="{{ url_for('classes.mark_submission_route', class_id=cls.class_id, assignment_id=assignment.assignment_id, submission_id=sub.submission_id) }}"
+                       class="link_button"
+                       style="display:inline-block; padding: 8px 18px; font-size:0.95rem; margin: 0;">
+                        {% if sub.marks is not none %}Edit Mark{% else %}Mark{% endif %}
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p style="opacity:0.6;">No students have submitted yet.</p>
+        {% endif %}
+    </div>
+
+</section>
+
+<section style="padding: 0 20px 20px; max-width: 900px; margin: 0 auto;">
+    {{ button(url=url_for('classes.class_detail', class_id=cls.class_id), button_text='← Back to Class', extra_classes='homepage-btn') }}
+</section>
+
+{% endblock %}

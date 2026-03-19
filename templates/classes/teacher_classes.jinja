@@ -1,0 +1,65 @@
+{% extends "base.jinja" %}
+{% block title %}My Classes{% endblock %}
+{% block content %}
+{% from 'button.jinja' import button %}
+
+<section id="hero" style="padding: 40px 20px; text-align: center;">
+    <h1>My Classes</h1>
+    <p style="max-width: 700px; margin: 0.5rem auto;">Create and manage your classes, then share the join code with your students.</p>
+</section>
+
+<section style="padding: 0 20px 40px 20px; max-width: 900px; margin: 0 auto;">
+
+    {# Create class form #}
+    <div class="container-full" style="margin-bottom: 20px;">
+        <h2 style="margin-bottom: 1rem;">Create a New Class</h2>
+        <form method="POST" class="form">
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %}
+            <div class="form-group">
+                <label for="name">Class Name</label>
+                <input type="text" id="name" name="name" placeholder="e.g. Year 10 Biology" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description <span style="font-weight:400; opacity:0.7;">(optional)</span></label>
+                <textarea id="description" name="description" rows="3" placeholder="A short description of this class…"></textarea>
+            </div>
+            <button type="submit" class="submit-button" style="margin-top: 0.5rem;">Create Class</button>
+        </form>
+    </div>
+
+    {# Existing classes #}
+    <div class="container-full">
+        <h2 style="margin-bottom: 1rem;">Your Classes</h2>
+        {% if classes %}
+            <div class="species-grid">
+                {% for cls in classes %}
+                <a href="{{ url_for('classes.class_detail', class_id=cls.class_id) }}" class="container-lite" style="display:block; text-decoration:none; color: var(--text);">
+                    <h3 style="margin-bottom: 0.4rem;">{{ cls.name }}</h3>
+                    {% if cls.description %}
+                        <p style="opacity:0.75; margin-bottom: 0.8rem; font-size:0.95rem;">{{ cls.description }}</p>
+                    {% endif %}
+                    <p style="margin-bottom: 0.4rem; font-size: 0.9rem;">
+                        Join code:&nbsp;
+                        <span style="
+                            font-family: monospace;
+                            font-size: 1.15rem;
+                            font-weight: 700;
+                            letter-spacing: 0.15em;
+                            background: var(--background);
+                            border: 1.5px solid var(--primary);
+                            border-radius: 8px;
+                            padding: 2px 10px;
+                        ">{{ cls.join_code }}</span>
+                    </p>
+                </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p style="opacity:0.6;">You have not created any classes yet. Use the form above to get started.</p>
+        {% endif %}
+    </div>
+
+</section>
+{% endblock %}

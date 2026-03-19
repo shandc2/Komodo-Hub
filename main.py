@@ -34,7 +34,7 @@ def import_pages(route, app):
 
 
 app = Flask(__name__, static_folder="static", static_url_path="")
-
+app.secret_key = "extremely secret key that should be changed"
 
 @app.before_request
 def load_user():
