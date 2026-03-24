@@ -328,3 +328,78 @@ def mark_submission(submission_id, marks, feedback=""):
             SET marks = ?, feedback = ?, marked_at = ?
             WHERE submission_id = ?
         """, (marks, feedback, datetime.now(), submission_id))
+
+
+# ── programs ─────────────────────────────────────────────────────────────────
+
+def create_program(leader_id, title, description=""):
+    with get_db() as conn:
+        conn.execute("""
+            INSERT INTO programs (leader_id, title, description, created_at)
+            VALUES (?, ?, ?, ?)
+        """, (leader_id, title, description, datetime.now()))
+
+
+def get_all_programs():
+    with get_db() as conn:
+        rows = conn.execute(
+            "SELECT * FROM programs ORDER BY created_at DESC"
+        ).fetchall()
+        return [dict(r) for r in rows]
+
+
+def get_program_by_id(program_id):
+    with get_db() as conn:
+        row = conn.execute(
+            "SELECT * FROM programs WHERE program_id = ? LIMIT 1",
+            (program_id,)
+        ).fetchone()
+        return dict(row) if row else None
+
+
+def get_programs_by_leader(leader_id):
+    with get_db() as conn:
+        rows = conn.execute(
+            "SELECT * FROM programs WHERE leader_id = ? ORDER BY created_at DESC",
+            (leader_id,)
+        ).fetchall()
+        return [dict(r) for r in rows]
+
+
+def join_program(program_id, user_id):
+    with get_db() as conn:
+        conn.execute("""
+            INSERT OR IGNORE INTO program_enrolments (program_id, user_id, enrolled_at)
+            VALUES (?, ?, ?)
+        """, (program_id, user_id, datetime.now()))
+
+
+def is_enrolled_in_program(program_id, user_id):
+    with get_db() as conn:
+        row = conn.execute(
+            "SELECT 1 FROM program_enrolments WHERE program_id = ? AND user_id = ?",
+            (program_id, user_id)
+        ).fetchone()
+        return row is not None
+
+
+def get_programs_for_user(user_id):
+    with get_db() as conn:
+        rows = conn.execute("""
+            SELECT p.*
+            FROM programs p
+            JOIN program_enrolments e ON p.program_id = e.program_id
+            WHERE e.user_id = ?
+            ORDER BY e.enrolled_at DESC
+        """, (user_id,)).fetchall()
+        return [dict(r) for r in rows]
+
+
+def search_programs(query):
+    with get_db() as conn:
+        rows = conn.execute("""
+            SELECT * FROM programs
+            WHERE instr(LOWER(COALESCE(CAST(title AS TEXT), '')), ?1) > 0
+               OR instr(LOWER(COALESCE(CAST(description AS TEXT), '')), ?1) > 0
+        """, (query.lower(),)).fetchall()
+        return [dict(r) for r in rows]

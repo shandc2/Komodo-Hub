@@ -1,0 +1,47 @@
+{% extends "base.jinja" %}
+{% block title %}Create a Program{% endblock %}
+{% block content %}
+
+<section id="hero" style="padding: 40px 20px; text-align: center;">
+    <h1>Create a Program</h1>
+    <p style="max-width: 700px; margin: 0.5rem auto;">
+        Set up a new conservation program for others to discover and join.
+    </p>
+</section>
+<section class="form-section">
+    <div class="container">
+        <h2 style="margin-bottom: 1rem;">Program Details</h2>
+        <form action="/programs/create" method="POST" class="form">
+            <div class="form-group">
+                <label for="title">Program Title</label>
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    placeholder="e.g. Sumatran Tiger Patrol"
+                    required
+                    maxlength="120"
+                >
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea
+                    id="description"
+                    name="description"
+                    rows="6"
+                    placeholder="Describe the goals, activities, and impact of your program..."
+                    maxlength="2000"
+                ></textarea>
+            </div>
+            <button type="submit" class="submit-button" style="margin-top: 10px;">
+                Create Program
+            </button>
+        </form>
+        <div style="text-align: center; margin-top: 1rem;">
+            <a href="/programs/my" style="opacity: 0.7; font-size: 0.9rem;">
+                ← Back to my programs
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

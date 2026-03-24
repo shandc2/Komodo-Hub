@@ -1,0 +1,84 @@
+{% extends "base.jinja" %}
+{% block title %}Programs{% endblock %}
+{% block content %}
+{% from 'button.jinja' import button %}
+{% from 'search_bar.jinja' import search_bar %}
+
+<section id="hero" style="padding: 40px 20px; text-align: center;">
+    <h1>Conservation Programs</h1>
+    <p style="max-width: 700px; margin: 0.5rem auto;">
+        Discover and join community-led conservation programs, or search for one that matches your interests.
+    </p>
+</section>
+
+<section style="padding: 0 20px 60px 20px; max-width: 960px; margin: 0 auto;">
+
+    {# Search bar #}
+    <div class="container-full" style="margin-bottom: 20px;">
+    <h2>Search programs...</h2>
+        {{ search_bar('/programs', query) }}
+
+        {% if query %}
+            <p style="text-align: center; opacity: 0.7; margin-top: -1rem;">
+                {{ programs | length }} result{{ 's' if programs | length != 1 }} for
+                <strong>"{{ query }}"</strong>
+                &mdash; <a href="/programs">clear</a>
+            </p>
+        {% endif %}
+    </div>
+
+    {# Results grid #}
+    {% if programs %}
+        <div class="container-full">
+        <h2>Programs...</h2>
+            {% for prog in programs %}
+            <div class="container-lite" style="display: flex; flex-direction: column; gap: 10px; padding: 20px; margin-top: 20px">
+                <h3 style="margin-bottom: 4px;">{{ prog.title }}</h3>
+                <p style="opacity: 0.8; flex: 1;">
+                    {{ prog.description if prog.description else 'No description provided.' }}
+                </p>
+                <div style="height: 10px;"></div>
+                <div class="button">
+                    {{ button(url='/programs/' ~ prog.program_id, button_text='View', extra_classes='homepage-btn') }}
+                    {% if prog.enrolled %}
+                        <span class="link_button homepage-btn"
+                              style="background-color: var(--accent); cursor: default; text-align: center;">
+                            ✓ Enrolled
+                        </span>
+                        <div style="height: 10px;"></div>
+                    {% else %}
+                        <form action="/programs/{{ prog.program_id }}/join" method="POST" style="display:inline;">
+                            <button type="submit" class="link_button homepage-btn"
+                                    style="border: none; cursor: pointer;">
+                                Join
+                            </button>
+                        </form>
+                        <div style="height: 10px;"></div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="container-full" style="text-align: center;">
+            <p style="opacity: 0.7;">
+                {% if query %}
+                    No programs matched your search.
+                {% else %}
+                    There are no programs yet.
+                {% endif %}
+            </p>
+        </div>
+    {% endif %}
+
+    {# Community leader shortcut #}
+    {% if user and user.account_type == 'community_leader' %}
+    <div class="container-full" style="margin-top: 20px; text-align: center;">
+        <p>Want to run a new conservation program?</p>
+        {{ button(url='/programs/create', button_text='Create a Program', extra_classes='homepage-btn') }}
+    </div>
+    {% endif %}
+
+</section>
+
+{% endblock %}

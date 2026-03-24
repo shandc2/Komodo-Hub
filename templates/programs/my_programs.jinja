@@ -1,0 +1,66 @@
+{% extends "base.jinja" %}
+{% block title %}My Programs{% endblock %}
+{% block content %}
+{% from 'button.jinja' import button %}
+
+<section id="hero" style="padding: 40px 20px; text-align: center;">
+    {% if user.account_type == 'community_leader' %}
+        <h1>Your Programs</h1>
+        <p style="max-width: 700px; margin: 0.5rem auto;">
+            Programs you have created and are running.
+        </p>
+    {% else %}
+        <h1>My Programs</h1>
+        <p style="max-width: 700px; margin: 0.5rem auto;">
+            Conservation programs you are enrolled in.
+        </p>
+    {% endif %}
+</section>
+
+<section style="padding: 0 20px 60px 20px; max-width: 960px; margin: 0 auto;">
+
+    {% if programs %}
+        <div class="container-full">
+        <h2>Your programs</h2>
+            {% for prog in programs %}
+            <div class="container-lite" style="display: flex; flex-direction: column; gap: 10px; padding: 20px; margin-top: 20px">
+                <h3 style="margin-bottom: 4px;">{{ prog.title }}</h3>
+                <p style="opacity: 0.8; flex: 1;">
+                    {{ prog.description if prog.description else 'No description provided.' }}
+                </p>
+                <div style="margin-top: 8px;">
+                <div class="homepage-buttons" style="justify-content: flex-start; margin-top: 1rem;">
+                    {{ button(url='/programs/' ~ prog.program_id, button_text='View', extra_classes='homepage-btn') }}
+                </div>    
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="container-full" style="text-align: center;">
+            {% if user.account_type == 'community_leader' %}
+                <p style="opacity: 0.7;">You have not created any programs yet.</p>
+                <div class="homepage-buttons" style="justify-content: flex-start; margin-top: 1rem;">
+                    {{ button(url='/programs/create', button_text='Create a Program', extra_classes='homepage-btn') }}
+                </div>
+            {% else %}
+                <p style="opacity: 0.7;">You are not enrolled in any programs yet.</p>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {# Action bar at the bottom #}
+    <div style="margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;">
+        {% if user.account_type == 'community_leader' %}
+        <div class="homepage-buttons" style="justify-content: flex-start; margin-top: 1rem;">
+            {{ button(url='/programs/create', button_text='+ Create New Program', extra_classes='homepage-btn') }}
+        </div>
+        {% endif %}
+        <div class="homepage-buttons" style="justify-content: flex-start; margin-top: 1rem;">
+            {{ button(url='/programs', button_text='Browse All Programs', extra_classes='homepage-btn') }}
+        </div>
+    </div>
+
+</section>
+
+{% endblock %}

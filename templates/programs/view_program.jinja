@@ -1,0 +1,36 @@
+{% extends "base.jinja" %}
+{% block title %}{{ program.title }}{% endblock %}
+{% block content %}
+{% from 'button.jinja' import button %}
+
+<section id="hero" style="padding: 40px 20px; text-align: center;">
+    <h1>{{ program.title }}</h1>
+</section>
+<section style="padding: 0 20px 60px 20px; max-width: 800px; margin: 0 auto;">
+    <div class="container-full">
+        <p style="opacity: 0.8; font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.5rem;">
+            {{ program.description if program.description else 'No description has been provided for this program.' }}
+        </p>
+        <div class="split"></div>
+        <p style="opacity: 0.6; font-size: 0.85rem; margin-top: 1rem;">
+            Program created on {{ program.created_at[:10] if program.created_at else 'unknown date' }}.
+        </p>
+        <div style="margin-top: 1.5rem; display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+            {% if enrolled %}
+                <span class="link_button homepage-btn"
+                      style="background-color: var(--accent); cursor: default; text-align: center;">
+                    ✓ You are enrolled
+                </span>
+            {% else %}
+                <form action="/programs/{{ program.program_id }}/join" method="POST" style="display: contents;">
+                    <button type="submit" class="link_button homepage-btn"
+                            style="border: none; cursor: pointer;">
+                        Join This Program
+                    </button>
+                </form>
+            {% endif %}
+            {{ button(url='/programs', button_text='← All Programs', extra_classes='homepage-btn') }}
+        </div>
+    </div>
+</section>
+{% endblock %}
