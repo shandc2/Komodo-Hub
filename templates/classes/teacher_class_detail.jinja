@@ -1,0 +1,114 @@
+{% extends "base.jinja" %}
+{% block title %}{{ cls.name }}{% endblock %}
+{% block content %}
+{% from 'button.jinja' import button %}
+
+<section id="hero" style="padding: 40px 20px; text-align: center;">
+    <h1>{{ cls.name }}</h1>
+    {% if cls.description %}
+        <p style="max-width: 700px; margin: 0.5rem auto; opacity:0.8;">{{ cls.description }}</p>
+    {% endif %}
+    <p style="margin-top: 0.75rem;">
+        Join code:&nbsp;
+        <span style="
+            font-family: monospace;
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            background: var(--green3);
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            padding: 4px 16px;
+        ">{{ cls.join_code }}</span>
+    </p>
+</section>
+
+<section style="padding: 0 20px 40px 20px; max-width: 900px; margin: 0 auto;">
+
+    {# Enrolled students #}
+    <div class="container-full" style="margin-bottom: 20px;">
+        <h2 style="margin-bottom: 1rem;">Enrolled Students
+            <span style="font-size:1rem; font-weight:400; opacity:0.7;">({{ students | length }})</span>
+        </h2>
+        {% if students %}
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                {% for student in students %}
+                <div style="
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    background: var(--background);
+                    border: 1.5px solid var(--primary);
+                    border-radius: 12px;
+                    padding: 12px 20px;
+                ">
+                    <div>
+                        <span style="font-weight: 700;">{{ student.username }}</span>
+                        <span style="opacity:0.6; margin-left: 0.75rem; font-size:0.9rem;">{{ student.email }}</span>
+                    </div>
+                    <span style="opacity:0.5; font-size:0.8rem;">
+                        Joined {{ student.enrolled_at[:10] }}
+                    </span>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p style="opacity:0.6;">No students have joined yet. Share the join code above with your class.</p>
+        {% endif %}
+    </div>
+
+    {# Assignments #}
+    <div class="container-full">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:10px;">
+            <h2>Assignments</h2>
+            {{ button(url=url_for('classes.create_assignment_route', class_id=cls.class_id), button_text='+ New Assignment', extra_classes='homepage-btn') }}
+        </div>
+
+        {% if assignments %}
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                {% for a in assignments %}
+                <a href="{{ url_for('classes.assignment_detail', class_id=cls.class_id, assignment_id=a.assignment_id) }}"
+                   style="
+                       display: flex;
+                       align-items: center;
+                       justify-content: space-between;
+                       text-decoration: none;
+                       color: var(--text);
+                       background: var(--background);
+                       border: 1.5px solid var(--primary);
+                       border-radius: 12px;
+                       padding: 14px 20px;
+                       transition: border-color 0.2s;
+                   "
+                   onmouseover="this.style.borderColor='var(--green)'"
+                   onmouseout="this.style.borderColor='var(--primary)'">
+                    <div>
+                        <span style="font-weight: 700; font-size:1.05rem;">{{ a.title }}</span>
+                        {% if a.description %}
+                            <p style="margin:4px 0 0; opacity:0.65; font-size:0.9rem;">{{ a.description | truncate(80) }}</p>
+                        {% endif %}
+                    </div>
+                    <span style="
+                        white-space: nowrap;
+                        background: var(--green3);
+                        border: 1px solid var(--primary);
+                        border-radius: 8px;
+                        padding: 4px 12px;
+                        font-size: 0.85rem;
+                        margin-left: 1rem;
+                    ">{{ a.max_marks }} marks</span>
+                </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p style="opacity:0.6;">No assignments yet. Create one using the button above.</p>
+        {% endif %}
+    </div>
+
+</section>
+
+<section style="padding: 0 20px 20px; max-width: 900px; margin: 0 auto;">
+    {{ button(url=url_for('classes.classes_index'), button_text='← Back to Classes', extra_classes='homepage-btn') }}
+</section>
+
+{% endblock %}

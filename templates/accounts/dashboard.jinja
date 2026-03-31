@@ -11,31 +11,26 @@
 
 <section style="padding: 0 20px 40px 20px; max-width: 900px; margin: 0 auto;">
 
-    {#Enrolled Programmes (everyone sees this)#}
-    <div class="container-full" style="margin-bottom: 20px;">
-        <h2>Your Programmes</h2>
-        {% if enrolled_programmes %}
-            <div class="species-grid">
-                {% for prog in enrolled_programmes %}
-                <div class="container-lite">
-                    <h3>{{ prog.name }}</h3>
-                    <p>{{ prog.description }}</p>
-                    {{ button(url='/programmes/' ~ prog.id, button_text='View', extra_classes='homepage-btn') }}
-                </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <p style="color: var(--text); opacity: 0.6;">You are not enrolled in any programmes yet.</p>
-            {{ button(url='/programmes', button_text='Browse Programmes', extra_classes='homepage-btn') }}
-        {% endif %}
+    {#Enrolled Programs (everyone except community leaders sees this)#}
+    {% if user.account_type != "community_leader" %}
+    <div class="container-full" style="margin-bottom: 20px">
+        <h2>Programs</h2>
+        <p>Browse and join programs here</p>
+        <div class="homepage-buttons" style="justify-content: flex-start; margin-top: 1rem;">
+            {{ button(url='/programs', button_text='Browse Programs', extra_classes='homepage-btn') }}
+            {{ button(url='/programs/my', button_text='Joined Programs', extra_classes='homepage-btn') }}
+        </div>
     </div>
+    {% endif %}
 
     {#Student#}
-    {% if session.account_type == "student" %}
+    {% if user.account_type == "student" %}
     <div class="container-full" style="margin-bottom: 20px;">
         <h2>Classes</h2>
         <p>View the classes you have joined.</p>
-        {{ button(url='/classes', button_text='View Classes', extra_classes='homepage-btn') }}
+        <div class="homepage-buttons" style="justify-content: flex-start; margin-top: 1rem;">
+            {{ button(url='/classes', button_text='View Classes', extra_classes='homepage-btn') }}
+        </div>
     </div>
     {% endif %}
 
@@ -53,9 +48,12 @@
     {#Community Leader#}
     {% if user.account_type == "community_leader" %}
     <div class="container-full" style="margin-bottom: 20px;">
-        <h2>Programmes</h2>
-        <p>Create a new conservation programme for others to join.</p>
-        {{ button(url='/programmes/create', button_text='Create a Programme', extra_classes='homepage-btn') }}
+        <h2>Programs</h2>
+        <p>Manage your conservation programs or create a new one.</p>
+        <div class="homepage-buttons" style="justify-content: flex-start; margin-top: 1rem;">
+            {{ button(url='/programs/my', button_text='My Programs', extra_classes='homepage-btn') }}
+            {{ button(url='/programs/create', button_text='Create a Program', extra_classes='homepage-btn') }}
+        </div>
     </div>
     {% endif %}
 

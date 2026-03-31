@@ -11,7 +11,7 @@ SEED_SPECIES = [
             "Its dense forest habitat is rapidly disappearing due to agricultural expansion and "
             "illegal logging. Poaching for the illegal wildlife trade remains a severe threat. "
             "Conservation efforts include protected national parks, anti-poaching patrols, and "
-            "community engagement programmes."
+            "community engagement programs."
         ),
         "category": "Mammal",
         "extinction_risk": "Critically Endangered",
@@ -38,7 +38,7 @@ SEED_SPECIES = [
             "The Bali Myna is a striking white bird endemic to the island of Bali. Fewer than "
             "100 individuals survive in the wild, making it one of the rarest birds in the world. "
             "The primary drivers of its decline are the illegal pet trade and loss of its lowland "
-            "forest habitat. Captive breeding and reintroduction programmes have been key "
+            "forest habitat. Captive breeding and reintroduction programs have been key "
             "strategies in efforts to stabilise and grow its wild population."
         ),
         "category": "Bird",
@@ -82,7 +82,7 @@ SEED_SPECIES = [
             "The Celebes Crested Macaque is endemic to north-east Sulawesi, recognised by "
             "its jet-black coat and distinctive crest. Fewer than 5,500 individuals are thought "
             "to survive. The species is hunted for bushmeat and its forest habitat continues "
-            "to shrink. Conservation programmes focus on community education, law enforcement, "
+            "to shrink. Conservation programs focus on community education, law enforcement, "
             "and ecotourism as a sustainable alternative income source for local communities."
         ),
         "category": "Mammal",
@@ -108,6 +108,7 @@ def init_database():
         """)
     print("Database initialised.")
     seed_species()
+    init_programs_database()
 
 
 def seed_species():
@@ -152,6 +153,76 @@ def init_accounts_database():
     print("Accounts database initialised.")
 
 
+def init_classes_database():
+    with get_db() as conn:
+        conn.execute("""
+        CREATE TABLE IF NOT EXISTS classes (
+            class_id   INTEGER PRIMARY KEY AUTOINCREMENT,
+            teacher_id INTEGER NOT NULL,
+            name       TEXT    NOT NULL,
+            description TEXT   DEFAULT '',
+            join_code  TEXT    UNIQUE NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+        """)
+        conn.execute("""
+        CREATE TABLE IF NOT EXISTS class_enrolments (
+            class_id   INTEGER NOT NULL,
+            student_id INTEGER NOT NULL,
+            enrolled_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (class_id, student_id)
+        )
+        """)
+        conn.execute("""
+        CREATE TABLE IF NOT EXISTS assignments (
+            assignment_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            class_id      INTEGER NOT NULL,
+            title         TEXT    NOT NULL,
+            description   TEXT    DEFAULT '',
+            max_marks     INTEGER DEFAULT 10,
+            created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+        """)
+        conn.execute("""
+        CREATE TABLE IF NOT EXISTS submissions (
+            submission_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            assignment_id INTEGER NOT NULL,
+            student_id    INTEGER NOT NULL,
+            answer_text   TEXT    NOT NULL,
+            submitted_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            marks         INTEGER DEFAULT NULL,
+            feedback      TEXT    DEFAULT NULL,
+            marked_at     TIMESTAMP DEFAULT NULL,
+            UNIQUE (assignment_id, student_id)
+        )
+        """)
+    print("Classes database tables initialised.")
+
+
+def init_programs_database():
+    with get_db() as conn:
+        conn.execute("""
+        CREATE TABLE IF NOT EXISTS programs (
+            program_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            leader_id    INTEGER NOT NULL,
+            title        TEXT    NOT NULL,
+            description  TEXT    DEFAULT '',
+            created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+        """)
+        conn.execute("""
+        CREATE TABLE IF NOT EXISTS program_enrolments (
+            program_id INTEGER NOT NULL,
+            user_id      INTEGER NOT NULL,
+            enrolled_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (program_id, user_id)
+        )
+        """)
+    print("Programs database tables initialised.")
+
+
 if __name__ == "__main__":
     init_database()
     init_accounts_database()
+    init_classes_database()
+    init_programs_database()

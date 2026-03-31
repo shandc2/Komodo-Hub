@@ -153,3 +153,253 @@ def update_species(species_id, english, latin, body, category, extinction_risk):
             extinction_risk,
             species_id,
         ))
+
+
+# ── classes ────────────────────────────────────────────────────────────────────
+
+def _generate_class_code():
+    return secrets.token_hex(3).upper()
+
+
+def create_class(teacher_id, name, description=""):
+    with get_db() as conn:
+        code = _generate_class_code()
+        while conn.execute("SELECT class_id FROM classes WHERE join_code = ?", (code,)).fetchone():
+            code = _generate_class_code()
+        conn.execute("""
+            INSERT INTO classes (teacher_id, name, description, join_code, created_at)
+            VALUES (?, ?, ?, ?, ?)
+        """, (teacher_id, name, description, code, datetime.now()))
+
+
+def get_classes_for_teacher(teacher_id):
+    with get_db() as conn:
+        rows = conn.execute(
+            "SELECT * FROM classes WHERE teacher_id = ? ORDER BY created_at DESC",
+            (teacher_id,)
+        ).fetchall()
+        return [dict(r) for r in rows]
+
+
+def get_class_by_code(code):
+    with get_db() as conn:
+        row = conn.execute(
+            "SELECT * FROM classes WHERE join_code = ? LIMIT 1",
+            (code.upper(),)
+        ).fetchone()
+        return dict(row) if row else None
+
+
+def get_class_by_id(class_id):
+    with get_db() as conn:
+        row = conn.execute(
+            "SELECT * FROM classes WHERE class_id = ? LIMIT 1",
+            (class_id,)
+        ).fetchone()
+        return dict(row) if row else None
+
+
+def join_class(class_id, student_id):
+    with get_db() as conn:
+        conn.execute("""
+            INSERT OR IGNORE INTO class_enrolments (class_id, student_id, enrolled_at)
+            VALUES (?, ?, ?)
+        """, (class_id, student_id, datetime.now()))
+
+
+def is_enrolled(class_id, student_id):
+    with get_db() as conn:
+        row = conn.execute(
+            "SELECT 1 FROM class_enrolments WHERE class_id = ? AND student_id = ?",
+            (class_id, student_id)
+        ).fetchone()
+        return row is not None
+
+
+def get_classes_for_student(student_id):
+    with get_db() as conn:
+        rows = conn.execute("""
+            SELECT c.*
+            FROM classes c
+            JOIN class_enrolments e ON c.class_id = e.class_id
+            WHERE e.student_id = ?
+            ORDER BY e.enrolled_at DESC
+        """, (student_id,)).fetchall()
+        return [dict(r) for r in rows]
+
+
+def get_enrolled_students(class_id):
+    with get_db() as conn:
+        rows = conn.execute("""
+            SELECT u.user_id, u.username, u.email, e.enrolled_at
+            FROM users u
+            JOIN class_enrolments e ON u.user_id = e.student_id
+            WHERE e.class_id = ?
+            ORDER BY e.enrolled_at ASC
+        """, (class_id,)).fetchall()
+        return [dict(r) for r in rows]
+
+
+def create_assignment(class_id, title, description, max_marks=10):
+    with get_db() as conn:
+        conn.execute("""
+            INSERT INTO assignments (class_id, title, description, max_marks, created_at)
+            VALUES (?, ?, ?, ?, ?)
+        """, (class_id, title, description, max_marks, datetime.now()))
+
+
+def get_assignments_for_class(class_id):
+    with get_db() as conn:
+        rows = conn.execute(
+            "SELECT * FROM assignments WHERE class_id = ? ORDER BY created_at DESC",
+            (class_id,)
+        ).fetchall()
+        return [dict(r) for r in rows]
+
+
+def get_assignment_by_id(assignment_id):
+    with get_db() as conn:
+        row = conn.execute(
+            "SELECT * FROM assignments WHERE assignment_id = ? LIMIT 1",
+            (assignment_id,)
+        ).fetchone()
+        return dict(row) if row else None
+
+
+def submit_answer(assignment_id, student_id, answer_text):
+    with get_db() as conn:
+        conn.execute("""
+            INSERT OR IGNORE INTO submissions (assignment_id, student_id, answer_text, submitted_at)
+            VALUES (?, ?, ?, ?)
+        """, (assignment_id, student_id, answer_text, datetime.now()))
+
+
+def get_submission(assignment_id, student_id):
+    with get_db() as conn:
+        row = conn.execute("""
+            SELECT s.*, u.username
+            FROM submissions s
+            JOIN users u ON s.student_id = u.user_id
+            WHERE s.assignment_id = ? AND s.student_id = ?
+            LIMIT 1
+        """, (assignment_id, student_id)).fetchone()
+        return dict(row) if row else None
+
+
+def get_submission_by_id(submission_id):
+    with get_db() as conn:
+        row = conn.execute("""
+            SELECT s.*, u.username
+            FROM submissions s
+            JOIN users u ON s.student_id = u.user_id
+            WHERE s.submission_id = ?
+            LIMIT 1
+        """, (submission_id,)).fetchone()
+        return dict(row) if row else None
+
+
+def get_all_submissions(assignment_id):
+    with get_db() as conn:
+        rows = conn.execute("""
+            SELECT s.*, u.username
+            FROM submissions s
+            JOIN users u ON s.student_id = u.user_id
+            WHERE s.assignment_id = ?
+            ORDER BY s.submitted_at ASC
+        """, (assignment_id,)).fetchall()
+        return [dict(r) for r in rows]
+
+
+def get_student_submissions_for_class(class_id, student_id):
+    with get_db() as conn:
+        rows = conn.execute("""
+            SELECT s.*
+            FROM submissions s
+            JOIN assignments a ON s.assignment_id = a.assignment_id
+            WHERE a.class_id = ? AND s.student_id = ?
+        """, (class_id, student_id)).fetchall()
+        return [dict(r) for r in rows]
+
+
+def mark_submission(submission_id, marks, feedback=""):
+    with get_db() as conn:
+        conn.execute("""
+            UPDATE submissions
+            SET marks = ?, feedback = ?, marked_at = ?
+            WHERE submission_id = ?
+        """, (marks, feedback, datetime.now(), submission_id))
+
+
+# ── programs ─────────────────────────────────────────────────────────────────
+
+def create_program(leader_id, title, description=""):
+    with get_db() as conn:
+        conn.execute("""
+            INSERT INTO programs (leader_id, title, description, created_at)
+            VALUES (?, ?, ?, ?)
+        """, (leader_id, title, description, datetime.now()))
+
+
+def get_all_programs():
+    with get_db() as conn:
+        rows = conn.execute(
+            "SELECT * FROM programs ORDER BY created_at DESC"
+        ).fetchall()
+        return [dict(r) for r in rows]
+
+
+def get_program_by_id(program_id):
+    with get_db() as conn:
+        row = conn.execute(
+            "SELECT * FROM programs WHERE program_id = ? LIMIT 1",
+            (program_id,)
+        ).fetchone()
+        return dict(row) if row else None
+
+
+def get_programs_by_leader(leader_id):
+    with get_db() as conn:
+        rows = conn.execute(
+            "SELECT * FROM programs WHERE leader_id = ? ORDER BY created_at DESC",
+            (leader_id,)
+        ).fetchall()
+        return [dict(r) for r in rows]
+
+
+def join_program(program_id, user_id):
+    with get_db() as conn:
+        conn.execute("""
+            INSERT OR IGNORE INTO program_enrolments (program_id, user_id, enrolled_at)
+            VALUES (?, ?, ?)
+        """, (program_id, user_id, datetime.now()))
+
+
+def is_enrolled_in_program(program_id, user_id):
+    with get_db() as conn:
+        row = conn.execute(
+            "SELECT 1 FROM program_enrolments WHERE program_id = ? AND user_id = ?",
+            (program_id, user_id)
+        ).fetchone()
+        return row is not None
+
+
+def get_programs_for_user(user_id):
+    with get_db() as conn:
+        rows = conn.execute("""
+            SELECT p.*
+            FROM programs p
+            JOIN program_enrolments e ON p.program_id = e.program_id
+            WHERE e.user_id = ?
+            ORDER BY e.enrolled_at DESC
+        """, (user_id,)).fetchall()
+        return [dict(r) for r in rows]
+
+
+def search_programs(query):
+    with get_db() as conn:
+        rows = conn.execute("""
+            SELECT * FROM programs
+            WHERE instr(LOWER(COALESCE(CAST(title AS TEXT), '')), ?1) > 0
+               OR instr(LOWER(COALESCE(CAST(description AS TEXT), '')), ?1) > 0
+        """, (query.lower(),)).fetchall()
+        return [dict(r) for r in rows]

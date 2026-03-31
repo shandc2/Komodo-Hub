@@ -1,26 +1,82 @@
 {% extends "base.jinja" %}
 {% block title %}About{% endblock %}
-{% block head %}
-{% endblock %}
+{% block head %}{% endblock %}font-size: 3.5rem;
 {% block content %}
 {% from 'button.jinja' import button %}
-<section style="padding: 100px 20px;"> 
-    <h1>About Komodo Hub</h1>
-    <p>
-    Komodo Hub is a website deisgned to assist and educate people worldwide about conservation, with a focus on Indonesia. We aim to inform people on how to better
-     protect wildlife and their habitats.
+
+{# ── Hero ── #}
+<section style="padding: 60px 20px 40px; text-align: center;">
+    <h1 style="font-size: 3.5rem; margin-bottom: 1rem; color: var(--text);">About Komodo Hub</h1>
+    <p style="max-width: 700px; margin: 0 auto; font-size: 1.1rem; color: var(--text); opacity: 0.9;">
+        A platform designed to assist and educate people worldwide about conservation, with a focus on Indonesia.
     </p>
-    <p>
-    Badan Pusat Statistik, the Indonesian Bureau of Statistics, has recently published data on the country’s endangered endemic species. Despite spending millions
-    of dollars on conservation efforts, the government might have not seen any significant breakthroughs in the population of some species. The success of Komodo
-    has been largely exclusive, and the world is now left with merely less than 100 Sumatran Tigers, Javan Rhinoceros, Bali Mynas, Javan Eagles, Tarsius, and
-    Celebes Crested Macaques, respectively. Habitat loss remains the primary cause of the problems. Other causes include habitat changes, commercial
-    over-exploitation, the introduction of harmful non-native species, pollution, and the spread of diseases.
-    </p>
-    <p>
-    In 2022 the Komodo Foundation, a not-for-profit organization, was given a substantial amount of funds to initiate the development of a revolutionary digital
-    platform for animal conservation in Indonesia. Komodo Hub.
-    </p>
+</section>
+
+{# ── The Conservation Crisis ── #}
+<section style="padding: 20px 20px 40px;">
+    <div class="container-full" style="max-width: 900px;">
+        <h2 style="margin-bottom: 1rem; color: var(--text);">The Conservation Crisis</h2>
+        <p style="margin-bottom: 1rem;">
+            Badan Pusat Statistik, the Indonesian Bureau of Statistics, has recently published data on the country's endangered endemic species.
+            Despite spending millions of dollars on conservation efforts, the government has not seen significant breakthroughs in the population
+            of some species.
+        </p>
+        <p style="margin-bottom: 1rem;">
+            The world is now left with merely less than 100 individuals each of the Sumatran Tiger, Javan Rhinoceros, Bali Myna, Javan Eagle,
+            Tarsius, and Celebes Crested Macaque. Habitat loss remains the primary cause, alongside commercial over-exploitation, the introduction
+            of harmful non-native species, pollution, and the spread of disease.
+        </p>
+        <p>
+            In 2022, the Komodo Foundation &mdash; a not-for-profit organisation &mdash; was given substantial funding to initiate the development of a
+            revolutionary digital platform for animal conservation in Indonesia: <strong>Komodo Hub</strong>.
+        </p>
     </div>
 </section>
+
+{# ── Our Mission ── #}
+<section style="padding: 20px 20px 40px;">
+    <div class="container-full" style="max-width: 900px;">
+        <h2 style="margin-bottom: 1rem; color: var(--text);">Our Mission</h2>
+        <p style="margin-bottom: 1rem;">
+            Komodo Hub was built to bring together researchers, conservationists, educators, students and everyday people into one shared space.
+            We believe that raising awareness is the first step toward real change and that a connected, informed community is the most
+            powerful force for protecting the natural world. By making conservation visable and engaging, we aim to turn concern
+            into action, and action into impact.
+        </p>
+    </div>
+</section>
+
+{# ── What We Offer ── #}
+<section style="padding: 20px 20px 40px;">
+    <h2 style="text-align: center; margin-bottom: 1.5rem;">What We Offer</h2>
+    <div class="key_features">
+        <div style="background: var(--primary); color: var(--background);">
+            <h3 style="margin-bottom: 0.75rem; color: var(--background);">Species Database</h3>
+            <p style="font-size: 0.95rem; color: var(--background);">Browse detailed profiles of Indonesia's endangered wildlife, with up-to-date conservation status and habitat information.</p>
+        </div>
+        <div style="background: var(--primary); color: var(--background);">
+            <h3 style="margin-bottom: 0.75rem; color: var(--background);">Education</h3>
+            <p style="font-size: 0.95rem; color: var(--background);">Join the rest of your class and complete work and programs set by your teachers.</p>
+        </div>
+        <div style="background: var(--primary); color: var(--background);">
+            <h3 style="margin-bottom: 0.75rem; color: var(--background);">Community</h3>
+            <p style="font-size: 0.95rem; color: var(--background);">Join a growing network of people united by a passion for conservation by uploading your sightings.</p>
+        </div>
+    </div>
+</section>
+
+{# ── Register Now ── #}
+<section style="padding: 20px 20px 40px;">
+    <div class="container-full" style="max-width: 900px; text-align: center;">
+        <h2 style="margin-bottom: 0.75rem;">Register Now</h2>
+        <p style="max-width: 580px; margin: 0 auto 1.5rem; opacity: 0.9;">
+            Create a free account to track species, contribute to our database, and connect with the conservation community.
+        </p>
+        <div class="homepage-buttons">
+            {{ button(url='/accounts/user_registration', button_text='Create an Account', extra_classes='homepage-btn') }}
+        </div>
+    </div>
+</section>
+
+
 {% endblock %}

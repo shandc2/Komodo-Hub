@@ -1,0 +1,39 @@
+{% extends "base.jinja" %}
+{% block title %}New Assignment — {{ cls.name }}{% endblock %}
+{% block content %}
+{% from 'button.jinja' import button %}
+
+<section id="hero" style="padding: 40px 20px; text-align: center;">
+    <h1>New Assignment</h1>
+    <p style="max-width: 700px; margin: 0.5rem auto; opacity:0.8;">{{ cls.name }}</p>
+</section>
+
+<section class="form-section" style="padding-top: 10px;">
+    <div class="container">
+        <h2 style="margin-bottom: 1rem;">Assignment Details</h2>
+        <form method="POST" class="form">
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %}
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" placeholder="e.g. Critically Endangered Species Report" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Instructions / Description</label>
+                <textarea id="description" name="description" rows="6"
+                    placeholder="Describe the task, any requirements, and what students should submit…"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="max_marks">Maximum Marks</label>
+                <input type="number" id="max_marks" name="max_marks" value="10" min="1" max="1000">
+            </div>
+            <button type="submit" class="submit-button" style="margin-top: 0.75rem;">Create Assignment</button>
+        </form>
+        <div style="margin-top: 1rem;">
+            {{ button(url=url_for('classes.class_detail', class_id=cls.class_id), button_text='Cancel', extra_classes='homepage-btn') }}
+        </div>
+    </div>
+</section>
+
+{% endblock %}
