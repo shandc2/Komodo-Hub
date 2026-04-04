@@ -214,8 +214,8 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
-database/species.db
-static/images/.DS_Store
-.DS_Store
 
+database/species.db
+.DS_Store
 database/database.db
+random
