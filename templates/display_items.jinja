@@ -1,6 +1,6 @@
-{% macro display_all_items(items)%}
+{% macro display_all_species(items)%}
 {# Displays all species in the provided 'items' array #}
-{# Used in the species database and species results pages #}
+{# Used in the species database and search species results pages #}
 <section class="species-grid">
     {% for item in items %}
     <a href="/species/{{ item['species_english'] }}" class="container-lite">
@@ -8,6 +8,21 @@
         <div 
         style="background-image: url('{{ '/species/image/' ~ item['photoid'] }}');" class="div-image">
         </div>
+        <p style="color: var(--text)">
+        Main category: {{ item['category'] }}
+        </p>
+    </a>
+
+    {% endfor %}
+</section>
+{% endmacro %}
+{% macro display_all_articles(items)%}
+{# Displays all articles in the provided 'items' array #}
+{# Used in the article library and article search results pages #}
+<section class="species-grid">
+    {% for item in items %}
+    <a href="/articles/{{ item['article_id'] }}" class="container-lite">
+        <h3 class="plain-white-text">{{ item['article_title'] }}</h3>
         <p style="color: var(--text)">
         Main category: {{ item['category'] }}
         </p>
