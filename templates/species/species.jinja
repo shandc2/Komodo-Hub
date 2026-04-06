@@ -5,7 +5,7 @@
 {% block content %}
 {% from 'button.jinja' import button %}
 {% from 'featured_species.jinja' import featured_species_section %}
-{% from 'display_items.jinja' import display_all_items %}
+{% from 'display_items.jinja' import display_all_species %}
 {% from 'search_bar.jinja' import search_bar%}
 <section class="title">
 Species Database
@@ -16,5 +16,5 @@ Species Database
 {# All Species #}
 {{search_bar("/species/search", "")}}   
 <h2 style="text-align: center; margin-top: 30px;">All Species</h2>
-{{display_all_items(species)}}
+{{display_all_species(species)}}
 {% endblock %}

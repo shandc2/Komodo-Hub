@@ -90,7 +90,27 @@ SEED_SPECIES = [
         "photoid": "celebes crested macaque"
     },
 ]
-
+test_article = [
+    {
+        "article_id":"a-starrier-night",
+        "title"     :"A Starrier Night",
+        "subtitle"  :("In the past decade, our planet has rapidly lost its night sky. In response,"
+                      "West Texas created the largest international dark-sky reserve on Earth."),
+        "main_text" :("Light pollution has been growing rapidly, with the sky brightening nearly 10% each year "
+                      "since 2011. In West Texas, the McDonald Observatory—the darkest observatory in the "
+                      "continental US—faced an operational threat as development crept into the region. "
+                      "Superintendent Teznie Pugh and colleagues partnered with local landowners, parks, and "
+                      "The Nature Conservancy to protect the night sky. In 2022, DarkSky International certified "
+                      "the Greater Big Bend International Dark Sky Reserve, covering 9.6 million acres and "
+                      "spanning the US-Mexico border—the largest International Dark Sky Reserve in the world. "
+                      "The Davis Mountains Preserve (33,000 acres) forms the core of the reserve. The greatest "
+                      "ongoing threat comes from oil and gas development in the Permian Basin. The reserve also "
+                      "supports ecological research into the effects of light pollution on nocturnal wildlife, "
+                      "plants, and ecosystems."),
+        "author"    :"Jenny Rogers",
+        "publish_date":"2026-02-13"
+    }
+]
 
 def init_database():
     with get_db() as conn:
@@ -109,7 +129,48 @@ def init_database():
     print("Database initialised.")
     seed_species()
     init_programs_database()
+    init_articles()
 
+def init_articles():
+    with get_db() as conn:
+        # table for articles in library
+        conn.execute("""
+                     CREATE TABLE IF NOT EXISTS articles (
+                         article_id TEXT PRIMARY KEY UNIQUE,
+                         title TEXT,
+                         subtitle TEXT,
+                         main_text TEXT,
+                         author TEXT,
+                         publish_date);""")
+        print("Successfully created/found articles table.")
+        # table to store links relevant to articles (e.g. sources or original article)
+        conn.execute("""
+                     CREATE TABLE IF NOT EXISTS article_links (
+                         link_id    INTEGER PRIMARY KEY AUTOINCREMENT,
+                         article_id TEXT NOT NULL,
+                         url        TEXT NOT NULL,
+                         link_text  TEXT,
+                         FOREIGN KEY (article_id) REFERENCES articles(article_id)
+                         ON DELETE CASCADE);""")
+        print("Succesfully found/created article_links table.")
+        for article in test_article:
+            table_exists = conn.execute(
+                "SELECT article_id FROM articles WHERE article_id = ?",
+                (article["article_id"],)).fetchone()
+            if table_exists:
+                print(f"  SKIP  {article['article_id']} (already exists)")
+                continue
+            conn.execute("""
+                         INSERT INTO articles
+                         (article_id, title, subtitle, main_text, author, publish_date)
+                         VALUES (?, ?, ?, ?, ?, ?)""",
+                         (article["article_id"],
+                          article["title"],
+                          article["subtitle"],
+                          article["main_text"],
+                          article["author"],
+                          article["publish_date"],))
+            print(f"  ADD   {article['article_id']}")
 
 def seed_species():
     with get_db() as conn:
