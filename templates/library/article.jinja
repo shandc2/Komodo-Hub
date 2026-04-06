@@ -4,18 +4,13 @@
 {% endblock %}
 {% block content %}
 {% from 'button.jinja' import button %}
-<div class="species-layout">
 <section id="summary" style="padding: 10px 20px; text-align: center; margin-top:1rem" class="container">
     <h1>{{ title }}</h1>
-    <h2><em>{{ subtitle }}</em></h2>
-    <p>Category: {{author}}</p>
-    <p>Category: {{publish_date}}</p>
-
+    <h3><em>{{ subtitle }}</em></h3>
+    <p>Author: {{author}}</p>
+    <p>Published: {{publish_date}}</p>
+    <p>{{ main_text }}</p>
 </section>
-<section id="info" style="padding: 10px 20px; text-align: center;" class="container">
-<p>{{ main_text }}</p>
-</section>
-</div>
 {# this button should only be visible to certain account types #}
 {# <div style="text-align: right;">
     {{ button(url='/species/editor/'+species_id, button_text='Edit Species') }}

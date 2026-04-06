@@ -20,12 +20,12 @@ def data(article_id):
         raise TypeError(f"No species named '{species_english}' found in the database.")
     return render_template(
         "library/article.jinja",
-        article_id  =database_entry["article_id"   ].capitalize(),
-        title       =database_entry["title"     ].capitalize(),
-        subtitle    =database_entry["subtitle"         ],
-        main_text   =database_entry["main_text"          ].capitalize(),
-        author      =database_entry["author"   ],
-        publish_date=database_entry["publish_date"           ])
+        article_id  =database_entry["article_id"    ],
+        title       =database_entry["title"         ].title(),
+        subtitle    =database_entry["subtitle"      ],
+        main_text   =database_entry["main_text"     ].capitalize(),
+        author      =database_entry["author"        ],
+        publish_date=database_entry["publish_date"  ])
 
 @page.route("/species/image/<photoid>")
 def image(photoid):
