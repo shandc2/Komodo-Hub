@@ -1,4 +1,4 @@
-from database.db_connection import get_db, get_db
+from database.db_connection import get_db
 from database.db_commands import register_user
 from datetime import datetime
 
@@ -127,6 +127,7 @@ def init_database():
             photoid TEXT
         )
         """)
+    init_accounts_database()
     print("Database initialised.")
     seed_species()
 
@@ -207,6 +208,19 @@ def init_accounts_database():
             email TEXT UNIQUE NOT NULL,
             password_hash TEXT NOT NULL,
             account_type TEXT NOT NULL DEFAULT 'private_user',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+        """)
+        conn.execute("""
+        CREATE TABLE IF NOT EXISTS tokens (
+            token TEXT PRIMARY KEY,
+            user_id INTEGER
+        )
+        """)
+        conn.execute("""
+        CREATE TABLE IF NOT EXISTS password_resets (
+            token TEXT PRIMARY KEY,
+            user_id INTEGER NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
         """)

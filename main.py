@@ -35,6 +35,7 @@ def import_pages(route, app):
 
 app = Flask(__name__, static_folder="static", static_url_path="")
 app.secret_key = "9279dc6c-d2bc-4f89-a1b3-fc1438a6910c"
+init_database()
 
 @app.before_request
 def load_user():
