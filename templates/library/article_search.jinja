@@ -1,0 +1,15 @@
+{% extends "base.jinja" %}
+{% block title %}Species Database{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+{% from 'button.jinja' import button %}
+{% from 'display_items.jinja' import display_all_articles %}
+{% from 'search_bar.jinja' import search_bar%}
+<section class="title">
+Article Library
+</section>
+{# All Species #}
+{{search_bar("/articles/search", query)}}   
+{{display_all_articles(results)}}
+{% endblock %}

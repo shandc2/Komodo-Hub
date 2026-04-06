@@ -137,6 +137,18 @@ WHERE
             (query.lower(),)
         ).fetchall()
         return [dict(row) for row in rows]
+    
+def search_articles(query):
+    with get_db() as conn:
+        rows = conn.execute("""SELECT * FROM articles WHERE
+                            instr(LOWER(COALESCE(CAST(article_id        AS TEXT), '')), ?1) > 0
+                            OR instr(LOWER(COALESCE(CAST(title          AS TEXT), '')), ?1) > 0
+                            OR instr(LOWER(COALESCE(CAST(subtitle       AS TEXT), '')), ?1) > 0
+                            OR instr(LOWER(COALESCE(CAST(author         AS TEXT), '')), ?1) > 0
+                            OR instr(LOWER(COALESCE(CAST(publish_date   AS TEXT), '')), ?1) > 0;""",
+            (query.lower(),)
+        ).fetchall()
+        return [dict(row) for row in rows]
 
 def delete_species(species_id):
     with get_db() as conn:

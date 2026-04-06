@@ -1,7 +1,7 @@
 from flask import render_template, Blueprint, request
 import configparser
 
-from database.db_commands import get_all_articles, search_species, get_species_by_name
+from database.db_commands import get_all_articles, search_articles, get_species_by_name
 from utilities.featured_species import featured_species_function
 
 config = configparser.ConfigParser()
@@ -25,6 +25,6 @@ def all_species():
 def search():
     query = request.args.get("search-query")
 
-    results = search_species(query)
+    results = search_articles(query)
     print(results)
-    return render_template("/species/species_search.jinja", results=results, query=query)
+    return render_template("/library/article_search.jinja", results=results, query=query)
