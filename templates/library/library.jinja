@@ -4,12 +4,13 @@
 {% endblock %}
 {% block content %}
 {% from 'button.jinja' import button %}
-{% from 'display_items.jinja' import display_all_species %}
+{% from 'display_items.jinja' import display_all_articles %}
 {% from 'search_bar.jinja' import search_bar%}
 <section class="title">
-Species Database
+Article Library
 </section>
-{# All Species #}
-{{search_bar("/species/search", query)}}   
-{{display_all_species(results)}}
+{# All Articles #}
+{{search_bar("/articles/search", "")}}   
+<h2 style="text-align: center; margin-top: 30px;">All Articles</h2>
+{{display_all_articles(articles)}}
 {% endblock %}
