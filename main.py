@@ -64,7 +64,6 @@ def handle_bad_request(e):
     ), 500
 
 
-init_database()
 import_pages("routes", app)
 
 if __name__ == "__main__":

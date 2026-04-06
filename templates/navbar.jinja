@@ -2,13 +2,14 @@
 <div class="navbar">
     <div class="left">
         <a href="/" class="left">
-        <img src="/images/lizard.png" class="logo-img">
-        <span class="logo-text">Komodo Hub</span>
+            <img src="/images/lizard.png" class="logo-img">
+            <span class="logo-text">Komodo Hub</span>
         </a>
     </div>
-    
+
     <div class="links">
-        {# todo #}
+        {% if user %}
+        {% if user["account_type"] == "admin" %}
         <div class="dropdown">
             <button class="dropbtn">Devtools ▾</button>
             <div class="dropdown-content">
@@ -21,9 +22,6 @@
                 <a href="/dashboard">Dashboard</a>
             </div>
         </div>
-        {# todo #}
-        {% if user %}
-        {% if user[4] %}
         <a href="/admin">Admin</a>
         {% endif %}
         <a href="/dashboard">Dashboard</a>

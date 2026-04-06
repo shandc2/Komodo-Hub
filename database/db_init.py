@@ -1,4 +1,5 @@
 from database.db_connection import get_db, get_db
+from database.db_commands import register_user
 from datetime import datetime
 
 SEED_SPECIES = [
@@ -108,7 +109,6 @@ def init_database():
         """)
     print("Database initialised.")
     seed_species()
-    init_programs_database()
 
 
 def seed_species():
@@ -220,9 +220,8 @@ def init_programs_database():
         """)
     print("Programs database tables initialised.")
 
-
-if __name__ == "__main__":
-    init_database()
-    init_accounts_database()
-    init_classes_database()
-    init_programs_database()
+init_database()
+init_accounts_database()
+init_classes_database()
+init_programs_database()
+register_user("admin", "admin@komodohub.org", "admin", "admin")
