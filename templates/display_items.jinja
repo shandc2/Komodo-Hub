@@ -22,9 +22,10 @@
 <section class="species-grid">
     {% for item in items %}
     <a href="/articles/{{ item['article_id'] }}" class="container-lite">
-        <h3 class="plain-white-text">{{ item['article_title'] }}</h3>
+        <h3 class="plain-white-text">{{ item['title'] }}</h3>
         <p style="color: var(--text)">
-        Main category: {{ item['category'] }}
+        Main category: {{ item['author'] }}
+        Date published: {{ item["publish_date"] }}
         </p>
     </a>
 

@@ -92,6 +92,16 @@ def get_all_species():
     with get_db() as conn:
         rows = conn.execute("SELECT * FROM species").fetchall()
         return [dict(row) for row in rows]
+    
+def get_all_articles():
+    with get_db() as conn:
+        rows = conn.execute("SELECT * FROM articles").fetchall()
+        return [dict(row) for row in rows]
+    
+def get_article_by_id(id):
+    with get_db() as conn:
+        row = conn.execute("SELECT * FROM articles WHERE article_id = ? LIMIT 1", (id,)).fetchone()
+        return dict(row) if row else None
 
 
 def get_species_by_name(species_english):
