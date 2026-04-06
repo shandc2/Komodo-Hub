@@ -477,3 +477,36 @@ def search_programs(query):
                OR instr(LOWER(COALESCE(CAST(description AS TEXT), '')), ?1) > 0
         """, (query.lower(),)).fetchall()
         return [dict(r) for r in rows]
+
+
+def update_user_settings(user_id, username, email, account_type=None):
+    email = email.strip().lower()
+    with get_db() as conn:
+        # Check if username is taken by someone else
+        existing_username = conn.execute(
+            "SELECT user_id FROM users WHERE username = ? AND user_id != ?",
+            (username, user_id)
+        ).fetchone()
+        if existing_username:
+            return False, "Username already taken"
+        
+        # Check if email is taken by someone else
+        existing_email = conn.execute(
+            "SELECT user_id FROM users WHERE LOWER(email) = LOWER(?) AND user_id != ?",
+            (email, user_id)
+        ).fetchone()
+        if existing_email:
+            return False, "Email already taken"
+        
+        # Update the user
+        if account_type is not None:
+            conn.execute(
+                "UPDATE users SET username = ?, email = ?, account_type = ? WHERE user_id = ?",
+                (username, email, account_type, user_id)
+            )
+        else:
+            conn.execute(
+                "UPDATE users SET username = ?, email = ? WHERE user_id = ?",
+                (username, email, user_id)
+            )
+        return True, "Settings updated successfully"
