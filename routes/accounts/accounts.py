@@ -1,5 +1,11 @@
 from flask import render_template, Blueprint, request, redirect, url_for, Response, g
-from database.db_commands import register_user, login_user
+from database.db_commands import (
+    register_user,
+    login_user,
+    create_password_reset_request,
+    get_password_reset_request,
+    reset_password,
+)
 
 page = Blueprint("login", __name__, url_prefix="")
 
@@ -22,6 +28,58 @@ def login():
     resp = Response(render_template("accounts/login.jinja", error=error))
     if error: resp.status = 401
     return resp
+
+
+@page.route("/password-reset", methods=["GET", "POST"])
+def password_reset_request():
+    if g.user:
+        return redirect(url_for("login.dashboard"))
+    message = None
+    reset_link = None
+    if request.method == "POST":
+        email = request.form.get("email", "").strip().lower()
+        token = create_password_reset_request(email)
+        message = (
+            "If an account with that email exists, a password reset link has been created."
+        )
+        if token:
+            reset_link = url_for("login.password_reset", token=token, _external=True)
+    return render_template(
+        "accounts/password_reset_request.jinja",
+        message=message,
+        reset_link=reset_link,
+    )
+
+
+@page.route("/password-reset/<token>", methods=["GET", "POST"])
+def password_reset(token):
+    if g.user:
+        return redirect(url_for("login.dashboard"))
+    error = None
+    success = None
+    reset_request = get_password_reset_request(token)
+    if not reset_request:
+        error = "This reset link is invalid or has expired."
+    if request.method == "POST" and reset_request:
+        password = request.form.get("password", "")
+        password_confirm = request.form.get("password_confirm", "")
+        if password != password_confirm:
+            error = "Passwords do not match."
+        elif len(password) < 8:
+            error = "Password must be at least 8 characters."
+        else:
+            if reset_password(token, password):
+                success = "Your password has been reset. Please log in."
+                reset_request = None
+            else:
+                error = "Unable to reset your password. Please request a new link."
+    return render_template(
+        "accounts/password_reset.jinja",
+        error=error,
+        success=success,
+        token=token,
+        reset_request=reset_request,
+    )
 
 
 @page.route("/register", methods=["GET", "POST"])
