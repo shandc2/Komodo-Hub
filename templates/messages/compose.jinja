@@ -1,0 +1,101 @@
+{% extends "base.jinja" %}
+{% block title %}New Message{% endblock %}
+{% block content %}
+{% from 'button.jinja' import button %}
+
+<section id="hero" style="padding: 40px 20px; text-align: center;">
+    <h1>New Message</h1>
+</section>
+
+<section style="padding: 0 20px 40px 20px; max-width: 600px; margin: 0 auto;">
+    <div class="container-full">
+        <form action="{{ url_for('messages.send') }}" method="POST" class="form">
+            <div class="form-group" style="position: relative;">
+                <label for="recipient_search">To:</label>
+                <input type="text" id="recipient_search" 
+                       placeholder="Search for a user by username..."
+                       value="{{ recipient_username if recipient_username else '' }}">
+                <input type="hidden" name="recipient_id" id="recipient_id" 
+                       value="{{ recipient_id if recipient_id else '' }}">
+                <div id="search-results" style="
+                    position: absolute;
+                    background: var(--background);
+                    border: 1px solid var(--primary);
+                    border-radius: 8px;
+                    max-height: 200px;
+                    overflow-y: auto;
+                    width: calc(100% - 40px);
+                    display: none;
+                    z-index: 100;
+                "></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="subject">Subject (optional):</label>
+                <input type="text" id="subject" name="subject" maxlength="200">
+            </div>
+            
+            <div class="form-group">
+                <label for="body">Message:</label>
+                <textarea id="body" name="body" rows="6" required></textarea>
+            </div>
+            
+            <button type="submit" class="submit-button">Send Message</button>
+        </form>
+    </div>
+    
+    <div style="margin-top: 20px; text-align: center;">
+        {{ button(url='/messages', button_text='Cancel', extra_classes='homepage-btn') }}
+    </div>
+</section>
+
+<script>
+    const searchInput = document.getElementById('recipient_search');
+    const recipientIdInput = document.getElementById('recipient_id');
+    const resultsDiv = document.getElementById('search-results');
+    let searchTimeout;
+    
+    searchInput.addEventListener('input', function() {
+        clearTimeout(searchTimeout);
+        const query = this.value.trim();
+        
+        if (query.length < 2) {
+            resultsDiv.style.display = 'none';
+            return;
+        }
+        
+        searchTimeout = setTimeout(() => {
+            fetch(`/messages/search?q=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.users.length > 0) {
+                        resultsDiv.innerHTML = data.users.map(user => `
+                            <div style="padding: 10px; cursor: pointer; border-bottom: 1px solid var(--primary);"
+                                 onclick="selectUser(${user.user_id}, '${user.username.replace(/'/g, "\\'")}')">
+                                <strong>${user.username}</strong><br>
+                                <small>${user.email}</small>
+                            </div>
+                        `).join('');
+                        resultsDiv.style.display = 'block';
+                    } else {
+                        resultsDiv.innerHTML = '<div style="padding: 10px;">No users found</div>';
+                        resultsDiv.style.display = 'block';
+                    }
+                });
+        }, 300);
+    });
+    
+    function selectUser(id, username) {
+        searchInput.value = username;
+        recipientIdInput.value = id;
+        resultsDiv.style.display = 'none';
+    }
+    
+    // Close results when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!searchInput.contains(e.target) && !resultsDiv.contains(e.target)) {
+            resultsDiv.style.display = 'none';
+        }
+    });
+</script>
+{% endblock %}

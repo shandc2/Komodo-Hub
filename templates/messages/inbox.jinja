@@ -1,0 +1,61 @@
+{% extends "base.jinja" %}
+{% block title %}Messages{% endblock %}
+{% block content %}
+{% from 'button.jinja' import button %}
+
+<section id="hero" style="padding: 40px 20px; text-align: center;">
+    <h1>Messages</h1>
+    {% if unread_total > 0 %}
+        <p style="color: var(--accent);">You have {{ unread_total }} unread message{{ 's' if unread_total != 1 }}</p>
+    {% endif %}
+</section>
+
+<section style="padding: 0 20px 40px 20px; max-width: 800px; margin: 0 auto;">
+    <div style="margin-bottom: 20px; text-align: right;">
+        {{ button(url='/messages/compose', button_text='+ New Message', extra_classes='homepage-btn') }}
+    </div>
+    
+    {% if conversations %}
+        <div class="container-full">
+            {% for conv in conversations %}
+            <a href="{{ url_for('messages.conversation', user_id=conv.user_id) }}" 
+               style="text-decoration: none; color: var(--text);">
+                <div style="
+                    background: var(--background);
+                    border: 1.5px solid var(--primary);
+                    border-radius: 12px;
+                    padding: 15px 20px;
+                    margin-bottom: 10px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    transition: border-color 0.2s;
+                ">
+                    <div>
+                        <strong>{{ conv.username }}</strong>
+                        {% if conv.unread_count > 0 %}
+                            <span style="
+                                background: var(--accent);
+                                border-radius: 10px;
+                                padding: 2px 8px;
+                                font-size: 0.75rem;
+                                margin-left: 8px;
+                            ">{{ conv.unread_count }} new</span>
+                        {% endif %}
+                        <p style="opacity: 0.6; font-size: 0.85rem; margin-top: 4px;">
+                            {{ conv.last_message[:16] if conv.last_message else 'No messages' }}
+                        </p>
+                    </div>
+                    <span style="opacity: 0.5;">→</span>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="container-full" style="text-align: center;">
+            <p style="opacity: 0.6;">No messages yet.</p>
+            {{ button(url='/messages/compose', button_text='Send message', extra_classes='homepage-btn') }}
+        </div>
+    {% endif %}
+</section>
+{% endblock %}
