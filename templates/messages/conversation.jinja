@@ -1,0 +1,60 @@
+{% extends "base.jinja" %}
+{% block title %}Conversation with {{ other_user.username }}{% endblock %}
+{% block content %}
+{% from 'button.jinja' import button %}
+
+<section id="hero" style="padding: 40px 20px; text-align: center;">
+    <h1>Conversation with {{ other_user.username }}</h1>
+    <p style="opacity: 0.7;">{{ other_user.email }}</p>
+</section>
+
+<section style="padding: 0 20px 40px 20px; max-width: 700px; margin: 0 auto;">
+    
+    {# Message thread #}
+    <div class="container-full" style="margin-bottom: 20px; max-height: 500px; overflow-y: auto;">
+        {% if messages %}
+            {% for msg in messages|reverse %}
+            <div style="
+                margin-bottom: 20px;
+                text-align: {% if msg.sender_id == user.user_id %}right{% else %}left{% endif %};
+            ">
+                <div style="
+                    display: inline-block;
+                    max-width: 80%;
+                    background: {% if msg.sender_id == user.user_id %}var(--primary_darker){% else %}var(--background){% endif %};
+                    border: 1.5px solid var(--primary);
+                    border-radius: 12px;
+                    padding: 12px 16px;
+                ">
+                    {% if msg.subject %}
+                        <strong style="display: block; margin-bottom: 4px;">{{ msg.subject }}</strong>
+                    {% endif %}
+                    <p style="margin: 0; white-space: pre-wrap;">{{ msg.body }}</p>
+                    <small style="opacity: 0.5; display: block; margin-top: 6px;">
+                        {{ msg.created_at[:16] }}
+                    </small>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p style="text-align: center; opacity: 0.6;">No messages yet. Start the conversation!</p>
+        {% endif %}
+    </div>
+    
+    {# Reply form #}
+    <div class="container-full">
+        <h3>Send a reply</h3>
+        <form action="{{ url_for('messages.send') }}" method="POST" class="form">
+            <input type="hidden" name="recipient_id" value="{{ other_user.user_id }}">
+            <div class="form-group">
+                <textarea name="body" rows="4" placeholder="Type your message..." required></textarea>
+            </div>
+            <button type="submit" class="submit-button">Send Message</button>
+        </form>
+    </div>
+    
+    <div style="margin-top: 20px; text-align: center;">
+        {{ button(url='/messages', button_text='Back to Inbox', extra_classes='homepage-btn') }}
+    </div>
+</section>
+{% endblock %}

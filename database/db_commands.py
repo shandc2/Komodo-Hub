@@ -510,3 +510,121 @@ def update_user_settings(user_id, username, email, account_type=None):
                 (username, email, user_id)
             )
         return True, "Settings updated successfully"
+
+# ── messaging system ─────────────────────────────────────────────────────────────────
+
+
+
+def send_message(sender_id, receiver_id, subject, body, parent_message_id=None):
+    """Send a new message"""
+    with get_db() as conn:
+        cursor = conn.execute("""
+            INSERT INTO messages (sender_id, receiver_id, subject, body, parent_message_id)
+            VALUES (?, ?, ?, ?, ?)
+        """, (sender_id, receiver_id, subject, body, parent_message_id))
+        return cursor.lastrowid
+
+
+def get_user_conversations(user_id):
+    """Get all conversations for a user (unique correspondents)"""
+    with get_db() as conn:
+        rows = conn.execute("""
+            SELECT DISTINCT 
+                u.user_id,
+                u.username,
+                u.email,
+                MAX(m.created_at) as last_message,
+                COUNT(CASE WHEN m.is_read = 0 AND m.receiver_id = ? THEN 1 END) as unread_count
+            FROM messages m
+            JOIN users u ON (u.user_id = m.sender_id OR u.user_id = m.receiver_id)
+            WHERE (m.sender_id = ? OR m.receiver_id = ?)
+                AND u.user_id != ?
+                AND ((m.sender_id = ? AND m.sender_deleted = 0) OR (m.receiver_id = ? AND m.receiver_deleted = 0))
+            GROUP BY u.user_id
+            ORDER BY last_message DESC
+        """, (user_id, user_id, user_id, user_id, user_id, user_id))
+        return [dict(row) for row in rows]
+
+
+def get_messages_between_users(user1_id, user2_id, limit=50, offset=0):
+    """Get message history between two users"""
+    with get_db() as conn:
+        rows = conn.execute("""
+            SELECT m.*, 
+                u1.username as sender_name,
+                u2.username as receiver_name
+            FROM messages m
+            JOIN users u1 ON m.sender_id = u1.user_id
+            JOIN users u2 ON m.receiver_id = u2.user_id
+            WHERE ((m.sender_id = ? AND m.receiver_id = ?) OR (m.sender_id = ? AND m.receiver_id = ?))
+                AND ((m.sender_id = ? AND m.sender_deleted = 0) OR (m.receiver_id = ? AND m.receiver_deleted = 0))
+            ORDER BY m.created_at DESC
+            LIMIT ? OFFSET ?
+        """, (user1_id, user2_id, user2_id, user1_id, user1_id, user2_id, limit, offset))
+        return [dict(row) for row in rows]
+
+
+def mark_message_as_read(message_id, user_id):
+    """Mark a specific message as read"""
+    with get_db() as conn:
+        conn.execute("""
+            UPDATE messages 
+            SET is_read = 1 
+            WHERE message_id = ? AND receiver_id = ?
+        """, (message_id, user_id))
+
+
+def mark_conversation_as_read(user_id, other_user_id):
+    """Mark all messages from a specific user as read"""
+    with get_db() as conn:
+        conn.execute("""
+            UPDATE messages 
+            SET is_read = 1 
+            WHERE sender_id = ? AND receiver_id = ? AND is_read = 0
+        """, (other_user_id, user_id))
+
+
+def delete_message_for_user(message_id, user_id):
+    """Soft delete a message for a specific user"""
+    with get_db() as conn:
+        conn.execute("""
+            UPDATE messages 
+            SET sender_deleted = CASE WHEN sender_id = ? THEN 1 ELSE sender_deleted END,
+                receiver_deleted = CASE WHEN receiver_id = ? THEN 1 ELSE receiver_deleted END
+            WHERE message_id = ?
+        """, (user_id, user_id, message_id))
+
+
+def get_unread_message_count(user_id):
+    """Get total unread messages for a user"""
+    with get_db() as conn:
+        row = conn.execute("""
+            SELECT COUNT(*) as count
+            FROM messages
+            WHERE receiver_id = ? AND is_read = 0 AND receiver_deleted = 0
+        """, (user_id,)).fetchone()
+        return row['count'] if row else 0
+
+
+def search_users(query, current_user_id, limit=10):
+    """Search for users to message"""
+    with get_db() as conn:
+        rows = conn.execute("""
+            SELECT user_id, username, email, account_type
+            FROM users
+            WHERE (username LIKE ? OR email LIKE ?)
+                AND user_id != ?
+            LIMIT ?
+        """, (f'%{query}%', f'%{query}%', current_user_id, limit))
+        return [dict(row) for row in rows]
+
+
+def get_user_by_id(user_id):
+    """Get user by ID - returns user info for messaging"""
+    with get_db() as conn:
+        row = conn.execute(
+            "SELECT user_id, username, email, account_type FROM users WHERE user_id = ? LIMIT 1",
+            (user_id,)
+        ).fetchone()
+        return dict(row) if row else None
+
