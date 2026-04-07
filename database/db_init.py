@@ -127,7 +127,6 @@ def init_database():
             photoid TEXT
         )
         """)
-    init_accounts_database()
     print("Database initialised.")
     seed_species()
 
