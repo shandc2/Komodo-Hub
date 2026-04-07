@@ -17,7 +17,7 @@ page = Blueprint("article", __name__)
 def data(article_id):
     database_entry = get_article_by_id(article_id)
     if database_entry is None:
-        raise TypeError(f"No species named '{species_english}' found in the database.")
+        raise TypeError(f"No article named '{article_id}' found in the database.")
     return render_template(
         "library/article.jinja",
         article_id  =database_entry["article_id"    ],

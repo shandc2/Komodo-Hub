@@ -566,7 +566,6 @@ input:focus {
   color: whitesmoke;
   border: none;
   cursor: pointer;
-  width: 200px;
   text-align: center;
   display: inline-flex;
   align-items: center;

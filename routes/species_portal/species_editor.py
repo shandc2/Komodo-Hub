@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, request, redirect, url_for
+from flask import render_template, Blueprint, request, redirect, url_for, g
 from database.db_commands import delete_species, get_species_by_id, update_species, get_species_by_name
 import uuid
 
@@ -7,6 +7,8 @@ page = Blueprint("species_editor", __name__, url_prefix="/species/editor")
 
 @page.route("/<species_id>")
 def edit_species(species_id):
+    if not g.user or g.user["account_type"] != "admin":
+        return "access denied", 401
     species_to_edit = get_species_by_id(species_id)
     print(species_id)
     return render_template(
@@ -17,6 +19,8 @@ def edit_species(species_id):
 
 @page.route("/<species_id>", methods=["POST"])
 def species_update(species_id):
+    if not g.user or g.user["account_type"] != "admin":
+        return "access denied", 401
     try:
         eng_name        = request.form["eng_name"].title()
         latin_name      = request.form["latin_name"].capitalize()
@@ -43,6 +47,8 @@ def species_update(species_id):
         
 @page.route("/success/<eng_name>")
 def edit_success(eng_name):
+    if not g.user or g.user["account_type"] != "admin":
+        return "access denied", 401
     return render_template(
             "species_portal/species_portal_success.jinja",
             eng_name = eng_name,
@@ -50,6 +56,8 @@ def edit_success(eng_name):
     
 @page.route("/delete/<species_english>", methods=["POST"])
 def delete_species_from_database(species_english):
+    if not g.user or g.user["account_type"] != "admin":
+        return "access denied", 401
     try:
         entry = get_species_by_name(species_english)
         if entry is None:

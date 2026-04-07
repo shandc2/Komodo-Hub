@@ -1,4 +1,5 @@
-from database.db_connection import get_db, get_db
+from database.db_connection import get_db
+from database.db_commands import register_user
 from datetime import datetime
 
 SEED_SPECIES = [
@@ -126,10 +127,9 @@ def init_database():
             photoid TEXT
         )
         """)
+    init_accounts_database()
     print("Database initialised.")
     seed_species()
-    init_programs_database()
-    init_articles()
 
 def init_articles():
     with get_db() as conn:
@@ -211,6 +211,19 @@ def init_accounts_database():
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
         """)
+        conn.execute("""
+        CREATE TABLE IF NOT EXISTS tokens (
+            token TEXT PRIMARY KEY,
+            user_id INTEGER
+        )
+        """)
+        conn.execute("""
+        CREATE TABLE IF NOT EXISTS password_resets (
+            token TEXT PRIMARY KEY,
+            user_id INTEGER NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+        """)
     print("Accounts database initialised.")
 
 
@@ -281,9 +294,9 @@ def init_programs_database():
         """)
     print("Programs database tables initialised.")
 
-
-if __name__ == "__main__":
-    init_database()
-    init_accounts_database()
-    init_classes_database()
-    init_programs_database()
+init_database()
+init_accounts_database()
+init_classes_database()
+init_programs_database()
+init_articles()
+register_user("admin", "admin@komodohub.org", "admin", "admin")

@@ -35,8 +35,9 @@
 <p>{{ main_text }}</p>
 </section>
 </div>
-{# this button should only be visible to certain account types #}
+{% if user and user["account_type"] == "admin"%}
 <div style="text-align: right;">
     {{ button(url='/species/editor/'+species_id, button_text='Edit Species') }}
 </div>
+{% endif %}
 {% endblock %}

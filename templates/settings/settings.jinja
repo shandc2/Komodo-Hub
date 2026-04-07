@@ -1,0 +1,28 @@
+{% extends "base.jinja" %}
+
+{% block title %}Settings{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Settings</h1>
+    <form method="post" action="{{ url_for('settings.home') }}">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" value="{{user.username }}" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="{{user.email }}" required>
+        </div>
+        <div class="form-group">
+            <label for="account_type">Account Type:</label>
+            <select id="account_type" name="account_type" required>
+                <option value="private account" {% if current_account_type == 'private account' %}selected{% endif %}>Private Account</option>
+                <option value="teacher" {% if current_account_type == 'teacher' %}selected{% endif %}>Teacher</option>
+                <option value="student" {% if current_account_type == 'student' %}selected{% endif %}>Student</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+</div>
+{% endblock %}

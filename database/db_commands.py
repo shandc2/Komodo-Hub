@@ -8,9 +8,10 @@ import random
 
 
 def register_user(username, email, password, account_type="private_user"):
+    email = email.strip().lower()
     with get_db() as conn:
         existing = conn.execute(
-            "SELECT user_id FROM users WHERE username = ? OR email = ?",
+            "SELECT user_id FROM users WHERE username = ? OR LOWER(email) = LOWER(?)",
             (username, email)
         ).fetchone()
         if existing:
@@ -61,12 +62,63 @@ def create_token_for_user(user_id):
         return token
     print("hello")
     
+def create_password_reset_request(email):
+    user = get_user_by_email(email)
+    if not user:
+        return None
+    reset_token = secrets.token_hex(64)
+    with get_db() as conn:
+        conn.execute("""
+            INSERT INTO password_resets (
+                token,
+                user_id,
+                created_at
+            )
+            VALUES (?, ?, ?)
+        """, (reset_token, user["user_id"], datetime.now()))
+    return reset_token
+
+
+def get_password_reset_request(token):
+    with get_db() as conn:
+        row = conn.execute(
+            "SELECT * FROM password_resets WHERE token = ? LIMIT 1",
+            (token,)
+        ).fetchone()
+        return dict(row) if row else None
+
+
+def reset_password(token, password):
+    reset_request = get_password_reset_request(token)
+    if not reset_request:
+        return False
+    password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt(14))
+    with get_db() as conn:
+        conn.execute(
+            "UPDATE users SET password_hash = ? WHERE user_id = ?",
+            (password_hash, reset_request["user_id"])
+        )
+        conn.execute(
+            "DELETE FROM password_resets WHERE token = ?",
+            (token,)
+        )
+    return True
+
+
 def delete_token(token):
     with get_db() as conn:
         conn.execute("""
             DELETE FROM tokens
             WHERE token = ?
         """, (token,))
+
+def get_user_by_email(email):
+    with get_db() as conn:
+        row = conn.execute(
+            "SELECT * FROM users WHERE LOWER(email) = LOWER(?) LIMIT 1",
+            (email,)
+        ).fetchone()
+        return dict(row) if row else None
 
 def add_species(english, latin, body, category, extinction_risk, image_id):
     with get_db() as conn:
@@ -425,3 +477,36 @@ def search_programs(query):
                OR instr(LOWER(COALESCE(CAST(description AS TEXT), '')), ?1) > 0
         """, (query.lower(),)).fetchall()
         return [dict(r) for r in rows]
+
+
+def update_user_settings(user_id, username, email, account_type=None):
+    email = email.strip().lower()
+    with get_db() as conn:
+        # Check if username is taken by someone else
+        existing_username = conn.execute(
+            "SELECT user_id FROM users WHERE username = ? AND user_id != ?",
+            (username, user_id)
+        ).fetchone()
+        if existing_username:
+            return False, "Username already taken"
+        
+        # Check if email is taken by someone else
+        existing_email = conn.execute(
+            "SELECT user_id FROM users WHERE LOWER(email) = LOWER(?) AND user_id != ?",
+            (email, user_id)
+        ).fetchone()
+        if existing_email:
+            return False, "Email already taken"
+        
+        # Update the user
+        if account_type is not None:
+            conn.execute(
+                "UPDATE users SET username = ?, email = ?, account_type = ? WHERE user_id = ?",
+                (username, email, account_type, user_id)
+            )
+        else:
+            conn.execute(
+                "UPDATE users SET username = ?, email = ? WHERE user_id = ?",
+                (username, email, user_id)
+            )
+        return True, "Settings updated successfully"
