@@ -294,9 +294,77 @@ def init_programs_database():
         """)
     print("Programs database tables initialised.")
 
+def init_activities_database():
+    activities_list = [
+        {
+            "title": "Build a Bird Feeder",
+            "description": "Create a bird feeder using recycled materials.",
+            "species": "Bird Conservation",
+            "due_date": "3 days",
+            "difficulty": "Easy"
+        },
+        {
+            "title": "Plant a Tree",
+            "description": "Plant a tree in your garden or local area to help restore natural habitats and support wildlife.",
+            "species": "Habitat Restoration",
+            "due_date": "5 days",
+            "difficulty": "Medium"
+        },
+        {
+            "title": "Organise a Conservation Awareness Campaign",
+            "description": "Plan and deliver a campaign to raise awareness about endangered species.",
+            "species": "Education & Conservation",
+            "due_date": "2 weeks",
+            "difficulty": "Hard"
+        }
+    ]
+
+    with get_db() as conn:
+        # Create activities table if it doesn't exist
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS activities (
+                activity_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                title TEXT NOT NULL,
+                description TEXT,
+                species TEXT,
+                due_date TEXT,
+                difficulty TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+        print("Activities table created/found.")
+
+        # Insert activities if not already in table
+        for activity in activities_list:
+            exists = conn.execute(
+                "SELECT activity_id FROM activities WHERE title = ?",
+                (activity["title"],)
+            ).fetchone()
+            if exists:
+                print(f"  SKIP  {activity['title']} (already exists)")
+                continue
+
+            conn.execute("""
+                INSERT INTO activities
+                    (title, description, species, due_date, difficulty, created_at)
+                VALUES (?, ?, ?, ?, ?, ?)
+            """, (
+                activity["title"],
+                activity["description"],
+                activity["species"],
+                activity["due_date"],
+                activity["difficulty"],
+                datetime.now(),
+            ))
+            print(f"  ADD   {activity['title']}")
+    print("Activities seeding complete.")
+
+
+
 init_database()
 init_accounts_database()
 init_classes_database()
 init_programs_database()
 init_articles()
+init_activities_database()
 register_user("admin", "admin@komodohub.org", "admin", "admin")
