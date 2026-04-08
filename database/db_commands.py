@@ -547,7 +547,7 @@ def get_user_conversations(user_id):
 
 
 def get_messages_between_users(user1_id, user2_id, limit=50, offset=0):
-    """Get message history between two users"""
+    """Simplified version - Get message history between two users"""
     with get_db() as conn:
         rows = conn.execute("""
             SELECT m.*, 
@@ -556,12 +556,34 @@ def get_messages_between_users(user1_id, user2_id, limit=50, offset=0):
             FROM messages m
             JOIN users u1 ON m.sender_id = u1.user_id
             JOIN users u2 ON m.receiver_id = u2.user_id
-            WHERE ((m.sender_id = ? AND m.receiver_id = ?) OR (m.sender_id = ? AND m.receiver_id = ?))
-                AND ((m.sender_id = ? AND m.sender_deleted = 0) OR (m.receiver_id = ? AND m.receiver_deleted = 0))
-            ORDER BY m.created_at DESC
+            WHERE (m.sender_id = ? AND m.receiver_id = ?) 
+               OR (m.sender_id = ? AND m.receiver_id = ?)
+            ORDER BY m.created_at ASC
             LIMIT ? OFFSET ?
-        """, (user1_id, user2_id, user2_id, user1_id, user1_id, user2_id, limit, offset))
+        """, (user1_id, user2_id, user2_id, user1_id, limit, offset))
+        
         return [dict(row) for row in rows]
+
+
+
+
+
+#def get_messages_between_users(user1_id, user2_id, limit=50, offset=0):
+#    """Get message history between two users"""
+#    with get_db() as conn:
+#        rows = conn.execute("""
+#            SELECT m.*, 
+#                u1.username as sender_name,
+#                u2.username as receiver_name
+#            FROM messages m
+#            JOIN users u1 ON m.sender_id = u1.user_id
+#            JOIN users u2 ON m.receiver_id = u2.user_id
+#            WHERE ((m.sender_id = ? AND m.receiver_id = ?) OR (m.sender_id = ? AND m.receiver_id = ?))
+#                AND ((m.sender_id = ? AND m.sender_deleted = 0) OR (m.receiver_id = ? AND m.receiver_deleted = 0))
+#            ORDER BY m.created_at DESC
+#            LIMIT ? OFFSET ?
+#        """, (user1_id, user2_id, user2_id, user1_id, user1_id, user2_id, limit, offset))
+#        return [dict(row) for row in rows]
 
 
 def mark_message_as_read(message_id, user_id):
