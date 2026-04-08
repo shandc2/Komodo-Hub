@@ -223,6 +223,23 @@ def init_accounts_database():
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
         """)
+        conn.execute("""
+        CREATE TABLE IF NOT EXISTS messages (
+            message_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            sender_id INTEGER NOT NULL,
+            receiver_id INTEGER NOT NULL,
+            subject TEXT,
+            body TEXT NOT NULL,
+            is_read BOOLEAN DEFAULT 0,
+            sender_deleted BOOLEAN DEFAULT 0,
+            receiver_deleted BOOLEAN DEFAULT 0,
+            parent_message_id INTEGER,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (sender_id) REFERENCES users(user_id),
+            FOREIGN KEY (receiver_id) REFERENCES users(user_id),
+            FOREIGN KEY (parent_message_id) REFERENCES messages(message_id)
+        )
+        """)
     print("Accounts database initialised.")
 
 
