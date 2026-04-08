@@ -1,0 +1,71 @@
+{% extends "base.jinja" %}
+{% block title %}Activities{% endblock %}
+{% block content %}
+{% from 'button.jinja' import button %}
+
+{% block head %}
+<style>
+.activity-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.activity-card {
+    background: #0b5d2a;
+    padding: 25px;
+    border-radius: 12px;
+    width: 300px;
+    box-sizing: border-box;
+}
+</style>
+{% endblock %}
+
+<section style="padding: 50px 20px; text-align: center;">
+    <h1>Activities</h1>
+
+    <!-- Activities List -->
+    <div class="activity-container">
+        {% for activity in activities %}
+            <div class="activity-card">
+                <h3>{{ activity.title }}</h3>
+                <p>{{ activity.description }}</p>
+                <p><strong>Category:</strong> {{ activity.species }}</p>
+                <p><strong>Due date:</strong> {{ activity.due_date }}</p>
+                <p><strong>Difficulty:</strong> {{ activity.difficulty }}</p>
+
+                {% if activity.activity_id in started_ids %}
+                    <p><strong>In Progress</strong></p>
+                {% else %}
+                    {{ button(url=url_for('activities.start_activity', activity_id=activity.activity_id), button_text='Start Activity', extra_classes='homepage-btn') }}
+                </button>
+        {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ADMIN ONLY SECTION -->
+{% if g.user and g.user["account_type"] == "admin" %}
+<section style="padding: 50px 20px; text-align: center; background-color: #eee;">
+    <h2>Create New Activity (Admin)</h2>
+
+    <form method="POST" class="activity-form">
+        <input type="text" name="title" placeholder="Activity Title" required><br><br>
+
+        <textarea name="description" placeholder="Description" required></textarea><br><br>
+
+        <input type="text" name="species" placeholder="Species / Program" required><br><br>
+
+        <input type="number" name="due_date" placeholder="due_date"><br><br>
+
+        <input type="text" name="difficulty" placeholder="difficulty"><br><br>
+
+        <button type="submit" class="homepage-btn">Publish Activity</button>
+    </form>
+</section>
+{% endif %}
+
+{% endblock %}
