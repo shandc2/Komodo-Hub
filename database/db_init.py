@@ -300,21 +300,21 @@ def init_activities_database():
             "title": "Build a Bird Feeder",
             "description": "Create a bird feeder using recycled materials.",
             "species": "Bird Conservation",
-            "due_date": "3 days",
+            "duration_days": 3,
             "difficulty": "Easy"
         },
         {
             "title": "Plant a Tree",
             "description": "Plant a tree in your garden or local area to help restore natural habitats and support wildlife.",
             "species": "Habitat Restoration",
-            "due_date": "5 days",
+            "duration_days": 5,
             "difficulty": "Medium"
         },
         {
             "title": "Organise a Conservation Awareness Campaign",
             "description": "Plan and deliver a campaign to raise awareness about endangered species.",
             "species": "Education & Conservation",
-            "due_date": "2 weeks",
+            "duration_days": 14,
             "difficulty": "Hard"
         }
     ]
@@ -327,7 +327,7 @@ def init_activities_database():
                 title TEXT NOT NULL,
                 description TEXT,
                 species TEXT,
-                due_date TEXT,
+                duration_days INTEGER,
                 difficulty TEXT,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
@@ -346,18 +346,33 @@ def init_activities_database():
 
             conn.execute("""
                 INSERT INTO activities
-                    (title, description, species, due_date, difficulty, created_at)
+                    (title, description, species, duration_days, difficulty, created_at)
                 VALUES (?, ?, ?, ?, ?, ?)
             """, (
                 activity["title"],
                 activity["description"],
                 activity["species"],
-                activity["due_date"],
+                activity["duration_days"],
                 activity["difficulty"],
                 datetime.now(),
             ))
             print(f"  ADD   {activity['title']}")
     print("Activities seeding complete.")
+
+def init_user_activities_table():
+    with get_db() as conn:
+        conn.execute("""
+        CREATE TABLE IF NOT EXISTS user_activities (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            activity_id INTEGER NOT NULL,
+            started_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            completed INTEGER DEFAULT 0,
+
+            FOREIGN KEY (user_id) REFERENCES users(user_id),
+            FOREIGN KEY (activity_id) REFERENCES activities(activity_id)
+        )
+        """)
 
 
 
@@ -367,4 +382,5 @@ init_classes_database()
 init_programs_database()
 init_articles()
 init_activities_database()
+init_user_activities_table()
 register_user("admin", "admin@komodohub.org", "admin", "admin")
