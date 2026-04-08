@@ -1,9 +1,7 @@
 from flask import render_template, Blueprint, g, request, redirect, url_for
 from database.db_connection import get_db
-from datetime import datetime
 
 page = Blueprint('activities', __name__, url_prefix='/activities')
-
 
 @page.route('/', methods=['GET', 'POST'])
 def home():
@@ -12,13 +10,13 @@ def home():
             with get_db() as conn:
                 conn.execute("""
                     INSERT INTO activities
-                    (title, description, species, duration_days, difficulty)
+                    (title, description, species, due_date, difficulty)
                     VALUES (?, ?, ?, ?, ?)
                 """, (
                     request.form['title'],
                     request.form['description'],
                     request.form['species'],
-                    int(request.form['duration_days']),
+                    request.form['due_date'],
                     request.form['difficulty']
                 ))
         return redirect(url_for('activities.home'))
@@ -75,24 +73,7 @@ def my_activities():
             WHERE ua.user_id = ?
         """, (g.user["user_id"],)).fetchall()
 
-    activities_with_time = []
-
-    for activity in activities:
-        try:
-            started_at = datetime.fromisoformat(activity["started_at"])
-        except:
-            started_at = datetime.strptime(activity["started_at"], "%Y-%m-%d %H:%M:%S")
-
-        duration = activity["duration_days"]
-        days_passed = (datetime.now() - started_at).days
-        days_left = duration - days_passed
-
-        activity_dict = dict(activity)
-        activity_dict["days_left"] = days_left
-
-        activities_with_time.append(activity_dict)
-
     return render_template(
         'activities/my_activities.jinja',
-        activities=activities_with_time
+        activities=activities
     )

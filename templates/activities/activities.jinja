@@ -33,17 +33,15 @@
                 <h3>{{ activity.title }}</h3>
                 <p>{{ activity.description }}</p>
                 <p><strong>Category:</strong> {{ activity.species }}</p>
-                <p><strong>Duration days:</strong> {{ activity.duration_days }}</p>
+                <p><strong>Due date:</strong> {{ activity.due_date }}</p>
                 <p><strong>Difficulty:</strong> {{ activity.difficulty }}</p>
 
                 {% if activity.activity_id in started_ids %}
-                <p><strong>In Progress</strong></p>
+                    <p><strong>In Progress</strong></p>
                 {% else %}
-                    {{ button(
-                        url=url_for('activities.start_activity', activity_id=activity.activity_id),
-                        button_text='Start Activity'
-                    ) }}
-                {% endif %}
+                    {{ button(url=url_for('activities.start_activity', activity_id=activity.activity_id), button_text='Start Activity', extra_classes='homepage-btn') }}
+                </button>
+        {% endif %}
             </div>
         {% endfor %}
     </div>
@@ -61,7 +59,7 @@
 
         <input type="text" name="species" placeholder="Species / Program" required><br><br>
 
-        <input type="number" name="duration_days" placeholder="duration_days"><br><br>
+        <input type="number" name="due_date" placeholder="due_date"><br><br>
 
         <input type="text" name="difficulty" placeholder="difficulty"><br><br>
 
