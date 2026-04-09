@@ -1,0 +1,43 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6">
+  <diagram name="Page-1" id="Y7i12buB9koV2zs5vw_M">
+    <mxGraphModel dx="2066" dy="1248" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Y1GkeIaNaN_39Ro0tFyQ-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="User Browser" vertex="1">
+          <mxGeometry height="60" width="120" x="90" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Y1GkeIaNaN_39Ro0tFyQ-6" edge="1" parent="1" source="Y1GkeIaNaN_39Ro0tFyQ-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="Y1GkeIaNaN_39Ro0tFyQ-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Y1GkeIaNaN_39Ro0tFyQ-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Flask Web App" vertex="1">
+          <mxGeometry height="60" width="120" x="90" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="Y1GkeIaNaN_39Ro0tFyQ-7" edge="1" parent="1" source="Y1GkeIaNaN_39Ro0tFyQ-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="Y1GkeIaNaN_39Ro0tFyQ-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Y1GkeIaNaN_39Ro0tFyQ-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Webpage Logic&lt;br&gt;(inside the routes directory)" vertex="1">
+          <mxGeometry height="60" width="120" x="90" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="Y1GkeIaNaN_39Ro0tFyQ-8" edge="1" parent="1" source="Y1GkeIaNaN_39Ro0tFyQ-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="Y1GkeIaNaN_39Ro0tFyQ-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="240" y="440" />
+              <mxPoint x="240" y="200" />
+            </Array>
+            <mxPoint x="230" y="200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Y1GkeIaNaN_39Ro0tFyQ-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Jinja2 Templates" vertex="1">
+          <mxGeometry height="60" width="120" x="90" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="Y1GkeIaNaN_39Ro0tFyQ-11" edge="1" parent="1" source="Y1GkeIaNaN_39Ro0tFyQ-2" style="endArrow=classic;startArrow=classic;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="Y1GkeIaNaN_39Ro0tFyQ-1" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="10" y="180" as="sourcePoint" />
+            <mxPoint x="60" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
