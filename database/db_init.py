@@ -1,5 +1,5 @@
 from database.db_connection import get_db
-from database.db_commands import register_user
+from database.db_commands import register_user, create_program, get_all_programs
 from datetime import datetime
 
 SEED_SPECIES = [
@@ -398,3 +398,9 @@ register_user("admin", "admin@komodohub.org", "admin", "admin")
 register_user("private", "private@komodohub.org", "private_user", "private")
 register_user("teacher", "teacher@komodohub.org", "teacher", "teacher")
 register_user("student", "student@komodohub.org", "student", "student")
+register_user("communityleader", "communityleader@komodohub.org", "community_leader", "community_leader")
+if len(get_all_programs()) < 1:
+    create_program(leader_id=1, title="Sumatran Tiger Watch", description="Report sightings of Sumatran Tigers and help track population movement across Sumatra.")
+    create_program(leader_id=1, title="Javan Rhino Guardians", description="Coordinate community efforts to report rhino activity and protect their remaining habitat in Ujung Kulon.")
+    create_program(leader_id=1, title="Bali Myna Recovery Project", description="Monitor and protect the critically endangered Bali Myna by documenting nesting sites and sightings across Bali.")
+    create_program(leader_id=1, title="Indonesia's Endemic Species Library", description="Contribute articles, essays, and columns about Indonesian endemic species to grow the public knowledge base.")
