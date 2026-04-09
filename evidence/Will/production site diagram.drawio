@@ -1,0 +1,63 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6">
+  <diagram name="Page-1" id="2wT2WU9NkvpTAcdHzYou">
+    <mxGraphModel dx="1152" dy="834" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="HZnixJc9v59I_crZTgQJ-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="310" width="380" x="370" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="HZnixJc9v59I_crZTgQJ-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Let&#39;s Encrypt&lt;div&gt;(TLS / SSL certs)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="100" x="400" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="HZnixJc9v59I_crZTgQJ-19" edge="1" parent="1" source="HZnixJc9v59I_crZTgQJ-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;dashed=1;" target="HZnixJc9v59I_crZTgQJ-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="HZnixJc9v59I_crZTgQJ-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="nginx&lt;div&gt;(Reverse proxy)&lt;br&gt;(TLS termination)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="390" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="HZnixJc9v59I_crZTgQJ-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Internet&lt;div&gt;(HTTPS request)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="70" width="120" x="170" y="325" as="geometry" />
+        </mxCell>
+        <mxCell id="HZnixJc9v59I_crZTgQJ-5" edge="1" parent="1" source="HZnixJc9v59I_crZTgQJ-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="HZnixJc9v59I_crZTgQJ-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="HZnixJc9v59I_crZTgQJ-6" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Private Server" vertex="1">
+          <mxGeometry height="30" width="100" x="510" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="HZnixJc9v59I_crZTgQJ-7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="195" width="180" x="550" y="262.5" as="geometry" />
+        </mxCell>
+        <mxCell id="HZnixJc9v59I_crZTgQJ-9" edge="1" parent="1" source="HZnixJc9v59I_crZTgQJ-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="HZnixJc9v59I_crZTgQJ-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="HZnixJc9v59I_crZTgQJ-10" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Docker Compose" vertex="1">
+          <mxGeometry height="30" width="100" x="590" y="235" as="geometry" />
+        </mxCell>
+        <mxCell id="HZnixJc9v59I_crZTgQJ-15" edge="1" parent="1" source="HZnixJc9v59I_crZTgQJ-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="HZnixJc9v59I_crZTgQJ-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="HZnixJc9v59I_crZTgQJ-11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Dockerfile&lt;div&gt;(Defines container image)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="140" x="570" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="HZnixJc9v59I_crZTgQJ-17" edge="1" parent="1" source="HZnixJc9v59I_crZTgQJ-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="HZnixJc9v59I_crZTgQJ-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="HZnixJc9v59I_crZTgQJ-12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Gunicorn&lt;div&gt;(WSGI server)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="120" x="580" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="HZnixJc9v59I_crZTgQJ-18" edge="1" parent="1" source="HZnixJc9v59I_crZTgQJ-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;dashed=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="HZnixJc9v59I_crZTgQJ-3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="640" y="480" />
+              <mxPoint x="450" y="480" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HZnixJc9v59I_crZTgQJ-16" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Komodo Hub&lt;div&gt;(Application)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="120" x="580" y="400" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
